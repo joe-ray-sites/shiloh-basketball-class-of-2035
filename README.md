@@ -99,6 +99,15 @@ list order in `shiloh-bb.planOrder`, and an unsaved draft in
 `shiloh-bb.practiceDraft`. "Share link" packs the whole plan into a
 `?plan=` URL that opens on any phone with a "Save to my practices" button.
 
+### Getting a coach's plan into the season plans
+
+A coach-made (or edited) plan has a "Send to the season plans" button. It
+produces a block of text the coach can share, copy or email: a readable
+summary, the share link, and a paste-ready entry for the `PRACTICES` array.
+To publish it, paste that text into Claude with "add this as a season plan"
+(or drop the entry into `PRACTICES` by hand with the next id), then commit
+and push. Set `ADMIN.email` in `index.html` to enable the Email button.
+
 ## Access code
 
 The landing screen asks for a 4-digit code. It is a deterrent, not security —

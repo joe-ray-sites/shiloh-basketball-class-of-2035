@@ -969,6 +969,16 @@ button.game{width:100%;text-align:left;font:inherit;cursor:pointer;}
 .restore{max-width:560px;font-size:12.5px;color:var(--muted);text-align:center;padding:6px 0;}
 .restore button{border:0;background:none;font:inherit;font-weight:700;color:var(--accent);cursor:pointer;padding:4px;}
 
+/* ── SUBMIT A PLAN TO THE SEASON ──────────────────────────── */
+.sub-intro{font-size:13.5px;color:var(--ink);line-height:1.5;}
+.sub-intro b{color:var(--navy);}
+.sub-text{width:100%;min-height:220px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;
+  line-height:1.45;color:var(--ink);background:#fbfcfd;border:1px solid var(--line);border-radius:12px;
+  padding:10px 12px;resize:vertical;outline:none;white-space:pre;overflow:auto;}
+.sub-btns{display:flex;flex-wrap:wrap;gap:8px;}
+.sub-btns .btn{flex:1 1 130px;text-decoration:none;}
+.sub-ok{font-size:12.5px;color:var(--win);font-weight:700;min-height:16px;}
+
 /* ═══════════════════════════════════════════════════════════
    TABLET — two-up cards, roomier gutters
    ═══════════════════════════════════════════════════════════ */
@@ -2001,6 +2011,7 @@ const state = {
   picker: { open:false, q:"", cat:"all" },
   shared: null,       // a plan that arrived through a ?plan= share link
   planFilter: "all",  // "all" | "mine" | "season" on the plans list
+  submit: null,       // plan open in the "send to the season plans" sheet
   reorder: false,     // plans list in move-up/down mode
   style: STYLES.includes(urlCard) ? urlCard : (STYLES.includes(stored) ? stored : "bold"),
   flipped: new Set(),
@@ -2922,6 +2933,83 @@ function sharePlan(p, btn) {
   else prompt("Copy this link:", url);
 }
 
+/* ── Send a plan back to the site admin ───────────────────────
+   No server, so a submission is a block of text the coach shares, copies
+   or emails. It carries a readable summary, the share link, and the exact
+   entry for PRACTICES so the admin can paste it straight into index.html
+   (or hand it to Claude with "add this as a season plan"). */
+const ADMIN = { name:"Joe", email:"" };   // set email to enable the Email button
+
+const jsStr = (s) => JSON.stringify(String(s == null ? "" : s));
+
+function submissionText(p) {
+  const total = practiceMinutes(p);
+  const lines = p.blocks.map((b, i) => {
+    const d = DRILLS[b.drill];
+    return `${i + 1}. ${b.min} min · ${d.name} [${b.drill}]${b.note ? ` · Coach: ${b.note}` : ""}`;
+  });
+  const code = `{ id:NEXT, title:${jsStr(p.title)}, date:${p.date ? jsStr(p.date) : "null"},
+  goal:${jsStr(p.goal || "")},
+  blocks:[
+${p.blocks.map(b => `    { min:${b.min}, drill:${jsStr(b.drill)}${b.note ? `, note:${jsStr(b.note)}` : ""} },`).join("\n")}
+  ] },`;
+  return `${TEAM.name} practice submission
+Title: ${p.title}
+Date: ${p.date || "TBD"}
+Total: ${total} minutes
+Goal: ${p.goal || "(none)"}
+
+Blocks:
+${lines.join("\n")}
+
+Open it: ${shareUrl(p)}
+
+--- Paste-ready entry for PRACTICES in index.html (replace NEXT with the next id) ---
+${code}`;
+}
+
+function openSubmitSheet(p) {
+  state.submit = p;
+  const text = submissionText(p);
+  const mail = ADMIN.email
+    ? `mailto:${encodeURIComponent(ADMIN.email)}?subject=${encodeURIComponent(`Practice plan for the season: ${p.title}`)}&body=${encodeURIComponent(text)}`
+    : "";
+  $("#sheet").innerHTML = `<div class="sheet-card" role="dialog" aria-modal="true" aria-label="Send to the season plans">
+    <button class="modal-x" data-subdone aria-label="Close">×</button>
+    <div class="sheet-h">
+      <div class="sheet-title">Send to the season plans</div>
+      <p class="sub-intro">Send this to <b>${esc(ADMIN.name)}</b> and it can be added to the season plans for everyone.
+        The text below has everything needed, including a link that opens the plan.</p>
+    </div>
+    <div class="sheet-body">
+      <div class="sub-btns">
+        ${navigator.share ? `<button class="btn" data-subshare>Share…</button>` : ""}
+        <button class="btn${navigator.share ? " ghost" : ""}" data-subcopy>Copy text</button>
+        ${mail ? `<a class="btn ghost" href="${mail}">Email ${esc(ADMIN.name)}</a>` : ""}
+      </div>
+      <div class="sub-ok" id="sub-ok"></div>
+      <textarea class="sub-text" id="sub-text" readonly>${esc(text)}</textarea>
+    </div>
+    <div class="sheet-f"><span>${p.blocks.length} drill${p.blocks.length === 1 ? "" : "s"} · <b>${practiceMinutes(p)}</b> min</span>
+      <button class="btn" data-subdone>Done</button></div>
+  </div>`;
+  $("#sheet").hidden = false;
+  document.body.classList.add("is-locked");
+}
+function closeSubmitSheet() {
+  state.submit = null;
+  $("#sheet").hidden = true;
+  document.body.classList.remove("is-locked");
+}
+function copySubmission() {
+  const text = submissionText(state.submit);
+  const ok = () => { const el = $("#sub-ok"); if (el) { el.textContent = "Copied — paste it into a text or email."; setTimeout(() => { el.textContent = ""; }, 2500); } };
+  const manual = () => { const el = $("#sub-ok"); $("#sub-text").select();
+    if (el) el.textContent = "Text selected — press and hold to copy."; };
+  if (navigator.clipboard) navigator.clipboard.writeText(text).then(ok, manual);
+  else { $("#sub-text").select(); try { document.execCommand("copy"); ok(); } catch (e) { manual(); } }
+}
+
 /* ── Practice plans ───────────────────────────────────────── */
 const practiceById = (id) => allPlans().find(p => p.id === id)
   || (state.shared && state.shared.id === id ? state.shared : null);
@@ -3025,6 +3113,7 @@ function practiceDetailView(id) {
         <button class="btn" data-edit="${p.id}">Edit</button>
         <button class="btn ghost" data-dup="${p.id}">Duplicate</button>
         <button class="btn ghost" data-share="${p.id}">Share link</button>
+        ${p.custom || p.edited ? `<button class="btn ghost" data-submit="${p.id}">Send to the season plans</button>` : ""}
         ${p.edited ? `<button class="btn ghost" data-reset="${p.id}">Reset to original</button>` : ""}
         <button class="btn danger" data-delete="${p.id}">Delete</button>`}
     </div>`;
@@ -3292,6 +3381,7 @@ function goTab(id) {
   state.builder = null;
   state.shared = null;
   state.reorder = false;
+  if (state.submit) closeSubmitSheet();
   history.replaceState(null, "", location.search + "#" + id);
   render();
   $("#main").scrollIntoView({ block: "start" });
@@ -3335,6 +3425,16 @@ document.addEventListener("click", (e) => {
   if (dup) { const p = practiceById(parseId(dup.dataset.dup)); if (p) openBuilder(p, true); return; }
   const sh = e.target.closest("[data-share]");
   if (sh) { const p = practiceById(parseId(sh.dataset.share)); if (p) sharePlan(p, sh); return; }
+  const sb = e.target.closest("[data-submit]");
+  if (sb) { const p = practiceById(parseId(sb.dataset.submit)); if (p) openSubmitSheet(p); return; }
+  if (state.submit) {
+    if (e.target.closest("[data-subdone]") || e.target.id === "sheet") return closeSubmitSheet();
+    if (e.target.closest("[data-subcopy]")) return copySubmission();
+    if (e.target.closest("[data-subshare]")) {
+      navigator.share({ title:`Practice plan: ${state.submit.title}`, text:submissionText(state.submit) }).catch(() => {});
+      return;
+    }
+  }
   const rs = e.target.closest("[data-reset]");
   if (rs) { delete EDITS[parseId(rs.dataset.reset)]; savePlanState(); render(); return; }
   const del = e.target.closest("[data-delete]");
@@ -3467,6 +3567,7 @@ $("#modal").addEventListener("click", (e) => { if (e.target.id === "modal") clos
 document.addEventListener("keydown", (e) => {
   if (e.key !== "Escape") return;
   if (state.picker.open) closePicker();
+  else if (state.submit) closeSubmitSheet();
   else if (!$("#modal").hidden) closePlayer();
   else if (menuOpen) { setMenu(false); $("#menu-btn").focus(); }
 });
