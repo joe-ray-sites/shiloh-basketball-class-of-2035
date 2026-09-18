@@ -89,14 +89,15 @@ Sources: Breakthrough Basketball youth drills, USA Basketball's foundational
 skills and drills, the Jr. NBA drill videos and Basketball For Coaches'
 written guides to the classic games.
 
-Coaches can also build their own plan on the Practice tab ("Build a
-practice"): pick drills from the library, set minutes and order, add notes,
-save. Saved plans live in that browser's localStorage under
-`shiloh-bb.practices` (a draft in progress is kept under
-`shiloh-bb.practiceDraft`), so they're per device — "Share link" packs the
-whole plan into a `?plan=` URL that opens on any phone with a "Save to my
-practices" button. Any stock plan can be copied into the builder with
-"Customize a copy".
+Every plan, season or coach-made, can be edited, duplicated, shared and
+deleted from its page, and the list can be filtered (All / Mine / Season
+plans) and reordered. All of that is per device, in localStorage:
+coach-made plans in `shiloh-bb.practices`, edits to season plans in
+`shiloh-bb.planEdits` (with a "Reset to original" button), deleted season
+plans in `shiloh-bb.planHidden` (a "Restore" link brings them back), the
+list order in `shiloh-bb.planOrder`, and an unsaved draft in
+`shiloh-bb.practiceDraft`. "Share link" packs the whole plan into a
+`?plan=` URL that opens on any phone with a "Save to my practices" button.
 
 ## Access code
 
