@@ -1,0 +1,2475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#071a2e" />
+<meta name="description" content="Shiloh Saints 4th Grade Basketball — roster, coaching staff, schedule and stats for parents." />
+
+<!-- Icons. Paths are relative so they resolve under the /repo-name/ subpath
+     that GitHub Pages serves from. Regenerate with: python3 make-icons.py -->
+<link rel="icon" href="favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png" />
+<link rel="manifest" href="manifest.webmanifest" />
+
+<!-- Add to Home Screen: launches without Safari chrome, titled "Saints Hoops"
+     (the football hub already owns "Shiloh Saints" on the home screen).
+     black-translucent lets the navy app bar run under the status bar; the bar
+     already reserves env(safe-area-inset-top). -->
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="Saints Hoops" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>Shiloh Saints · Basketball</title>
+<script>
+  // Runs before paint: if this browser already entered the code, skip the gate.
+  try { if (localStorage.getItem("shiloh-bb.gate") === "ok")
+          document.documentElement.classList.add("unlocked"); } catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=Roboto+Condensed:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* ═══════════════════════════════════════════════════════════
+   Shiloh Saints Basketball — mobile-first team hub.
+   Base styles target the phone; the min-width blocks below
+   scale the same markup up to the full desktop web view.
+   ═══════════════════════════════════════════════════════════ */
+
+:root{
+  --navy:#071a2e;
+  --navy-2:#0c2741;
+  --navy-3:#12365a;
+  --accent:#2596be;
+  --paper:#eef1f5;
+  --ink:#0d1b2a;
+  --muted:#5b6b7c;
+  --line:#e2e7ed;
+  --win:#1f9d57;
+  --loss:#d8553f;
+  --card-w:280px;
+  --tabbar-h:calc(60px + env(safe-area-inset-bottom, 0px));
+  --radius:20px;
+  /* width/height of assets/sc-logo.png — the white plate behind the mark
+     is sized to it. Update if the logo file changes shape. */
+  --logo-ratio:1202/1308;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+/* our display:flex rules would otherwise beat the UA's [hidden] display:none */
+[hidden]{display:none !important;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  font-family:"Roboto",system-ui,-apple-system,sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+body.is-locked{overflow:hidden;}
+button,input{font-family:inherit;}
+button{cursor:pointer;}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:6px;}
+img{max-width:100%;}
+
+.app{position:relative;min-height:100vh;display:flex;flex-direction:column;}
+.app-backdrop{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(700px 400px at 80% -10%, rgba(37,150,190,.10), transparent 60%);
+}
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+
+/* ── PASSWORD GATE ────────────────────────────────────────── */
+html.unlocked #gate{display:none;}
+html:not(.unlocked) .app,
+html:not(.unlocked) #modal{display:none !important;}
+.gate{
+  position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px;
+  background:
+    radial-gradient(900px 520px at 78% -10%, rgba(37,150,190,.22), transparent 60%),
+    linear-gradient(160deg,#071a2e 0%,#04101d 100%);
+  color:#fff;overflow:auto;
+}
+.gate-card{width:100%;max-width:340px;text-align:center;}
+.gate-mark{
+  height:86px;aspect-ratio:var(--logo-ratio);margin:0 auto 20px;display:grid;place-items:center;
+  background:#fff;border-radius:16px;padding:6px;box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+.gate-mark img{width:100%;height:100%;object-fit:contain;display:block;}
+.gate-mark.no-photo{background:none;padding:0;box-shadow:none;aspect-ratio:1;}
+.gate-mark.no-photo .mark-fallback{
+  width:100%;height:100%;display:grid;place-items:center;background:#fff;color:var(--navy);
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:30px;
+  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+}
+.gate-title{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:30px;letter-spacing:.5px;}
+.gate-sub{font-size:13px;color:#9fb3c6;margin-top:5px;}
+.gate-form{margin-top:28px;}
+.gate-label{display:block;font-size:12.5px;color:#aebfce;margin-bottom:12px;letter-spacing:.3px;}
+.pin{display:flex;gap:10px;justify-content:center;}
+.pin input{
+  width:56px;height:64px;text-align:center;
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:28px;color:#fff;
+  background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.18);
+  border-radius:14px;outline:none;transition:.16s;-webkit-text-security:disc;
+}
+.pin input:focus{border-color:var(--accent);background:rgba(37,150,190,.16);}
+.pin.is-bad input{border-color:#e4614f;background:rgba(228,97,79,.12);}
+.pin.is-bad{animation:shake .35s;}
+@keyframes shake{
+  0%,100%{transform:translateX(0);} 20%{transform:translateX(-7px);}
+  40%{transform:translateX(7px);}  60%{transform:translateX(-4px);} 80%{transform:translateX(4px);}
+}
+.gate-err{min-height:18px;margin-top:12px;font-size:12.5px;color:#ff9d8f;}
+.gate-go{
+  width:100%;margin-top:6px;padding:15px;border:0;border-radius:14px;
+  background:var(--accent);color:#fff;font-family:inherit;font-weight:700;font-size:15px;
+}
+.gate-foot{margin-top:18px;font-size:11.5px;color:#6f8499;}
+@media(max-width:360px){ .pin input{width:48px;height:58px;font-size:24px;} }
+
+/* ── TOP APP BAR (mobile) ─────────────────────────────────── */
+.appbar{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  position:sticky;top:0;z-index:25;
+  padding:calc(env(safe-area-inset-top, 0px) + 12px) 18px 12px;
+  background:linear-gradient(180deg,var(--navy) 0%,#06182b 100%);
+  color:#fff;box-shadow:0 4px 16px -8px rgba(7,26,46,.5);
+}
+.mbrand{display:flex;align-items:center;gap:11px;min-width:0;}
+/* The SC logo ships on an opaque white background whose navy matches this bar
+   exactly, so it gets a white badge sized to the artwork's own 1202:1308 ratio —
+   the image's background blends into the plate and reads as one mark. */
+.mmark{
+  height:46px;aspect-ratio:var(--logo-ratio);flex:0 0 auto;display:grid;place-items:center;
+  border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;
+  background:#fff;border-radius:9px;padding:3px;
+  box-shadow:0 2px 10px rgba(0,0,0,.28);
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:16px;
+  color:var(--navy);
+}
+.mmark img,.brand-mark img{width:100%;height:100%;object-fit:contain;display:block;}
+/* If the logo file goes missing, drop the plate and show the hexagon monogram. */
+.mark-fallback{display:none;}
+/* Scoped to the two logo marks — the player/coach photo hosts also carry
+   .no-photo and must keep their own sizing. */
+.mmark.no-photo,.brand-mark.no-photo{background:none;padding:0;box-shadow:none;aspect-ratio:1;}
+.mmark.no-photo .mark-fallback,.brand-mark.no-photo .mark-fallback{
+  width:100%;height:100%;display:grid;place-items:center;background:#fff;
+  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+}
+.mbrand-txt{display:flex;flex-direction:column;line-height:1.1;min-width:0;}
+.mbrand-txt b{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:16px;letter-spacing:.3px;}
+.mbrand-txt span{font-size:10.5px;color:#9fb3c6;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mrec{
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:22px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  padding:5px 13px;border-radius:12px;flex:0 0 auto;
+}
+.mrec i{color:var(--accent);font-style:normal;margin:0 3px;}
+
+/* ── SIDEBAR / BOTTOM TAB BAR ─────────────────────────────── */
+.side{
+  position:fixed;bottom:0;left:0;right:0;z-index:40;
+  display:flex;padding:7px 8px calc(env(safe-area-inset-bottom, 6px) + 7px);
+  background:rgba(255,255,255,.93);
+  -webkit-backdrop-filter:blur(16px) saturate(160%);
+  backdrop-filter:blur(16px) saturate(160%);
+  border-top:1px solid var(--line);
+  box-shadow:0 -4px 20px -10px rgba(7,26,46,.25);
+}
+.brand,.side-record,.side-foot{display:none;}
+.nav{display:flex;width:100%;justify-content:space-around;}
+.nav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  background:none;border:0;color:var(--muted);
+  font-size:11px;font-weight:500;padding:7px 4px;border-radius:12px;
+  min-height:48px;transition:color .16s;
+}
+.nav-item svg{width:23px;height:23px;}
+.nav-item.is-active{color:var(--accent);}
+.nav-count{display:none;}
+
+/* ── MAIN ─────────────────────────────────────────────────── */
+.main{
+  position:relative;z-index:1;flex:1;
+  padding:18px 16px calc(var(--tabbar-h) + 36px);
+}
+.topbar{display:flex;flex-direction:column;gap:14px;margin-bottom:16px;}
+.topbar h1{
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:25px;
+  letter-spacing:.3px;color:var(--navy);line-height:1.1;
+}
+.topbar-titles p{color:var(--muted);font-size:13px;margin-top:4px;}
+.search{
+  display:flex;align-items:center;gap:9px;background:#fff;
+  border:1px solid var(--line);border-radius:14px;padding:12px 14px;
+  color:var(--muted);box-shadow:0 2px 8px rgba(7,26,46,.04);
+}
+.search input{
+  border:0;outline:0;font-size:16px;flex:1;min-width:0;
+  color:var(--ink);background:none;
+}
+.search-x{
+  border:0;background:#eef1f5;border-radius:50%;
+  width:24px;height:24px;flex:0 0 24px;color:var(--muted);font-size:16px;line-height:1;
+}
+
+/* ── GAME FILM LINK (box score) ───────────────────────────── */
+.filmlink{
+  display:flex;align-items:center;gap:13px;text-decoration:none;
+  background:linear-gradient(180deg,#e2382b 0%,#c4291e 100%);
+  color:#fff;border-radius:14px;padding:11px 16px 11px 11px;
+  box-shadow:0 8px 20px -10px rgba(196,41,30,.85);
+  transition:filter .16s,transform .16s;
+}
+.filmlink-play{
+  width:52px;height:36px;flex:0 0 auto;background:#fff;border-radius:9px;
+  display:grid;place-items:center;color:#d02a1e;
+  box-shadow:0 1px 3px rgba(0,0,0,.18);
+}
+.filmlink-txt{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:17px;letter-spacing:.3px;flex:1;}
+.filmlink-out{opacity:.75;flex:0 0 auto;}
+.filmlink:active{transform:translateY(1px);}
+
+.toolbar{display:flex;flex-direction:column;gap:12px;margin-bottom:18px;}
+/* No overflow scrolling here — it would clip the Options popover, and with
+   only Sort + Options left the row wraps comfortably instead. */
+.opts{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  justify-content:space-between;
+}
+.optgrp{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);flex:0 0 auto;}
+.optgrp>span{flex:0 0 auto;}
+.segbtn{
+  font-size:13px;border:0;background:none;color:var(--muted);
+  padding:7px 11px;border-radius:9px;font-weight:500;min-height:34px;
+}
+.segbtn.is-on{background:#fff;color:var(--navy);box-shadow:0 1px 4px rgba(7,26,46,.08);font-weight:700;}
+
+/* ── OPTIONS MENU (card style) ────────────────────────────── */
+.menu-wrap{position:relative;flex:0 0 auto;}
+.menu-btn{
+  display:flex;align-items:center;gap:7px;
+  font-size:13px;font-weight:500;color:var(--muted);
+  background:#fff;border:1px solid var(--line);
+  padding:8px 14px;border-radius:10px;min-height:36px;transition:.16s;
+}
+.menu-btn.is-on,.menu-btn[aria-expanded="true"]{
+  border-color:var(--accent);color:var(--navy);font-weight:700;
+}
+.menu{
+  position:absolute;right:0;top:calc(100% + 8px);z-index:30;min-width:172px;
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px;
+  box-shadow:0 12px 32px -10px rgba(7,26,46,.32);
+}
+.menu-h{
+  font-size:10px;letter-spacing:.9px;text-transform:uppercase;color:var(--muted);
+  font-weight:700;padding:7px 10px 6px;
+}
+.menu-item{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;
+  background:none;border:0;color:var(--ink);font-size:14px;text-align:left;
+  padding:10px 10px;border-radius:9px;min-height:40px;
+}
+.menu-item.is-on{color:var(--navy);font-weight:700;}
+.menu-item.is-on::after{
+  content:"";width:7px;height:12px;flex:0 0 auto;margin-right:2px;
+  border:solid var(--accent);border-width:0 2.4px 2.4px 0;transform:rotate(45deg);
+}
+
+.grid{display:grid;gap:18px;grid-template-columns:1fr;max-width:420px;margin:0 auto;}
+.grid-coach{gap:16px;max-width:480px;}
+.empty{padding:56px 20px;text-align:center;color:var(--muted);font-size:15px;}
+
+/* ── FLIP CARD SHELL ──────────────────────────────────────── */
+.tc{
+  width:100%;aspect-ratio:320/430;perspective:1400px;
+  display:block;cursor:pointer;-webkit-tap-highlight-color:transparent;
+  -webkit-user-select:none;user-select:none;
+}
+/* The flip animates each face independently rather than rotating a
+   preserve-3d parent: iOS WebKit ignores backface-visibility on elements
+   that also clip (overflow:hidden + border-radius), which leaked the front
+   face through — mirrored — on iPhones. Faces counter-rotate and swap
+   visibility while edge-on, so no backface is ever relied upon. The
+   symmetric easing keeps the 90° point at exactly half the duration. */
+.tc-inner{position:relative;width:100%;height:100%;perspective:1400px;}
+.tc-face{
+  position:absolute;inset:0;border-radius:var(--radius);overflow:hidden;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  transform:rotateY(0deg);
+  transition:transform .6s cubic-bezier(.45,0,.55,1), visibility 0s linear .3s;
+}
+.tc-back{transform:rotateY(-180deg);visibility:hidden;}
+.tc.is-flipped .tc-front{transform:rotateY(180deg);visibility:hidden;}
+.tc.is-flipped .tc-back{transform:rotateY(0deg);visibility:visible;}
+.tc-front{box-shadow:0 0 0 1.5px rgba(37,150,190,.4) inset, 0 16px 30px -12px rgba(7,26,46,.55);}
+
+.tc-flip-hint{
+  position:absolute;right:12px;bottom:12px;z-index:6;
+  display:flex;align-items:center;gap:5px;border:0;
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:10px;letter-spacing:1.2px;
+  color:#fff;background:rgba(7,26,46,.55);
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  padding:7px 10px;border-radius:20px;opacity:.9;transition:opacity .2s;
+}
+
+/* ── PHOTO FRONT (classic + bold) ─────────────────────────── */
+.tcf-photo{position:absolute;inset:0;background:var(--navy);}
+.tcf-bg{position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 8%, var(--navy-3), var(--navy) 55%, #050f1b 100%);}
+.tcf-hex{
+  position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);
+  width:88%;aspect-ratio:1;
+  clip-path:polygon(50% 1%,100% 25%,100% 75%,50% 99%,0 75%,0 25%);
+  background:var(--accent);filter:drop-shadow(0 0 16px rgba(37,150,190,.85));
+}
+.tcf-hex::after{
+  content:"";position:absolute;inset:6px;
+  clip-path:polygon(50% 1%,100% 25%,100% 75%,50% 99%,0 75%,0 25%);
+  background:radial-gradient(120% 80% at 50% 8%, var(--navy-3), var(--navy) 60%, #061321 100%);
+}
+.tcf-bignum{
+  position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:300px;line-height:1;
+  color:rgba(255,255,255,.07);z-index:1;letter-spacing:-6px;
+}
+.tcf-wedge{
+  position:absolute;left:0;right:0;bottom:0;height:44%;z-index:3;
+  background:linear-gradient(180deg,transparent 0%,rgba(37,150,190,.55) 30%,var(--accent) 58%);
+  clip-path:polygon(0 26%,100% 0,100% 100%,0 100%);
+}
+.tcf-img{
+  position:absolute;left:50%;top:-3%;transform:translateX(-50%);
+  width:108%;height:120%;object-fit:cover;object-position:center top;z-index:2;
+}
+.tcf-shade{
+  position:absolute;inset:0;z-index:3;
+  background:linear-gradient(180deg,rgba(7,26,46,.30) 0%,transparent 22% 46%,rgba(7,26,46,.80) 76%,rgba(5,15,27,.98) 100%);
+}
+.tcf-foil{
+  position:absolute;inset:0;z-index:5;pointer-events:none;
+  background:linear-gradient(125deg,transparent 38%,rgba(255,255,255,.16) 48%,transparent 58%);
+  mix-blend-mode:screen;opacity:.7;
+}
+.tcf-top{position:absolute;top:13px;left:13px;right:13px;z-index:4;display:flex;align-items:flex-start;justify-content:space-between;}
+.tcf-numchip{
+  --chip:var(--accent);--chipfg:#fff;
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:26px;line-height:1;
+  min-width:46px;height:46px;padding:0 8px;display:grid;place-items:center;
+  background:var(--chip);color:var(--chipfg);border-radius:13px;
+  box-shadow:0 4px 12px rgba(0,0,0,.3);border:1.5px solid rgba(255,255,255,.25);
+}
+.tcf-pospill{
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;
+  color:#fff;background:rgba(255,255,255,.14);
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  border:1px solid rgba(255,255,255,.25);padding:6px 11px;border-radius:20px;
+}
+.tcf-plate{position:absolute;left:18px;right:18px;bottom:16px;z-index:4;}
+.tcf-nick{font-size:12.5px;color:var(--accent);font-weight:500;font-style:italic;margin-bottom:3px;}
+.tcf-name{
+  font-family:"Roboto Condensed",sans-serif;font-weight:400;font-size:27px;line-height:1.02;
+  color:#fff;text-transform:uppercase;letter-spacing:.4px;
+}
+.tcf-name b{font-weight:700;}
+.tcf-pos{font-size:12px;color:#aebfce;margin-top:5px;letter-spacing:.4px;}
+
+/* bold variant overrides */
+.tc-bold .tcf-bg{background:linear-gradient(155deg,var(--navy-3) 0%,var(--navy) 48%,#050f1b 100%);}
+.tc-bold .tcf-shade{display:none;}
+.tc-bold .tcf-bignum{
+  left:auto;right:6px;bottom:2px;top:auto;transform:none;
+  font-size:170px;line-height:.78;color:rgba(7,26,46,.28);z-index:3;letter-spacing:-8px;
+}
+.tc-bold .tcf-plate{bottom:18px;}
+.tc-bold .tcf-nick{color:#eafaff;font-style:normal;font-weight:500;}
+.tc-bold .tcf-name{text-shadow:0 2px 10px rgba(7,26,46,.35);}
+.tc-bold .tcf-pos{color:rgba(255,255,255,.92);}
+
+/* ── MODERN FRONT ─────────────────────────────────────────── */
+.tcm{
+  position:absolute;inset:0;background:#fff;display:flex;flex-direction:column;
+  border:1px solid var(--line);border-radius:var(--radius);
+}
+.tc-modern .tc-front{box-shadow:0 10px 26px -14px rgba(7,26,46,.4);}
+.tcm-photowrap{position:relative;height:66%;border-radius:19px 19px 0 0;overflow:hidden;background:var(--navy);}
+.tcm-photobg{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 0%, var(--navy-3), var(--navy) 70%);}
+.tcm-img{position:absolute;left:50%;top:-4%;transform:translateX(-50%);width:110%;height:150%;object-fit:cover;object-position:center top;}
+.tcm-numchip{
+  position:absolute;top:12px;right:12px;z-index:3;
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:18px;
+  background:var(--chip,var(--accent));color:var(--chipfg,#fff);
+  padding:5px 11px;border-radius:11px;box-shadow:0 4px 10px rgba(0,0,0,.25);
+}
+.tcm-body{padding:15px 18px 16px;display:flex;flex-direction:column;gap:3px;}
+.tcm-pos{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--accent);}
+.tcm-name{font-family:"Roboto Condensed",sans-serif;font-weight:400;font-size:23px;color:var(--navy);text-transform:uppercase;line-height:1.05;}
+.tcm-name b{font-weight:700;}
+.tcm-nick{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);margin-top:5px;}
+.tcm-nick svg{color:var(--accent);flex:0 0 auto;}
+
+/* ── PHOTO FALLBACK (no asset available) ──────────────────── */
+.ph{position:absolute;inset:0;z-index:1;display:grid;place-items:center;}
+.ph-mono{
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;
+  font-size:64px;letter-spacing:2px;color:rgba(255,255,255,.16);
+}
+.no-photo .tcf-img,.no-photo .tcm-img,.no-photo>img{display:none;}
+
+/* ── COMPACT CARD (no portrait) ───────────────────────────── */
+/* One third the height of a full card, so a photoless roster reads as a
+   list instead of a wall of empty art panels. */
+.tc.is-compact{aspect-ratio:320/143;}
+.tc.is-compact .tc-flip-hint{display:none;}
+.tc.is-compact .tc-front{box-shadow:0 0 0 1.5px rgba(37,150,190,.32) inset,0 8px 18px -10px rgba(7,26,46,.5);}
+
+.tcc{position:absolute;inset:0;display:flex;align-items:center;gap:14px;
+  padding:0 16px;overflow:hidden;
+  background:linear-gradient(120deg,var(--navy-3) 0%,var(--navy) 55%,#050f1b 100%);}
+.tcc-mono{position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:78px;line-height:1;
+  color:rgba(255,255,255,.06);letter-spacing:-2px;pointer-events:none;}
+.tcc-num{flex:0 0 auto;min-width:52px;height:52px;padding:0 8px;display:grid;place-items:center;
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:26px;
+  background:var(--accent);color:#fff;border-radius:13px;
+  border:1.5px solid rgba(255,255,255,.22);box-shadow:0 4px 12px rgba(0,0,0,.3);}
+.tcc-body{min-width:0;z-index:1;}
+.tcc-nick{font-size:11.5px;color:var(--accent);font-weight:500;font-style:italic;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* Long names wrap rather than truncate — the compact card has vertical room
+   for two lines. */
+.tcc-name{font-family:"Roboto Condensed",sans-serif;font-weight:400;font-size:20px;
+  color:#fff;text-transform:uppercase;line-height:1.08;letter-spacing:.3px;
+  overflow-wrap:anywhere;}
+.tcc-name b{font-weight:700;}
+.tcc-pos{font-size:11.5px;color:#9fb3c6;margin-top:2px;letter-spacing:.3px;}
+
+.tccb{position:absolute;inset:0;display:flex;flex-direction:column;gap:8px;
+  padding:13px 15px;border-radius:var(--radius);
+  background:linear-gradient(150deg,var(--navy-2),var(--navy) 70%,#040e1a);
+  border:1.5px solid rgba(37,150,190,.4);}
+.tccb-fact{flex:1;min-height:0;}
+.tccb-label{display:block;font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:10px;
+  letter-spacing:1.1px;text-transform:uppercase;color:var(--accent);margin-bottom:3px;}
+.tccb-fact p{font-size:12.5px;line-height:1.4;color:#dce6ef;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.tccb-open{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;
+  flex:0 0 auto;font-weight:700;font-size:12.5px;color:#fff;background:var(--accent);
+  border:0;border-radius:10px;padding:9px;}
+@media (hover:hover) and (pointer:fine){ .tccb-open:hover{filter:brightness(1.08);} }
+
+/* ── CARD BACK ────────────────────────────────────────────── */
+.tcb{
+  position:absolute;inset:0;color:#fff;padding:20px 20px 16px;
+  background:linear-gradient(165deg,var(--navy-2),var(--navy) 70%,#040e1a);
+  display:flex;flex-direction:column;
+  border:1.5px solid rgba(37,150,190,.4);border-radius:var(--radius);
+}
+.tcb-head{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.1);}
+.tcb-num{
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:24px;
+  width:44px;height:44px;flex:0 0 44px;display:grid;place-items:center;border-radius:12px;
+  background:var(--chip,var(--accent));color:var(--chipfg,#fff);
+}
+.tcb-name{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:19px;letter-spacing:.3px;line-height:1.1;}
+.tcb-pos{font-size:11.5px;color:#9fb3c6;margin-top:2px;}
+.tcb-rows{padding:14px 0 4px;display:flex;flex-direction:column;}
+.tcb-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:13px;}
+.tcb-k{color:#8fa6ba;flex:0 0 auto;}
+.tcb-v{font-weight:500;text-align:right;}
+.tcb-fact{margin-top:auto;background:rgba(37,150,190,.12);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:12px 14px;}
+.tcb-fact-label{
+  display:flex;align-items:center;gap:6px;
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:11px;
+  letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:5px;
+}
+.tcb-fact p{font-size:13px;line-height:1.45;color:#dce6ef;}
+.tcb-open{
+  margin-top:13px;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
+  font-weight:700;font-size:13.5px;color:#fff;background:var(--accent);
+  border:0;border-radius:12px;padding:13px;transition:filter .16s;
+}
+.tcb-flipback{text-align:center;font-size:10px;color:#6f8499;margin-top:9px;letter-spacing:.3px;}
+
+/* ── COACH CARD ───────────────────────────────────────────── */
+.cc{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 8px 22px -16px rgba(7,26,46,.4);transition:.2s;}
+.cc-top{position:relative;height:118px;background:linear-gradient(150deg,var(--navy-3),var(--navy) 75%);}
+.cc-top::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,transparent 0 22px,rgba(255,255,255,.025) 22px 23px);}
+.cc-avatar{
+  position:absolute;left:24px;bottom:-34px;width:88px;height:88px;border-radius:50%;
+  overflow:hidden;border:4px solid #fff;box-shadow:0 6px 16px rgba(7,26,46,.28);z-index:2;
+  background:linear-gradient(150deg,var(--navy-3),var(--navy));display:grid;place-items:center;
+}
+.cc-avatar img{width:100%;height:100%;object-fit:cover;object-position:center 8%;}
+.cc-avatar .ph-mono{font-size:28px;color:rgba(255,255,255,.55);position:absolute;}
+.cc-tag{
+  position:absolute;top:14px;right:14px;
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:11px;letter-spacing:1px;
+  text-transform:uppercase;color:var(--navy);background:#fff;padding:5px 11px;border-radius:20px;white-space:nowrap;
+}
+.cc-body{padding:44px 24px 22px;}
+.cc-name{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:20px;color:var(--navy);letter-spacing:.2px;}
+.cc-role{font-size:13px;color:var(--accent);font-weight:500;margin-top:2px;}
+.cc-motto{font-size:14px;font-style:italic;color:var(--ink);margin:14px 0 10px;line-height:1.4;}
+.cc-fact{font-size:12.5px;color:var(--muted);line-height:1.5;}
+/* Name-and-role only: pull the navy band in so the card isn't top-heavy. */
+.cc-brief .cc-top{height:92px;}
+.cc-brief .cc-avatar{width:76px;height:76px;bottom:-28px;}
+.cc-brief .cc-body{padding:38px 24px 20px;}
+
+/* ── SCHEDULE ─────────────────────────────────────────────── */
+.sched{display:flex;flex-direction:column;gap:11px;max-width:880px;}
+.game{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px 16px;
+}
+.game-week{
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:12px;letter-spacing:.5px;
+  color:var(--muted);text-transform:uppercase;flex:0 0 auto;
+}
+.game-main{flex:1 0 100%;order:2;min-width:0;}
+.game-opp{display:flex;align-items:center;gap:10px;font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:17px;color:var(--navy);line-height:1.2;}
+.ha{font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 7px;border-radius:6px;flex:0 0 auto;}
+.ha.home{background:rgba(37,150,190,.14);color:var(--accent);}
+.ha.away{background:#eef1f5;color:var(--muted);}
+.game-when{font-size:12.5px;color:var(--muted);margin-top:4px;}
+.game-right{margin-left:auto;flex:0 0 auto;text-align:right;order:1;}
+.game-res{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:17px;padding:5px 12px;border-radius:10px;white-space:nowrap;}
+.game-res.win{color:var(--win);background:rgba(31,157,87,.12);}
+.game-res.loss{color:var(--loss);background:rgba(216,85,63,.12);}
+.game-upc{font-size:13px;color:var(--muted);font-weight:500;}
+.game-badge{
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.8px;
+  text-transform:uppercase;color:#fff;background:var(--accent);padding:6px 12px;border-radius:10px;white-space:nowrap;
+}
+.game-badge.playoff{background:var(--navy);}
+.game.is-next{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,150,190,.12);}
+.game.is-playoff{background:linear-gradient(180deg,#fff,#f6f9fb);border-style:dashed;}
+
+/* ── DETAIL SHEET / MODAL ─────────────────────────────────── */
+.modal{
+  position:fixed;inset:0;z-index:50;background:rgba(5,15,27,.7);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  display:flex;align-items:flex-end;justify-content:center;
+  animation:fade .2s;
+}
+.modal[hidden]{display:none;}
+@keyframes fade{from{opacity:0;}to{opacity:1;}}
+.modal-card{
+  display:flex;flex-direction:column;background:#fff;position:relative;
+  width:100%;max-height:94vh;max-height:94dvh;overflow:auto;
+  border-radius:24px 24px 0 0;
+  box-shadow:0 40px 80px -20px rgba(0,0,0,.6);
+  animation:sheet .3s cubic-bezier(.2,.8,.3,1);
+  -webkit-overflow-scrolling:touch;
+}
+@keyframes sheet{from{transform:translateY(40px);opacity:.6;}to{transform:translateY(0);opacity:1;}}
+.modal-x{
+  position:absolute;top:16px;right:16px;z-index:10;
+  width:38px;height:38px;border-radius:50%;border:0;
+  background:rgba(255,255,255,.92);color:var(--navy);font-size:24px;line-height:1;
+  box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+.modal-photo{position:relative;flex:none;height:46vh;height:46dvh;min-height:260px;background:var(--navy);overflow:hidden;}
+.modal-bg{position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 6%, var(--navy-3), var(--navy) 55%, #050f1b);}
+.modal-hex{
+  position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);width:76%;aspect-ratio:1;
+  clip-path:polygon(50% 1%,100% 25%,100% 75%,50% 99%,0 75%,0 25%);
+  background:var(--accent);filter:drop-shadow(0 0 22px rgba(37,150,190,.8));
+}
+.modal-hex::after{
+  content:"";position:absolute;inset:7px;
+  clip-path:polygon(50% 1%,100% 25%,100% 75%,50% 99%,0 75%,0 25%);
+  background:radial-gradient(120% 80% at 50% 6%, var(--navy-3), var(--navy) 60%, #061321);
+}
+.modal-photo img{position:absolute;left:50%;top:-2%;transform:translateX(-50%);width:104%;height:114%;object-fit:cover;object-position:center top;z-index:2;}
+.modal-shade{position:absolute;inset:0;z-index:3;background:linear-gradient(180deg,transparent 50%,rgba(5,15,27,.85));}
+.modal-num{
+  position:absolute;top:18px;left:18px;z-index:4;
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:32px;
+  min-width:58px;height:58px;padding:0 10px;display:grid;place-items:center;border-radius:16px;
+  background:var(--chip,var(--accent));color:var(--chipfg,#fff);
+  box-shadow:0 6px 16px rgba(0,0,0,.35);border:2px solid rgba(255,255,255,.25);
+}
+.modal-plate{position:absolute;left:22px;right:22px;bottom:20px;z-index:4;}
+.modal-nick{font-size:14px;font-style:italic;color:var(--accent);margin-bottom:4px;}
+.modal-name{font-family:"Roboto Condensed",sans-serif;font-weight:400;font-size:31px;color:#fff;text-transform:uppercase;line-height:1;}
+.modal-name b{font-weight:700;}
+.modal-info{flex:1;padding:26px 22px calc(env(safe-area-inset-bottom, 0px) + 26px);display:flex;flex-direction:column;}
+.modal-pos{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);}
+.modal-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0 22px;}
+.ms{background:var(--paper);border-radius:14px;padding:13px 8px;text-align:center;}
+.ms span{display:block;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.ms b{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:22px;color:var(--navy);}
+/* A multi-position list ("PG,SG,SF") needs to step down to fit its tile. */
+.ms-pos b{font-size:15px;letter-spacing:.2px;overflow-wrap:anywhere;}
+.modal-fact{background:var(--navy);color:#fff;border-radius:16px;padding:18px 20px;}
+.modal-fact-h{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent);margin-bottom:7px;}
+.modal-fact p{font-size:14.5px;line-height:1.5;color:#dce6ef;}
+
+/* ── SEASON STATS (full card) ─────────────────────────────── */
+.stats{margin-top:24px;border-top:1px solid var(--line);padding-top:20px;}
+.stats-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.stats-h h3{
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:17px;
+  letter-spacing:.4px;text-transform:uppercase;color:var(--navy);
+}
+.stats-h span{font-size:11.5px;color:var(--muted);}
+.statgrp{margin-top:16px;}
+.statgrp-h{
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:11px;
+  letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;
+}
+/* Fixed 4-up: auto-fit would stretch a lone tile across the whole row. */
+.statrow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.st{background:var(--paper);border-radius:12px;padding:10px 6px;text-align:center;}
+.st span{display:block;font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.st b{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:19px;color:var(--navy);}
+.stats-empty{margin-top:14px;font-size:13.5px;color:var(--muted);}
+
+/* ── MENU / SEASON LIST ROWS ──────────────────────────────── */
+.mlist{display:flex;flex-direction:column;gap:10px;max-width:560px;}
+.mrow{display:flex;align-items:center;gap:14px;width:100%;text-align:left;
+  background:#fff;border:1px solid var(--line);border-radius:16px;
+  padding:16px 16px;font:inherit;cursor:pointer;transition:.16s;}
+.mrow-ico{flex:0 0 auto;width:40px;height:40px;display:grid;place-items:center;
+  border-radius:12px;background:var(--paper);color:var(--accent);}
+.mrow-yr{flex:0 0 auto;min-width:56px;height:40px;display:grid;place-items:center;
+  border-radius:12px;background:var(--navy);color:#fff;
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:16px;}
+.mrow-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
+.mrow-txt b{font-family:"Roboto Condensed",sans-serif;font-size:18px;color:var(--navy);letter-spacing:.2px;}
+.mrow-txt span{font-size:12.5px;color:var(--muted);}
+.mrow-go{flex:0 0 auto;color:var(--muted);}
+
+/* career table: totals row reads like the "Pro Totals" line on a card back */
+.career{margin-top:24px;}
+.career .pstat-scroll{margin-top:12px;}
+.career table{min-width:420px;}
+.career .pstat-name{font-family:"Roboto Condensed",sans-serif;font-weight:700;
+  color:var(--navy);font-size:14px;}
+.career tbody tr.career-total{background:var(--paper);}
+.career tbody tr.career-total td{border-top:2px solid var(--navy);}
+.career tbody tr.career-total .pstat-name{letter-spacing:.5px;text-transform:uppercase;font-size:12.5px;}
+
+/* ── BOX SCORE SUB-TABS + PLAY-BY-PLAY ────────────────────── */
+.bstabs{display:flex;gap:6px;margin:22px 0 4px;max-width:640px;
+  background:#e7ebf0;padding:4px;border-radius:12px;}
+.bstab{flex:1;border:0;background:none;color:var(--muted);
+  font-size:14px;font-weight:500;padding:10px 12px;border-radius:9px;min-height:40px;transition:.16s;}
+.bstab.is-on{background:#fff;color:var(--navy);font-weight:700;box-shadow:0 1px 4px rgba(7,26,46,.1);}
+
+.pbp{margin-top:18px;max-width:640px;display:flex;flex-direction:column;gap:14px;}
+.qtr{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;}
+.qtr-h{display:flex;align-items:center;gap:9px;padding:11px 14px;
+  background:var(--paper);border-bottom:1px solid var(--line);}
+.qtr-tag{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:11px;
+  letter-spacing:1px;text-transform:uppercase;color:#fff;background:var(--navy);
+  padding:4px 10px;border-radius:20px;}
+.qtr-n{font-size:12.5px;color:var(--muted);font-weight:500;}
+.qtr-note{margin-left:auto;font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:13px;
+  color:var(--navy);letter-spacing:.3px;}
+.plays{list-style:none;counter-reset:play;}
+.play{display:flex;align-items:center;gap:10px;padding:11px 14px;
+  border-bottom:1px solid var(--line);font-size:14px;line-height:1.35;}
+.play:last-child{border-bottom:0;}
+.play-txt{flex:1;min-width:0;}
+.play-txt b{font-family:"Roboto Condensed",sans-serif;color:var(--accent);}
+/* +2 / +3 chip and the running score after a made basket */
+.play-pts{flex:0 0 auto;font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:15px;
+  min-width:30px;text-align:right;color:var(--win);}
+.play-score{flex:0 0 auto;font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:12.5px;
+  min-width:44px;text-align:right;color:var(--muted);letter-spacing:.3px;}
+.play-tag{flex:0 0 auto;font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:10px;
+  letter-spacing:.8px;text-transform:uppercase;padding:4px 8px;border-radius:6px;}
+.play-tag.sc{background:var(--win);color:#fff;}
+.play-tag.to{background:var(--loss);color:#fff;}
+.play-tag.ev{background:rgba(7,26,46,.08);color:var(--navy);}
+.play-tag.fl{background:rgba(216,85,63,.12);color:var(--loss);}
+.play-tag.ms{background:#eef1f5;color:var(--muted);}
+.play.is-score{background:rgba(31,157,87,.07);}
+.play.is-turnover{background:rgba(216,85,63,.07);}
+/* Opponent plays: red text, red chip, red score tag */
+.play.is-opp .play-txt{color:var(--loss);}
+.play.is-opp .play-pts{color:var(--loss);}
+.play.is-opp.is-score{background:rgba(216,85,63,.07);}
+.play.is-opp .play-tag.sc{background:var(--loss);}
+.play.is-miss{color:var(--muted);}
+.play.is-note{color:var(--muted);font-style:italic;background:#fbfcfd;}
+@media (hover:hover) and (pointer:fine){ .bstab:hover{color:var(--navy);} }
+
+/* ── LINE SCORE (points by quarter) ───────────────────────── */
+.linescore{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  max-width:640px;}
+.linescore table{width:100%;border-collapse:collapse;font-size:13.5px;}
+.linescore th,.linescore td{padding:10px 8px;text-align:center;white-space:nowrap;}
+.linescore thead th{font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);
+  font-weight:700;border-bottom:1px solid var(--line);}
+.linescore tbody tr{border-bottom:1px solid var(--line);}
+.linescore tbody tr:last-child{border-bottom:0;}
+.linescore td{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:15px;color:var(--navy);}
+.linescore .ls-team{text-align:left;padding-left:14px;font-family:"Roboto Condensed",sans-serif;
+  font-weight:700;font-size:14px;}
+.linescore td.ls-tot{background:var(--paper);font-size:17px;}
+.linescore tr.is-win td{color:var(--navy);}
+.linescore tr.is-lose td{color:var(--muted);}
+
+/* ── PLACEHOLDER NOTICE ───────────────────────────────────── */
+.note{display:flex;align-items:center;gap:10px;max-width:640px;margin:0 auto 16px;
+  background:#fff7e6;border:1px solid #f3d9a4;color:#7a5a12;border-radius:14px;
+  padding:11px 14px;font-size:13px;line-height:1.4;}
+.note svg{flex:0 0 auto;color:#d9a441;}
+@media (min-width:560px){ .note{margin:0 0 18px;} }
+
+/* ── TEAM STATS + BOX SCORE ───────────────────────────────── */
+.tstat-top{max-width:520px;}
+.bs-sec{margin-top:26px;max-width:640px;}
+.bs-h{
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:17px;
+  letter-spacing:.5px;text-transform:uppercase;color:var(--navy);margin-bottom:10px;
+}
+.tbl{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;}
+.tbl-row{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:12px 16px;font-size:14px;color:var(--muted);
+  border-bottom:1px solid var(--line);
+}
+.tbl-row:last-child{border-bottom:0;}
+.tbl-row b{font-family:"Roboto Condensed",sans-serif;font-size:17px;color:var(--navy);}
+
+.lead-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;}
+.lead{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;}
+.lead-k{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);font-weight:700;}
+.lead-v{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:30px;color:var(--navy);line-height:1.1;margin:2px 0 3px;}
+.lead-p{font-size:12.5px;color:var(--muted);}
+.lead-p b{color:var(--navy);}
+/* leader cards punch through to the full category breakdown */
+.lead{width:100%;text-align:left;position:relative;border:1px solid var(--line);
+  cursor:pointer;font:inherit;transition:transform .14s,box-shadow .14s,border-color .14s;}
+.lead-go{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);
+  display:flex;}
+.lead:active{transform:translateY(1px);}
+/* Rank sits in its own gutter so it doesn't read as part of the jersey number. */
+.pstat .rank{display:inline-block;min-width:18px;font-family:"Roboto Condensed",sans-serif;
+  font-weight:700;font-size:12px;color:#9fb0c0;margin-right:12px;text-align:right;}
+
+/* box-score header */
+.crumb{
+  display:inline-flex;align-items:center;gap:8px;border:0;background:none;
+  color:var(--accent);font-size:17px;font-weight:700;letter-spacing:.2px;
+  padding:2px 10px 2px 0;margin:0 0 14px -4px;min-height:40px;cursor:pointer;
+}
+.crumb svg{flex:0 0 auto;}
+.crumb:active{opacity:.7;}
+.bs-head{background:var(--navy);color:#fff;border-radius:18px;padding:16px 20px;max-width:640px;}
+.bs-meta{font-size:11.5px;letter-spacing:.6px;text-transform:uppercase;color:#8fa6ba;margin-bottom:10px;}
+.bs-line{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:7px 0;}
+.bs-team{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:18px;letter-spacing:.3px;color:#aebfce;}
+.bs-score{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:30px;color:#aebfce;}
+.bs-line.is-win .bs-team,.bs-line.is-win .bs-score{color:#fff;}
+.bs-line.is-win .bs-score{color:var(--accent);}
+
+/* team-vs-opponent comparison rows */
+.cmp-head,.cmp{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;}
+.cmp-head{padding:0 16px 8px;}
+.cmp-head span{font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);font-weight:700;}
+.cmp-head span:first-child{text-align:right;}
+.cmp{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 16px;margin-bottom:6px;}
+.cmp span{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:16px;color:var(--navy);text-align:right;}
+.cmp span:last-child{text-align:left;color:var(--muted);}
+.cmp em{font-style:normal;font-size:11.5px;color:var(--muted);text-align:center;min-width:112px;}
+
+/* per-player stat tables */
+.pstat{margin-top:24px;max-width:640px;}
+.pstat-h{
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:12px;
+  letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;
+}
+.pstat-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;background:#fff;border:1px solid var(--line);border-radius:14px;}
+.pstat table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:340px;}
+.pstat th,.pstat td{padding:10px 8px;text-align:center;white-space:nowrap;}
+.pstat thead th{
+  font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);
+  font-weight:700;border-bottom:1px solid var(--line);
+}
+.pstat tbody tr{border-bottom:1px solid var(--line);}
+.pstat tbody tr:last-child{border-bottom:0;}
+.pstat td{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:15px;color:var(--navy);}
+.pstat .pstat-name{text-align:left;padding-left:14px;font-family:"Roboto",sans-serif;font-weight:400;font-size:13.5px;}
+.pstat td.pstat-name b{font-family:"Roboto Condensed",sans-serif;color:var(--accent);margin-right:5px;}
+
+/* played games are tappable */
+button.game{width:100%;text-align:left;font:inherit;cursor:pointer;}
+/* order:1 keeps the chevron trailing the result on the mobile two-row layout. */
+.game-go{order:1;margin-left:10px;color:var(--muted);display:flex;flex:0 0 auto;}
+
+/* ═══════════════════════════════════════════════════════════
+   TABLET — two-up cards, roomier gutters
+   ═══════════════════════════════════════════════════════════ */
+@media (min-width:560px){
+  .main{padding:22px 24px calc(var(--tabbar-h) + 40px);}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));max-width:none;gap:22px 18px;}
+  .grid-coach{grid-template-columns:repeat(auto-fill,minmax(290px,1fr));max-width:none;}
+  .opts{margin:0;padding:0;overflow:visible;justify-content:space-between;flex-wrap:wrap;}
+  .game-main{flex:1;order:0;}
+  .game-right{order:0;}
+  .game-week{flex:0 0 auto;min-width:64px;max-width:104px;}
+  .modal{align-items:center;padding:24px;}
+  .modal-card{max-width:520px;border-radius:24px;max-height:88vh;}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DESKTOP — sidebar shell, split modal, hover affordances
+   ═══════════════════════════════════════════════════════════ */
+@media (min-width:900px){
+  :root{--tabbar-h:0px;}
+  .app{flex-direction:row;}
+  .app-backdrop{
+    background:
+      radial-gradient(1100px 600px at 78% -10%, rgba(37,150,190,.10), transparent 60%),
+      repeating-linear-gradient(90deg, transparent 0 119px, rgba(7,26,46,.035) 119px 120px);
+  }
+  .appbar{display:none;}
+
+  .side{
+    position:sticky;top:0;bottom:auto;left:auto;right:auto;align-self:flex-start;
+    height:100vh;width:266px;flex:0 0 266px;z-index:2;
+    flex-direction:column;padding:26px 20px 22px;
+    background:linear-gradient(180deg,var(--navy) 0%,#04101d 100%);
+    color:#fff;border-top:0;border-right:1px solid rgba(255,255,255,.06);
+    -webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;
+  }
+  .brand{display:flex;align-items:center;gap:13px;padding:0 4px 22px;}
+  .brand-mark{
+    height:58px;aspect-ratio:var(--logo-ratio);flex:0 0 auto;display:grid;place-items:center;
+    border:0;cursor:pointer;
+    background:#fff;border-radius:11px;padding:4px;
+    box-shadow:0 4px 16px rgba(0,0,0,.32);
+    font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:20px;letter-spacing:.5px;
+    color:var(--navy);
+  }
+  .brand-mark.no-photo .mark-fallback{box-shadow:0 0 0 2px var(--accent), 0 4px 14px rgba(37,150,190,.4);}
+  .brand-name{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:18px;letter-spacing:.4px;line-height:1.05;}
+  .brand-sub{font-size:11px;color:#9fb3c6;margin-top:2px;letter-spacing:.2px;}
+
+  .nav{flex-direction:column;gap:5px;margin-top:6px;justify-content:flex-start;}
+  .nav-item{
+    flex:0 0 auto;flex-direction:row;align-items:center;gap:13px;
+    color:#aebfce;font-size:15px;font-weight:500;
+    padding:12px 14px;border-radius:13px;text-align:left;justify-content:flex-start;
+    transition:.18s;
+  }
+  .nav-item svg{width:20px;height:20px;opacity:.85;}
+  .nav-item:hover{background:rgba(255,255,255,.06);color:#fff;}
+  .nav-item.is-active{background:var(--accent);color:#fff;box-shadow:0 6px 18px rgba(37,150,190,.35);}
+  .nav-item.is-active svg{opacity:1;}
+  .nav-count{
+    display:inline-block;margin-left:auto;font-style:normal;font-size:12px;font-weight:700;
+    background:rgba(255,255,255,.16);padding:2px 9px;border-radius:20px;
+  }
+  .nav-item.is-active .nav-count{background:rgba(0,0,0,.18);}
+
+  .side-record{
+    display:block;margin-top:auto;background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px 18px;
+  }
+  .rec-title{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#8fa6ba;}
+  .rec-big{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:46px;line-height:1;margin:5px 0 4px;letter-spacing:1px;}
+  .rec-big span{color:var(--accent);margin:0 4px;}
+  .rec-sub{font-size:11.5px;color:#9fb3c6;}
+  .side-foot{display:block;margin-top:14px;font-size:10.5px;color:#6f8499;text-align:center;letter-spacing:.3px;}
+
+  .main{flex:1;min-width:0;padding:28px 36px 60px;}
+  .topbar{flex-direction:row;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:22px;flex-wrap:wrap;}
+  .topbar h1{font-size:30px;white-space:nowrap;}
+  .topbar-titles p{font-size:14px;}
+  .search{min-width:330px;padding:11px 14px;}
+  .filmlink{align-self:flex-end;}
+  .filmlink-txt{flex:0 0 auto;}
+  .search input{font-size:14px;}
+  .toolbar{flex-direction:row;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
+  .opts{gap:18px;}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(var(--card-w),1fr));gap:26px 22px;align-items:start;}
+  .tc{max-width:var(--card-w);aspect-ratio:300/430;margin:0 auto;}
+  .tc.is-compact{aspect-ratio:300/143;}
+
+  .modal-card{flex-direction:row;max-width:760px;max-height:88vh;overflow:hidden;}
+  .modal-photo{flex:0 0 46%;height:auto;min-height:420px;}
+  .modal-hex{width:92%;}
+  .modal-info{padding:48px 32px 32px;overflow:auto;}
+  .modal-name{font-size:34px;}
+  .modal-stats{gap:10px;}
+  .ms{padding:14px;}
+  .ms b{font-size:24px;}
+  .ms-pos b{font-size:17px;}
+}
+
+/* pointer-precision affordances only where hover really exists */
+@media (hover:hover) and (pointer:fine){
+  .menu-btn:hover{border-color:var(--accent);color:var(--navy);}
+  .mrow:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 10px 22px -14px rgba(7,26,46,.5);}
+  .lead:hover{border-color:var(--accent);box-shadow:0 10px 22px -14px rgba(7,26,46,.5);transform:translateY(-2px);}
+  .lead:hover .lead-go{color:var(--accent);}
+  .filmlink:hover{filter:brightness(1.07);}
+  .crumb:hover{color:var(--navy);}
+  .mmark:hover,.brand-mark:hover{filter:brightness(.94);}
+  .menu-item:hover{background:var(--paper);}
+  .tc-flip-hint{opacity:0;}
+  .tc:hover .tc-flip-hint{opacity:1;}
+  .tc:hover .tc-front{box-shadow:0 0 0 1.5px var(--accent) inset, 0 22px 40px -12px rgba(7,26,46,.6);}
+  .tc-modern:hover .tc-front{box-shadow:0 16px 34px -14px rgba(7,26,46,.5);}
+  .cc:hover{transform:translateY(-3px);box-shadow:0 18px 32px -18px rgba(7,26,46,.5);}
+  .game:hover{border-color:#cdd6df;}
+  .tcb-open:hover{filter:brightness(1.08);}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important;}
+  .tc-face{transition:none;}
+}
+</style>
+</head>
+<body>
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <div class="gate-mark photo-host">
+      <img src="assets/sc-logo.png" alt=""
+           onerror="this.closest('.photo-host').classList.add('no-photo')" />
+      <span class="mark-fallback" aria-hidden="true">SC</span>
+    </div>
+    <h1 class="gate-title">Shiloh Saints</h1>
+    <p class="gate-sub">Shiloh 4th Grade Basketball · Team Hub</p>
+
+    <form class="gate-form" id="gate-form" novalidate>
+      <label class="gate-label" for="pin1">Enter the 4-digit team code</label>
+      <div class="pin" id="pin">
+        <input id="pin1" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+               autocomplete="off" aria-label="Digit 1" />
+        <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+               autocomplete="off" aria-label="Digit 2" />
+        <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+               autocomplete="off" aria-label="Digit 3" />
+        <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+               autocomplete="off" aria-label="Digit 4" />
+      </div>
+      <p class="gate-err" id="gate-err" role="alert"></p>
+      <button class="gate-go" type="submit">Enter</button>
+    </form>
+    <p class="gate-foot">Ask a coach or team parent for the code.</p>
+  </div>
+</div>
+
+<div class="app" id="app">
+  <div class="app-backdrop" aria-hidden="true"></div>
+
+  <!-- ── TOP APP BAR (mobile) ─────────────────────────────── -->
+  <header class="appbar">
+    <div class="mbrand">
+      <button class="mmark photo-host" data-tab="schedule" aria-label="Go to schedule">
+        <img src="assets/sc-logo.png" alt="Shiloh Saints logo"
+             onerror="this.closest('.photo-host').classList.add('no-photo')" />
+        <span class="mark-fallback" aria-hidden="true">SC</span>
+      </button>
+      <div class="mbrand-txt">
+        <b>Shiloh Saints</b>
+        <span>Shiloh 4th Grade Basketball</span>
+      </div>
+    </div>
+    <div class="mrec" id="m-record" aria-label="Season record"></div>
+  </header>
+
+  <!-- ── NAV: sidebar on desktop, tab bar on mobile ───────── -->
+  <aside class="side">
+    <div class="brand">
+      <button class="brand-mark photo-host" data-tab="schedule" aria-label="Go to schedule">
+        <img src="assets/sc-logo.png" alt="Shiloh Saints logo"
+             onerror="this.closest('.photo-host').classList.add('no-photo')" />
+        <span class="mark-fallback" aria-hidden="true">SC</span>
+      </button>
+      <div>
+        <div class="brand-name">Shiloh Saints</div>
+        <div class="brand-sub">Shiloh 4th Grade Basketball</div>
+      </div>
+    </div>
+
+    <nav class="nav" id="nav" aria-label="Sections"></nav>
+
+    <div class="side-record">
+      <div class="rec-title" id="rec-season"></div>
+      <div class="rec-big" id="rec-big"></div>
+      <div class="rec-sub" id="rec-sub"></div>
+    </div>
+    <div class="side-foot">Parent Hub · Tap any card to flip</div>
+  </aside>
+
+  <!-- ── MAIN ─────────────────────────────────────────────── -->
+  <main class="main" id="main">
+    <button class="crumb" id="crumb" hidden>
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+      <span id="crumb-txt"></span>
+    </button>
+    <header class="topbar">
+      <div class="topbar-titles">
+        <h1 id="page-title"></h1>
+        <p id="page-sub"></p>
+      </div>
+      <a class="filmlink" id="filmlink" target="_blank" rel="noopener noreferrer" hidden>
+        <span class="filmlink-play" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+        </span>
+        <span class="filmlink-txt">Watch the game film</span>
+        <svg class="filmlink-out" width="14" height="14" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
+             aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+      </a>
+      <div class="search" id="searchwrap" hidden>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+        <label class="sr-only" for="q">Search players</label>
+        <input id="q" type="search" autocomplete="off" placeholder="Search name, number, position…" />
+        <button class="search-x" id="q-clear" hidden aria-label="Clear search">×</button>
+      </div>
+    </header>
+
+    <div class="toolbar" id="toolbar" hidden>
+      <div class="opts">
+        <div class="optgrp" id="sortgrp" role="group" aria-label="Sort players">
+          <span>Sort</span>
+          <button class="segbtn is-on" data-sort="num">Number</button>
+          <button class="segbtn" data-sort="name">Name</button>
+        </div>
+        <div class="menu-wrap">
+          <button class="menu-btn" id="menu-btn" aria-haspopup="true" aria-expanded="false">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="currentColor" stroke="none"/>
+              <circle cx="15" cy="12" r="2" fill="currentColor" stroke="none"/>
+              <circle cx="8" cy="18" r="2" fill="currentColor" stroke="none"/>
+            </svg>
+            Options
+          </button>
+          <div class="menu" id="menu" hidden>
+            <div class="menu-h">Card style</div>
+            <button class="menu-item" data-style="classic" role="menuitemradio" aria-checked="false">Classic</button>
+            <button class="menu-item" data-style="modern"  role="menuitemradio" aria-checked="false">Modern</button>
+            <button class="menu-item" data-style="bold"    role="menuitemradio" aria-checked="true">Bold</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="view"></div>
+  </main>
+</div>
+
+<!-- ── PLAYER DETAIL SHEET ────────────────────────────────── -->
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-name">
+  <div class="modal-card" id="modal-card">
+    <button class="modal-x" id="modal-x" aria-label="Close">×</button>
+    <div class="modal-photo" id="modal-photo"></div>
+    <div class="modal-info" id="modal-info"></div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   DATA — Shiloh 4th Grade Basketball
+   ═══════════════════════════════════════════════════════════ */
+/* PLACEHOLDER DATA. The roster, coaches and schedule below are stand-ins so
+   the shell can be built and deployed. Replace them with the real lists and
+   flip PLACEHOLDER to false — that removes the notice at the top of each page. */
+const PLACEHOLDER = true;
+
+// Player photos: drop a file per jersey number in assets/players/ — 23.jpg
+// (a .png of the same name is tried automatically before the initials fallback).
+const playerPhoto = (num) => `assets/players/${num}.jpg`;
+
+// [first, last, #, positions, nickname, fun fact]
+// Positions are shown exactly as entered — kids play multiple spots, so the
+// whole list travels together and the first one is the primary.
+const RAW = [
+  ["Player", "One",   1,  "PG",    "TBD", "Placeholder — the real roster is on its way"],
+  ["Player", "Two",   2,  "PG,SG", "TBD", "Placeholder — the real roster is on its way"],
+  ["Player", "Three", 3,  "SG",    "TBD", "Placeholder — the real roster is on its way"],
+  ["Player", "Four",  4,  "SF",    "TBD", "Placeholder — the real roster is on its way"],
+  ["Player", "Five",  5,  "SF,PF", "TBD", "Placeholder — the real roster is on its way"],
+  ["Player", "Six",   10, "PF",    "TBD", "Placeholder — the real roster is on its way"],
+  ["Player", "Seven", 11, "C",     "TBD", "Placeholder — the real roster is on its way"],
+  ["Player", "Eight", 12, "SG,SF", "TBD", "Placeholder — the real roster is on its way"],
+  ["Player", "Nine",  13, "PG",    "TBD", "Placeholder — the real roster is on its way"],
+  ["Player", "Ten",   14, "PF,C",  "TBD", "Placeholder — the real roster is on its way"],
+];
+
+const ROSTER = RAW.map(([first, last, num, positions, nick, fact], i) => ({
+  id: i + 1, first, last,
+  name: first + " " + last,
+  num,
+  pos: positions.split(",")[0].trim(),  // primary — used for the small front pill
+  position: positions,                  // full list, shown as entered
+  nickname: nick,
+  fact,
+  photo: playerPhoto(num),
+}));
+
+/* Coaches get name and title only unless more is supplied — no invented
+   quotes. Add `motto` / `fact` per coach and the card picks them up.
+   Photos: assets/coaches/<id>.jpg */
+const COACHES = [
+  { id:1, name:"Head Coach TBD",      role:"Head Coach",      tag:"Head Coach" },
+  { id:2, name:"Assistant Coach TBD", role:"Assistant Coach", tag:"Assistant" },
+];
+
+/* ── SCHEDULE + GAME STATS ─────────────────────────────────────
+   One entry per game. Add `final:true`, the score and a `stats` block when a
+   game gets played and everything else — each player's season totals, the
+   Team Stats page, the box score and the leaders — derives from it.
+
+   Game:   { id, week, date, opp, home, final, us, them, video?, playoff?, stats }
+
+   stats.players — keyed by JERSEY NUMBER, not name:
+     { pts, fgm, fga, tpm, tpa, ftm, fta, oreb, dreb, reb, ast, stl, blk, to, fouls }
+     Leave out anything not dictated. `reb` is filled from oreb+dreb when only
+     those are given. Missed shots can be entered as fga without fgm.
+
+   stats.team — optional overrides + team-only numbers:
+     { pts, fgm, ... fouls,               any total given here beats the player sum
+       quarters:{ us:[8,9,6,8], them:[6,4,8,5] },   points by quarter, 5th = OT
+       opp:{ fgm, fga, ... }               opponent totals if dictated }
+
+   stats.quarters — play-by-play, one block per quarter:
+     { n:1, plays:[ { t:"#1 layup", pts:2 },            made basket (1/2/3 pts)
+                    { t:"Opponent jumper", pts:2, opp:true },  opponent score (red)
+                    { t:"#3 missed 3-pointer", miss:true },
+                    { t:"#2 steal", stl:true }, { t:"#4 block", blk:true },
+                    { t:"#4 rebound", reb:true }, { t:"#5 turnover", to:true },
+                    { t:"#1 foul", foul:true }, { t:"Timeout", note:true } ] }
+     "#N" in play text is swapped for the player's name at render time. */
+const GAMES = [
+  { id:1,  week:"Wk 1", date:"2026-11-14", opp:"Opponent TBD", home:true  },
+  { id:2,  week:"Wk 2", date:"2026-11-21", opp:"Opponent TBD", home:false },
+  { id:3,  week:"Wk 3", date:"2026-12-05", opp:"Opponent TBD", home:true  },
+  { id:4,  week:"Wk 4", date:"2026-12-12", opp:"Opponent TBD", home:false },
+  { id:5,  week:"Wk 5", date:"2027-01-09", opp:"Opponent TBD", home:true  },
+  { id:6,  week:"Wk 6", date:"2027-01-16", opp:"Opponent TBD", home:false },
+  { id:7,  week:"Wk 7", date:"2027-01-23", opp:"Opponent TBD", home:true  },
+  { id:8,  week:"Wk 8", date:"2027-01-30", opp:"Opponent TBD", home:false },
+  { id:9,  week:"Playoff",      date:"2027-02-06", opp:"TBD", playoff:true },
+  { id:10, week:"Championship", date:"2027-02-13", opp:"TBD", playoff:true },
+];
+
+/* ── DEMO GAME (?demo=1 only) ─────────────────────────────────
+   A complete made-up box score so the stats pages can be checked before the
+   first real game. It is only spliced in when the page is opened with ?demo=1
+   in the URL; the live site never shows it. Delete once real games exist. */
+const DEMO_STATS = {
+  final:true, us:31, them:23, opp:"Demo Opponent",
+  stats:{
+    team:{ quarters:{ us:[8,9,6,8], them:[6,4,8,5] },
+           opp:{ fgm:10, fga:30, tpm:1, tpa:4, ftm:2, fta:5, reb:20, ast:5, stl:7, blk:1, to:14, fouls:8 } },
+    players:{
+      1:{ pts:8, fgm:4, fga:9, tpm:0, tpa:1, ftm:0, fta:2, oreb:1, dreb:2, ast:2, stl:3, blk:0, to:2, fouls:1 },
+      2:{ pts:6, fgm:3, fga:7, tpm:0, tpa:0, ftm:0, fta:0, oreb:2, dreb:3, ast:1, stl:2, blk:1, to:1, fouls:2 },
+      3:{ pts:5, fgm:2, fga:6, tpm:1, tpa:2, ftm:0, fta:0, oreb:0, dreb:2, ast:3, stl:1, blk:0, to:3, fouls:0 },
+      4:{ pts:4, fgm:2, fga:4, tpm:0, tpa:0, ftm:0, fta:0, oreb:3, dreb:3, ast:0, stl:1, blk:2, to:1, fouls:1 },
+      5:{ pts:4, fgm:1, fga:3, tpm:0, tpa:0, ftm:2, fta:4, oreb:1, dreb:3, ast:1, stl:0, blk:0, to:2, fouls:2 },
+      10:{ pts:2, fgm:1, fga:3, tpm:0, tpa:0, ftm:0, fta:0, oreb:0, dreb:1, ast:1, stl:1, blk:0, to:0, fouls:1 },
+      11:{ pts:2, fgm:1, fga:2, tpm:0, tpa:0, ftm:0, fta:0, oreb:1, dreb:1, ast:0, stl:0, blk:0, to:1, fouls:0 },
+      12:{ pts:0, fgm:0, fga:2, tpm:0, tpa:0, ftm:0, fta:0, oreb:1, dreb:2, ast:1, stl:1, blk:0, to:0, fouls:1 },
+      13:{ pts:0, fgm:0, fga:1, tpm:0, tpa:0, ftm:0, fta:0, oreb:0, dreb:1, ast:0, stl:0, blk:0, to:1, fouls:0 },
+      14:{ pts:0, fgm:0, fga:0, tpm:0, tpa:0, ftm:0, fta:0, oreb:0, dreb:0, ast:0, stl:1, blk:0, to:0, fouls:1 },
+    },
+    quarters:[
+      { n:1, plays:[
+        { t:"#1 layup", pts:2 },
+        { t:"Demo Opponent jumper", pts:2, opp:true },
+        { t:"#3 3-pointer", pts:3 },
+        { t:"#2 steal", stl:true },
+        { t:"#2 layup", pts:2 },
+        { t:"#5 free throw", pts:1 },
+        { t:"Demo Opponent layup", pts:2, opp:true },
+        { t:"#4 block", blk:true },
+        { t:"Demo Opponent layup", pts:2, opp:true },
+        { t:"#1 missed jumper", miss:true },
+        { t:"#4 rebound", reb:true } ] },
+      { n:2, plays:[
+        { t:"#1 layup", pts:2 },
+        { t:"Demo Opponent free throw", pts:1, opp:true },
+        { t:"#2 layup", pts:2 },
+        { t:"#3 layup", pts:2 },
+        { t:"#5 free throw", pts:1 },
+        { t:"Demo Opponent jumper", pts:2, opp:true },
+        { t:"#10 layup", pts:2 },
+        { t:"#3 turnover", to:true },
+        { t:"Demo Opponent free throw", pts:1, opp:true } ] },
+      { n:3, plays:[
+        { t:"#4 layup", pts:2 },
+        { t:"Demo Opponent 3-pointer", pts:3, opp:true },
+        { t:"#1 layup", pts:2 },
+        { t:"Demo Opponent layup", pts:2, opp:true },
+        { t:"Demo Opponent layup", pts:2, opp:true },
+        { t:"#11 layup", pts:2 },
+        { t:"#2 foul", foul:true },
+        { t:"Demo Opponent free throw", pts:1, opp:true } ] },
+      { n:4, plays:[
+        { t:"#2 layup", pts:2 },
+        { t:"#1 layup", pts:2 },
+        { t:"Demo Opponent layup", pts:2, opp:true },
+        { t:"#5 jumper", pts:2 },
+        { t:"Demo Opponent 3-pointer", pts:3, opp:true },
+        { t:"#4 layup", pts:2 },
+        { t:"Timeout — Shiloh", note:true } ] },
+    ],
+  },
+};
+const params = new URLSearchParams(location.search);
+if (params.get("demo") === "1") Object.assign(GAMES[0], DEMO_STATS);
+
+/* ── SEASONS ───────────────────────────────────────────────────
+   Each season is its own game list. Past seasons reuse every view. */
+const SEASONS = [
+  { year:2026, label:"2026–27 Season", short:"’26–27", games:GAMES, current:true },
+];
+SEASONS.forEach(sn => sn.games.forEach(g => { g.year = sn.year; }));
+
+/* Jerseys worn by someone other than the current holder in a past season.
+   Stats under these numbers belong to that player, so they are shown under
+   the right name and kept off the current holder's career line.
+     2025: { 21: { last: "Smith" } } */
+const SEASON_JERSEYS = {};
+const wornByOther = (year, num) => (SEASON_JERSEYS[year] || {})[num] || null;
+
+// A game only counts toward stats once it has a score on it.
+const playedIn = (games) => games.filter(g => g.final && g.us != null);
+
+const CURRENT = SEASONS.find(s => s.current);
+const PAST_SEASONS = SEASONS.filter(s => !s.current).sort((a, b) => b.year - a.year);
+const seasonByYear = (year) => SEASONS.find(s => s.year === year);
+
+// Box scores are reachable from any season, so ids resolve across all of them.
+const ALL_GAMES = SEASONS.flatMap(sn => sn.games);
+const gameById = (id) => ALL_GAMES.find(g => g.id === id);
+
+const PLAYED  = playedIn(GAMES);
+const NEXT_ID = (GAMES.find(g => !g.final) || {}).id;
+
+const recordOf = (games) => {
+  const p = playedIn(games);
+  return { w: p.filter(g => g.us >  g.them).length,
+           l: p.filter(g => g.us <  g.them).length,
+           t: p.filter(g => g.us === g.them).length };
+};
+
+const TEAM = {
+  name: "Shiloh Saints",
+  full: "Shiloh 4th Grade Basketball",
+  season: CURRENT.label,
+  monogram: "SC",
+  record: recordOf(GAMES),
+};
+
+/* ── DERIVED STATS ─────────────────────────────────────────────
+   Nothing below is hand-maintained; it all rolls up from the game lists.
+   Every function takes a game list so past seasons reuse the same code. */
+const BY_NUM = {};
+ROSTER.forEach(p => { BY_NUM[p.num] = p; });
+
+// Every per-player / team counting stat, in table order.
+const KEYS = ["pts","fgm","fga","tpm","tpa","ftm","fta","oreb","dreb","reb","ast","stl","blk","to","fouls"];
+
+const addInto = (dst, src, keys) => keys.forEach(k => {
+  if (src[k] != null) dst[k] = (dst[k] || 0) + src[k];
+});
+
+// A stat line as entered, with rebounds filled in from off/def when only
+// those were given.
+const lineOf = (raw) => {
+  const v = Object.assign({}, raw);
+  if (v.reb == null && (v.oreb != null || v.dreb != null)) v.reb = (v.oreb || 0) + (v.dreb || 0);
+  return v;
+};
+
+const pct = (m, a) => a ? Math.round(m / a * 100) + "%" : "—";
+const per = (n, g) => g ? (n / g).toFixed(1) : "0.0";
+const dash = "—";
+const fmt = (v) => v == null ? dash : v;
+const ma  = (m, a) => (m == null && a == null) ? dash : `${m || 0}–${a || 0}`;
+
+// One player's totals across the given games (defaults to this season).
+function seasonStats(num, games) {
+  const out = { gp: 0 };
+  (games || PLAYED).forEach(g => {
+    const s = g.stats; if (!s || !s.players) return;
+    if (wornByOther(g.year, num)) return;   // that jersey was someone else's
+    const line = s.players[num]; if (!line) return;
+    addInto(out, lineOf(line), KEYS);
+    out.gp++;
+  });
+  return out;
+}
+
+// Stats for a jersey number in a given season, whoever wore it.
+function seasonStats2(num, games, year) {
+  if (!wornByOther(year, num)) return seasonStats(num, games);
+  const out = { gp: 0 };
+  (games || []).forEach(g => {
+    const s = g.stats; if (!s || !s.players) return;
+    const line = s.players[num]; if (!line) return;
+    addInto(out, lineOf(line), KEYS);
+    out.gp++;
+  });
+  return out;
+}
+
+// Career: one row per season the player appeared in, plus the totals row.
+function careerStats(num) {
+  const rows = SEASONS
+    .map(sn => ({ season: sn, s: seasonStats(num, playedIn(sn.games)) }))
+    .filter(r => r.s.gp > 0);
+  const total = seasonStats(num, SEASONS.flatMap(sn => playedIn(sn.games)));
+  return { rows, total };
+}
+
+// One game's team line: the sum of the player lines, with anything given in
+// stats.team (a dictated team total) taking precedence.
+function teamLine(g) {
+  const s = g.stats || {};
+  const t = {};
+  Object.keys(s.players || {}).forEach(n => addInto(t, lineOf(s.players[n]), KEYS));
+  const given = lineOf(s.team || {});
+  KEYS.forEach(k => { if (given[k] != null) t[k] = given[k]; });
+  return t;
+}
+
+// Team totals across the given games (defaults to this season).
+function teamSeason(games) {
+  const t = { games:0, points:0, pointsAgainst:0, statGames:0,
+              qUs:[0,0,0,0], qThem:[0,0,0,0], qGames:0 };
+  KEYS.forEach(k => { t[k] = 0; });
+  (games || PLAYED).forEach(g => {
+    t.games++; t.points += g.us || 0; t.pointsAgainst += g.them || 0;
+    const s = g.stats; if (!s) return;
+    if (s.players || s.team) { addInto(t, teamLine(g), KEYS); t.statGames++; }
+    const q = s.team && s.team.quarters;
+    if (q && q.us) {
+      t.qGames++;
+      q.us.forEach((v, i) => { t.qUs[i] = (t.qUs[i] || 0) + v; });
+      (q.them || []).forEach((v, i) => { t.qThem[i] = (t.qThem[i] || 0) + v; });
+    }
+  });
+  return t;
+}
+
+// Season leader for a given stat path, e.g. s => s.pts
+function leaderBy(pick, games) {
+  const rows = ROSTER.map(p => ({ p, v: pick(seasonStats(p.num, games)) }))
+                     .filter(r => r.v != null && r.v > 0)
+                     .sort((a, b) => b.v - a.v);
+  return rows[0] || null;
+}
+
+/* Final scores are authoritative as entered — the audit never compares
+   player points to the score. It only checks that a dictated team total
+   agrees with the player lines, and warns in the console; it never alters
+   the numbers shown. */
+function auditGames() {
+  PLAYED.forEach(g => {
+    const s = g.stats; if (!s || !s.players || !s.team) return;
+    const sum = {};
+    Object.keys(s.players).forEach(n => addInto(sum, lineOf(s.players[n]), KEYS));
+    const given = lineOf(s.team);
+    KEYS.forEach(k => {
+      if (given[k] != null && sum[k] != null && given[k] !== sum[k])
+        console.warn(`[${g.week}] team line says ${given[k]} ${k}, player lines total ${sum[k]}.`);
+    });
+  });
+}
+
+const fmtDate = (iso, opts) =>
+  new Date(iso + "T12:00:00").toLocaleDateString("en-US",
+    opts || { weekday:"short", month:"short", day:"numeric" });
+
+/* ═══════════════════════════════════════════════════════════
+   STATE
+   ═══════════════════════════════════════════════════════════ */
+const NAV = [
+  { id:"schedule", label:"Schedule",   icon:"M8 2v4M16 2v4M3 9h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" },
+  { id:"players",  label:"Players",    icon:"M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" },
+  { id:"stats",    label:"Team Stats", icon:"M4 20V10M10 20v-7M16 20V4M22 20H2" },
+  { id:"menu",     label:"Menu",       icon:"M4 7h16M4 12h16M4 17h16" },
+];
+const HOME_TAB = NAV[0].id;   // the logo returns here
+
+// Pages reached through Menu rather than the bar itself.
+const MENU_PAGES = [
+  { id:"coaches", label:"Coaches", desc:"The staff guiding the Saints",
+    icon:"M12 2l2.4 5 5.6.6-4.2 3.9 1.2 5.5L12 19.3 6.9 22l1.2-5.5L4 12.6 9.6 12z" },
+  { id:"seasons", label:"Past Seasons", desc:"Schedules and team stats from previous years",
+    icon:"M3 3v18h18M7 15l4-4 3 3 5-6" },
+];
+// Menu stays lit while you're on one of its pages.
+const navTabFor = (tab) => MENU_PAGES.some(m => m.id === tab) ? "menu" : tab;
+const TABS = NAV.map(n => n.id).concat(MENU_PAGES.map(m => m.id));
+const STYLES = ["classic", "modern", "bold"];
+const LS_KEY = "shiloh-bb.cardStyle";
+
+// Card style + accent can be driven through the URL (?card=bold&accent=2596be).
+const urlCard = params.get("card");
+const urlAccent = params.get("accent");
+if (urlAccent && /^#?[0-9a-f]{3,8}$/i.test(urlAccent)) {
+  document.documentElement.style.setProperty("--accent", "#" + urlAccent.replace(/^#/, ""));
+}
+
+const stored = (() => { try { return localStorage.getItem(LS_KEY); } catch (e) { return null; } })();
+const hashTab = location.hash.replace("#", "");
+
+const state = {
+  tab: TABS.includes(hashTab) ? hashTab : HOME_TAB,
+  q: "",
+  sort: "num",
+  box: null,          // open box-score game id (schedule sub-view)
+  boxTab: "stats",    // "stats" | "plays" within a box score
+  leaders: null,      // open Team Stats breakdown ("pts" | "reb" | ...)
+  season: null,       // open past season (year)
+  seasonTab: "schedule", // "schedule" | "stats" within a past season
+  style: STYLES.includes(urlCard) ? urlCard : (STYLES.includes(stored) ? stored : "bold"),
+  flipped: new Set(),
+};
+
+/* ═══════════════════════════════════════════════════════════
+   HELPERS
+   ═══════════════════════════════════════════════════════════ */
+const $ = (sel) => document.querySelector(sel);
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) =>
+  ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+
+const initials = (p) => (p.first[0] + p.last[0]).toUpperCase();
+
+// Jersey numbers with no photo on disk. Populated the first time an image
+// fails so later re-renders (sorting, searching) size the card immediately.
+const NO_PHOTO = new Set();
+
+// Photos ship as a project asset; when it isn't there the card falls back to
+// a monogram over the same navy art rather than a broken img.
+const img = (src, alt, cls) =>
+  `<img src="${esc(src)}" alt="${esc(alt)}" class="${cls}" draggable="false"
+        loading="lazy" onerror="photoFallback(this)" />`;
+
+// Try the .png twin before giving up and showing the initials monogram, so a
+// folder of PNG portraits works without renaming anything.
+function photoFallback(el) {
+  if (!el.dataset.retried && /\.jpg$/i.test(el.getAttribute("src") || "")) {
+    el.dataset.retried = "1";
+    el.setAttribute("src", el.getAttribute("src").replace(/\.jpg$/i, ".png"));
+    return;
+  }
+  const host = el.closest(".photo-host");
+  if (host) host.classList.add("no-photo");
+}
+
+/* Work out which players have a portrait before the grid settles, so cards
+   don't resize under the reader mid-scroll. One re-render once all probes
+   finish; compact cards carry no <img>, so this can't loop. */
+function probePhotos() {
+  let pending = ROSTER.length;
+  const done = () => { if (--pending === 0 && state.tab === "players") render(); };
+  ROSTER.forEach(pl => {
+    const jpg = new Image();
+    jpg.onload = done;
+    jpg.onerror = () => {
+      const png = new Image();
+      png.onload = done;
+      png.onerror = () => { NO_PHOTO.add(pl.num); done(); };
+      png.src = pl.photo.replace(/\.jpg$/i, ".png");
+    };
+    jpg.src = pl.photo;
+  });
+}
+
+const placeholderNote = (what) => !PLACEHOLDER ? "" :
+  `<div class="note" role="note">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9L2.5 17.5A2 2 0 0 0 4.2 20.5h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+    <span>Placeholder ${what} — the real one is coming soon.</span>
+  </div>`;
+
+/* ═══════════════════════════════════════════════════════════
+   RENDER — chrome
+   ═══════════════════════════════════════════════════════════ */
+function renderChrome() {
+  const { w, l } = TEAM.record;
+  $("#m-record").innerHTML = `${w}<i>–</i>${l}`;
+  $("#rec-season").textContent = TEAM.season;
+  $("#rec-big").innerHTML = `${w}<span>–</span>${l}`;
+  $("#rec-sub").textContent = (w + l)
+    ? `Win–Loss · ${Math.round(w / (w + l) * 100)}% on the year`
+    : "Win–Loss · season not started";
+
+  $("#nav").innerHTML = NAV.map(n => {
+    const count = n.id === "players" ? ROSTER.length : null;
+    return `<button class="nav-item" data-tab="${n.id}" aria-current="false">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${n.icon}"/></svg>
+      <span>${n.label}</span>
+      ${count != null ? `<em class="nav-count">${count}</em>` : ""}
+    </button>`;
+  }).join("");
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RENDER — cards
+   ═══════════════════════════════════════════════════════════ */
+function photoFront(p, variant) {
+  return `<div class="tcf-photo photo-host">
+    <div class="tcf-bg"></div>
+    ${variant === "classic" ? `<div class="tcf-hex" aria-hidden="true"></div>` : ""}
+    ${variant === "bold"
+      ? `<div class="tcf-wedge" aria-hidden="true"></div><div class="tcf-bignum" aria-hidden="true">${p.num}</div>`
+      : ""}
+    <div class="ph" aria-hidden="true"><span class="ph-mono">${initials(p)}</span></div>
+    ${img(p.photo, p.name, "tcf-img")}
+    <div class="tcf-shade"></div>
+    <div class="tcf-top">
+      <div class="tcf-numchip">${p.num}</div>
+      <div class="tcf-pospill">${p.pos}</div>
+    </div>
+    <div class="tcf-plate">
+      <div class="tcf-nick">“${esc(p.nickname)}”</div>
+      <div class="tcf-name">${esc(p.first)} <b>${esc(p.last)}</b></div>
+      <div class="tcf-pos">${p.position}</div>
+    </div>
+    <div class="tcf-foil" aria-hidden="true"></div>
+  </div>`;
+}
+
+function modernFront(p) {
+  return `<div class="tcm">
+    <div class="tcm-photowrap photo-host">
+      <div class="tcm-photobg"></div>
+      <div class="ph" aria-hidden="true"><span class="ph-mono">${initials(p)}</span></div>
+      ${img(p.photo, p.name, "tcm-img")}
+      <div class="tcm-numchip">#${p.num}</div>
+    </div>
+    <div class="tcm-body">
+      <div class="tcm-pos">${p.position}</div>
+      <div class="tcm-name">${esc(p.first)} <b>${esc(p.last)}</b></div>
+      <div class="tcm-nick">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11 5H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2v3l4-3h0a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"/></svg>
+        ${esc(p.nickname)}
+      </div>
+    </div>
+  </div>`;
+}
+
+// Back of the card: this season's headline numbers once the player has a
+// stat line; the identifying rows until then.
+function backRows(p) {
+  const s = seasonStats(p.num);
+  const row = (k, v) => `<div class="tcb-row"><span class="tcb-k">${k}</span><span class="tcb-v">${v}</span></div>`;
+  if (!s.gp) return [
+    row("Jersey", `#${p.num}`),
+    row("Positions", p.position),
+    row("Nickname", `“${esc(p.nickname)}”`),
+  ].join("");
+  return [
+    row("Points",   `${s.pts || 0} · ${per(s.pts || 0, s.gp)} ppg`),
+    row("Rebounds", `${s.reb || 0} · ${per(s.reb || 0, s.gp)} rpg`),
+    row("Assists · Steals", `${s.ast || 0} · ${s.stl || 0}`),
+  ].join("");
+}
+
+function cardBack(p) {
+  return `<div class="tcb">
+    <div class="tcb-head">
+      <div class="tcb-num">${p.num}</div>
+      <div>
+        <div class="tcb-name">${esc(p.name)}</div>
+        <div class="tcb-pos">${p.position}</div>
+      </div>
+    </div>
+    <div class="tcb-rows">${backRows(p)}</div>
+    <div class="tcb-fact">
+      <div class="tcb-fact-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        Fun Fact
+      </div>
+      <p>${esc(p.fact)}</p>
+    </div>
+    <button class="tcb-open" data-open="${p.id}">
+      View full card
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+    <div class="tcb-flipback">tap card to flip back</div>
+  </div>`;
+}
+
+// Compact card: no portrait, so it drops to a third of the height and shows
+// just the identifying line rather than an empty art panel.
+function compactFront(p) {
+  return `<div class="tcc">
+    <div class="tcc-mono" aria-hidden="true">${initials(p)}</div>
+    <div class="tcc-num">${p.num}</div>
+    <div class="tcc-body">
+      <div class="tcc-nick">“${esc(p.nickname)}”</div>
+      <div class="tcc-name">${esc(p.first)} <b>${esc(p.last)}</b></div>
+      <div class="tcc-pos">${p.position}</div>
+    </div>
+  </div>`;
+}
+
+function compactBack(p) {
+  const s = seasonStats(p.num);
+  const line = s.gp
+    ? `<span class="tccb-label">This season</span>
+       <p>${per(s.pts || 0, s.gp)} ppg · ${per(s.reb || 0, s.gp)} rpg · ${s.ast || 0} ast · ${s.stl || 0} stl</p>`
+    : `<span class="tccb-label">Fun fact</span><p>${esc(p.fact)}</p>`;
+  return `<div class="tccb">
+    <div class="tccb-fact">${line}</div>
+    <button class="tccb-open" data-open="${p.id}">
+      Full card
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+  </div>`;
+}
+
+function playerCard(p) {
+  const v = state.style;
+  const flipped = state.flipped.has(p.id);
+  // A div, not a button: the back holds its own "View full card" button and the
+  // HTML parser would hoist a nested button straight out of the card.
+  const compact = NO_PHOTO.has(p.num);
+  return `<div class="tc tc-${v}${flipped ? " is-flipped" : ""}${compact ? " is-compact" : ""}"
+      role="button" tabindex="0" data-flip="${p.id}" data-num="${p.num}" aria-pressed="${flipped}"
+      aria-label="${esc(p.name)}, number ${p.num}, ${p.position}. Activate to flip the card.">
+    <div class="tc-inner">
+      <div class="tc-face tc-front"${flipped ? " inert" : ""}>
+        ${compact ? compactFront(p) : v === "modern" ? modernFront(p) : photoFront(p, v)}
+        <span class="tc-flip-hint" aria-hidden="true">
+          <span>FLIP</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+        </span>
+      </div>
+      <div class="tc-face tc-back"${flipped ? "" : " inert"}>${compact ? compactBack(p) : cardBack(p)}</div>
+    </div>
+  </div>`;
+}
+
+function coachCard(c) {
+  const words = c.name.replace(/^Coach\s+/, "").split(" ").filter(w => /[A-Za-z]/.test(w));
+  const mono = (words.length > 1 ? words.map(w => w[0]).join("") : (words[0] || "").slice(0, 2)).toUpperCase();
+  const brief = !c.motto && !c.fact;
+  return `<article class="cc${brief ? " cc-brief" : ""}">
+    <div class="cc-top">
+      <div class="cc-avatar photo-host">
+        <span class="ph-mono" aria-hidden="true">${mono}</span>
+        ${img(`assets/coaches/${c.id}.jpg`, c.name, "")}
+      </div>
+      <div class="cc-tag">${c.tag}</div>
+    </div>
+    <div class="cc-body">
+      <h3 class="cc-name">${esc(c.name)}</h3>
+      <div class="cc-role">${esc(c.role)}</div>
+      ${c.motto ? `<p class="cc-motto">${esc(c.motto)}</p>` : ""}
+      ${c.fact  ? `<p class="cc-fact">${esc(c.fact)}</p>`   : ""}
+    </div>
+  </article>`;
+}
+
+function gameRow(g) {
+  const scored = g.final && g.us != null;
+  const won  = scored && g.us > g.them;
+  const next = g.id === NEXT_ID;
+  const right = scored
+    ? `<div class="game-res ${won ? "win" : "loss"}">${won ? "W" : "L"} ${g.us}–${g.them}</div>`
+    : g.final  ? `<div class="game-upc">No result recorded</div>`
+    : next     ? `<div class="game-badge">Next Up</div>`
+    : g.playoff ? `<div class="game-badge playoff">${g.week}</div>`
+    : `<div class="game-upc">Upcoming</div>`;
+
+  const inner = `
+    <div class="game-week">${g.week}</div>
+    <div class="game-main">
+      <h3 class="game-opp">
+        <span class="ha ${g.home ? "home" : "away"}">${g.home ? "VS" : "@"}</span>
+        ${esc(g.opp)}
+      </h3>
+      <div class="game-when">${fmtDate(g.date, { weekday:"short", month:"short", day:"numeric", year:"numeric" })}${scored ? " · Final" : ""}</div>
+    </div>
+    <div class="game-right">${right}</div>`;
+
+  // Games with a recorded result are tappable and open the box score.
+  return scored
+    ? `<button class="game is-final" data-box="${g.id}">${inner}
+         <span class="game-go" aria-hidden="true">
+           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+         </span>
+       </button>`
+    : `<article class="game${next ? " is-next" : ""}${g.playoff ? " is-playoff" : ""}">${inner}</article>`;
+}
+
+/* Career table, in the spirit of a trading-card back: a row per season and
+   a totals row. */
+function careerSection(p) {
+  const { rows, total } = careerStats(p.num);
+  if (!rows.length) return "";
+  const cells = (s) => [
+    s.gp, s.pts || 0, per(s.pts || 0, s.gp), s.reb || 0, s.ast || 0, s.stl || 0, s.blk || 0,
+  ];
+  const row = (label, s, cls) =>
+    `<tr class="${cls || ""}"><td class="pstat-name">${label}</td>${
+      cells(s).map(v => `<td>${v}</td>`).join("")}</tr>`;
+
+  return `<section class="stats career">
+    <div class="stats-h">
+      <h3>Career Stats</h3>
+      <span>${rows.length} season${rows.length === 1 ? "" : "s"}</span>
+    </div>
+    <div class="pstat-scroll">
+      <table>
+        <thead><tr>
+          <th class="pstat-name">Season</th><th>G</th><th>PTS</th><th>PPG</th>
+          <th>REB</th><th>AST</th><th>STL</th><th>BLK</th>
+        </tr></thead>
+        <tbody>
+          ${rows.map(r => row(esc(r.season.short || String(r.season.year)), r.s)).join("")}
+          ${rows.length > 1 ? row("Career", total, "career-total") : ""}
+        </tbody>
+      </table>
+    </div>
+  </section>`;
+}
+
+/* ── Menu page ────────────────────────────────────────────── */
+function menuView() {
+  return `<div class="mlist">${MENU_PAGES.map(m => `
+    <button class="mrow" data-tab="${m.id}">
+      <span class="mrow-ico">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="${m.icon}"/></svg>
+      </span>
+      <span class="mrow-txt">
+        <b>${m.label}</b>
+        <span>${m.desc}</span>
+      </span>
+      <svg class="mrow-go" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+    </button>`).join("")}</div>`;
+}
+
+/* ── Past seasons ─────────────────────────────────────────────
+   A past season reuses the current season's schedule and Team Stats
+   views verbatim — same code, different game list. */
+function seasonsView() {
+  if (!PAST_SEASONS.length) return `<p class="empty">No previous seasons yet — this is the first one.</p>`;
+  return `<div class="mlist">${PAST_SEASONS.map(sn => {
+    const rec = recordOf(sn.games);
+    const played = playedIn(sn.games).length;
+    const sub = played
+      ? `${rec.w}–${rec.l} · ${played} game${played === 1 ? "" : "s"}`
+      : `${sn.games.length} games · stats not entered yet`;
+    return `<button class="mrow" data-season="${sn.year}">
+      <span class="mrow-yr">${esc(sn.short || sn.year)}</span>
+      <span class="mrow-txt"><b>${esc(sn.label)}</b><span>${sub}</span></span>
+      <svg class="mrow-go" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+    </button>`;
+  }).join("")}</div>`;
+}
+
+function seasonDetailView(year) {
+  const sn = seasonByYear(year);
+  if (!sn) return `<p class="empty">Unknown season.</p>`;
+  const tab = state.seasonTab;
+  return `
+    <div class="bstabs" role="tablist">
+      <button class="bstab ${tab === "schedule" ? "is-on" : ""}" data-seasontab="schedule"
+              role="tab" aria-selected="${tab === "schedule"}">Schedule</button>
+      <button class="bstab ${tab === "stats" ? "is-on" : ""}" data-seasontab="stats"
+              role="tab" aria-selected="${tab === "stats"}">Team Stats</button>
+    </div>
+    ${tab === "stats"
+      ? teamStatsView(playedIn(sn.games), sn.label)
+      : `<div class="sched">${sn.games.map(gameRow).join("")}</div>`}`;
+}
+
+/* ── Box score (one game) ─────────────────────────────────── */
+// Renders a stat table only when at least one player has a line in it.
+function statTable(title, cols, rows) {
+  if (!rows.length) return "";
+  return `<div class="pstat">
+    <div class="pstat-h">${title}</div>
+    <div class="pstat-scroll">
+      <table>
+        <thead><tr><th class="pstat-name">Player</th>${cols.map(c => `<th>${c}</th>`).join("")}</tr></thead>
+        <tbody>${rows.map(r => `<tr><td class="pstat-name">${r.name}</td>${
+          r.vals.map(v => `<td>${v}</td>`).join("")}</tr>`).join("")}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+const pName = (num, year) => {
+  const alt = year && wornByOther(year, num);
+  if (alt) return `<b>${num}</b> ${esc(alt.last)}`;
+  const p = BY_NUM[num];
+  return p ? `<b>${p.num}</b> ${esc(p.last)}` : `<b>${num}</b>`;
+};
+
+const QLABEL = ["1st", "2nd", "3rd", "4th", "OT", "2OT", "3OT"];
+const qLabel = (i) => QLABEL[i] || `${i - 3}OT`;
+
+// Points by quarter for one game or a whole season.
+function lineScore(us, them, opp, totals) {
+  const n = Math.max(us.length, them.length);
+  const cells = (arr) => Array.from({ length: n }, (_, i) => `<td>${arr[i] ?? dash}</td>`).join("");
+  const sum = (arr) => arr.reduce((a, b) => a + (b || 0), 0);
+  const tUs = totals ? totals[0] : sum(us), tThem = totals ? totals[1] : sum(them);
+  return `<div class="linescore">
+    <table>
+      <thead><tr><th class="ls-team"></th>${Array.from({ length: n }, (_, i) => `<th>${qLabel(i)}</th>`).join("")}<th>T</th></tr></thead>
+      <tbody>
+        <tr class="${tUs >= tThem ? "is-win" : "is-lose"}"><td class="ls-team">${TEAM.name}</td>${cells(us)}<td class="ls-tot">${tUs}</td></tr>
+        <tr class="${tThem > tUs ? "is-win" : "is-lose"}"><td class="ls-team">${esc(opp)}</td>${cells(them)}<td class="ls-tot">${tThem}</td></tr>
+      </tbody>
+    </table>
+  </div>`;
+}
+
+function boxScoreView(id) {
+  const g = gameById(id);
+  if (!g || g.us == null) return `<p class="empty">No box score for that game yet.</p>`;
+  const won = g.us > g.them;
+  const hasPlays = !!(g.stats && g.stats.quarters && g.stats.quarters.length);
+  const tab = hasPlays ? state.boxTab : "stats";
+
+  const head = `
+    <div class="bs-head">
+      <div class="bs-meta">Final · ${fmtDate(g.date, { weekday:"long", month:"long", day:"numeric", year:"numeric" })}</div>
+      <div class="bs-line ${won ? "is-win" : ""}">
+        <span class="bs-team">${TEAM.name}${g.home ? "" : " (away)"}</span>
+        <span class="bs-score">${g.us}</span>
+      </div>
+      <div class="bs-line ${won ? "" : "is-win"}">
+        <span class="bs-team">${esc(g.opp)}</span>
+        <span class="bs-score">${g.them}</span>
+      </div>
+    </div>`;
+
+  const tabs = hasPlays ? `
+    <div class="bstabs" role="tablist">
+      <button class="bstab ${tab === "stats" ? "is-on" : ""}" data-boxtab="stats"
+              role="tab" aria-selected="${tab === "stats"}">Box Score</button>
+      <button class="bstab ${tab === "plays" ? "is-on" : ""}" data-boxtab="plays"
+              role="tab" aria-selected="${tab === "plays"}">Play-by-Play</button>
+    </div>` : "";
+
+  return head + tabs + (tab === "plays" ? playsView(g) : boxStatsView(g));
+}
+
+/* ── Box score: stats tab ─────────────────────────────────── */
+function boxStatsView(g) {
+  const s = g.stats || {};
+  const t = teamLine(g);
+  const o = lineOf((s.team && s.team.opp) || {});
+  const q = s.team && s.team.quarters;
+  const hasTeam = KEYS.some(k => t[k] != null);
+
+  const players = Object.keys(s.players || {}).map(Number)
+    .map(n => ({ n, v: lineOf(s.players[n]) }))
+    .sort((a, b) => (b.v.pts || 0) - (a.v.pts || 0) || a.n - b.n)
+    .map(({ n, v }) => ({ name: pName(n, g.year),
+      vals: [v.pts || 0, ma(v.fgm, v.fga), ma(v.tpm, v.tpa), ma(v.ftm, v.fta),
+             fmt(v.reb), fmt(v.ast), fmt(v.stl), fmt(v.blk), fmt(v.to), fmt(v.fouls)] }));
+
+  const cmp = (label, a, b) => `<div class="cmp"><span>${a}</span><em>${label}</em><span>${b}</span></div>`;
+
+  return `
+    ${q && q.us ? `<section class="bs-sec"><h3 class="bs-h">Scoring by Quarter</h3>${
+        lineScore(q.us, q.them || [], g.opp, [g.us, g.them])}</section>` : ""}
+
+    ${hasTeam ? `
+    <section class="bs-sec">
+      <h3 class="bs-h">Team Stats</h3>
+      <div class="cmp-head"><span>${TEAM.name}</span><em></em><span>${esc(g.opp)}</span></div>
+      ${cmp("Field Goals",  ma(t.fgm, t.fga), ma(o.fgm, o.fga))}
+      ${cmp("FG %",         t.fga ? pct(t.fgm, t.fga) : dash, o.fga ? pct(o.fgm, o.fga) : dash)}
+      ${cmp("3-Pointers",   ma(t.tpm, t.tpa), ma(o.tpm, o.tpa))}
+      ${cmp("Free Throws",  ma(t.ftm, t.fta), ma(o.ftm, o.fta))}
+      ${cmp("Rebounds",     fmt(t.reb), fmt(o.reb))}
+      ${cmp("Assists",      fmt(t.ast), fmt(o.ast))}
+      ${cmp("Steals",       fmt(t.stl), fmt(o.stl))}
+      ${cmp("Blocks",       fmt(t.blk), fmt(o.blk))}
+      ${cmp("Turnovers",    fmt(t.to),  fmt(o.to))}
+      ${cmp("Fouls",        fmt(t.fouls), fmt(o.fouls))}
+    </section>` : ""}
+
+    ${statTable("Players", ["PTS","FG","3PT","FT","REB","AST","STL","BLK","TO","PF"], players)}
+
+    ${!hasTeam && !players.length ? `<p class="empty">Stats for this game haven't been entered yet.</p>` : ""}`;
+}
+
+/* ── Box score: Play-by-Play tab ──────────────────────────── */
+// "#11 layup" -> "<b>#11</b> Smith layup", so the data stays short and any
+// name change flows through automatically.
+const withNames = (t, year) => esc(t).replace(/#(\d+)/g, (m, n) => {
+  const alt = year && wornByOther(year, n);
+  if (alt) return `<b>#${n}</b> ${esc(alt.last)}`;
+  return BY_NUM[n] ? `<b>#${n}</b> ${esc(BY_NUM[n].last)}` : `<b>#${n}</b>`;
+});
+
+const SCORE_TAG = { 1:"Free Throw", 2:"Basket", 3:"3-Pointer" };
+
+function playRow(p, year, score) {
+  const scored = p.pts > 0;
+  const cls = ["play",
+    scored && "is-score", p.opp && "is-opp", p.to && "is-turnover",
+    p.miss && "is-miss", p.note && "is-note"].filter(Boolean).join(" ");
+  const tag =
+      scored  ? `<span class="play-tag sc">${SCORE_TAG[p.pts] || p.pts + " pts"}</span>`
+    : p.to    ? `<span class="play-tag to">Turnover</span>`
+    : p.stl   ? `<span class="play-tag ev">Steal</span>`
+    : p.blk   ? `<span class="play-tag ev">Block</span>`
+    : p.reb   ? `<span class="play-tag ev">Rebound</span>`
+    : p.foul  ? `<span class="play-tag fl">Foul</span>`
+    : p.miss  ? `<span class="play-tag ms">Miss</span>` : "";
+  const chip  = scored ? `<span class="play-pts">+${p.pts}</span>` : "";
+  const run   = scored ? `<span class="play-score">${score.us}–${score.them}</span>` : "";
+  return `<li class="${cls}"><span class="play-txt">${withNames(p.t, year)}</span>${tag}${chip}${run}</li>`;
+}
+
+function playsView(g) {
+  const quarters = (g.stats && g.stats.quarters) || [];
+  if (!quarters.length) return `<p class="empty">No play-by-play recorded for this game.</p>`;
+  const score = { us:0, them:0 };
+  return `<div class="pbp">` + quarters.map((q, i) => {
+    const rows = q.plays.map(pl => {
+      if (pl.pts > 0) { if (pl.opp) score.them += pl.pts; else score.us += pl.pts; }
+      return playRow(pl, g.year, score);
+    }).join("");
+    const n = q.n || i + 1;
+    return `<section class="qtr">
+      <div class="qtr-h">
+        <span class="qtr-tag">${n <= 4 ? "Q" + n : qLabel(n - 1)}</span>
+        <span class="qtr-n">${q.label || (n <= 4 ? qLabel(n - 1) + " Quarter" : "Overtime")}</span>
+        <span class="qtr-note">${q.note ? esc(q.note) + " · " : ""}${score.us}–${score.them}</span>
+      </div>
+      <ol class="plays">${rows}</ol>
+    </section>`;
+  }).join("") + `</div>`;
+}
+
+/* ── Team stats (season) ──────────────────────────────────── */
+const tblRow = (k, v) => `<div class="tbl-row"><span>${k}</span><b>${v}</b></div>`;
+
+/* The headline categories. Each drives its leader card and the full ranked
+   breakdown behind it, so the two can never disagree. */
+const LEADER_CATS = {
+  pts: { label:"Points",     table:"Scoring",    cols:["G","PTS","PPG","FG","3PT","FT"],
+         pick:s => s.pts,
+         vals:s => [s.gp, s.pts, per(s.pts, s.gp), ma(s.fgm, s.fga), ma(s.tpm, s.tpa), ma(s.ftm, s.fta)] },
+  reb: { label:"Rebounds",   table:"Rebounding", cols:["G","REB","RPG","OFF","DEF"],
+         pick:s => s.reb,
+         vals:s => [s.gp, s.reb, per(s.reb, s.gp), fmt(s.oreb), fmt(s.dreb)] },
+  ast: { label:"Assists",    table:"Assists",    cols:["G","AST","APG","TO"],
+         pick:s => s.ast,
+         vals:s => [s.gp, s.ast, per(s.ast, s.gp), fmt(s.to)] },
+  stl: { label:"Steals",     table:"Steals",     cols:["G","STL","SPG"],
+         pick:s => s.stl,
+         vals:s => [s.gp, s.stl, per(s.stl, s.gp)] },
+  blk: { label:"Blocks",     table:"Blocks",     cols:["G","BLK","BPG"],
+         pick:s => s.blk,
+         vals:s => [s.gp, s.blk, per(s.blk, s.gp)] },
+  tpm: { label:"3-Pointers", table:"3-Pointers", cols:["G","3PM","3PA","3P%"],
+         pick:s => s.tpm,
+         vals:s => [s.gp, s.tpm, fmt(s.tpa), pct(s.tpm, s.tpa)] },
+};
+
+function leaderCard(key, games) {
+  const cat = LEADER_CATS[key];
+  const row = leaderBy(cat.pick, games);
+  if (!row) return "";
+  return `<button class="lead" data-leaders="${key}">
+    <div class="lead-k">${cat.label}</div>
+    <div class="lead-v">${row.v}</div>
+    <div class="lead-p"><b>#${row.p.num}</b> ${esc(row.p.name)}</div>
+    <span class="lead-go" aria-hidden="true">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+    </span>
+  </button>`;
+}
+
+/* Full ranked breakdown behind a leader card. */
+function leadersView(key, games) {
+  const cat = LEADER_CATS[key];
+  if (!cat) return `<p class="empty">Unknown category.</p>`;
+  const year = games && games.length ? games[0].year : CURRENT.year;
+  // Numbers worn by a different player that season are listed under that name.
+  const extras = Object.keys(SEASON_JERSEYS[year] || {}).map(Number);
+  const rows = [...new Set(ROSTER.map(pl => pl.num).concat(extras))]
+    .map(num => ({ num, s: seasonStats2(num, games, year) }))
+    .filter(r => r.s.gp > 0 && cat.pick(r.s) != null)
+    .sort((a, b) => cat.pick(b.s) - cat.pick(a.s) || a.num - b.num)
+    .map((r, i) => ({
+      name: `<span class="rank">${i + 1}</span>${pName(r.num, year)}`,
+      vals: cat.vals(r.s),
+    }));
+
+  return rows.length
+    ? statTable(cat.table, cat.cols, rows)
+    : `<p class="empty">No ${cat.table.toLowerCase()} recorded yet this season.</p>`;
+}
+
+function teamStatsView(games, label) {
+  const t = teamSeason(games);
+  const rec = games ? recordOf(games) : TEAM.record;
+  if (!t.games) return `<p class="empty">No stats recorded yet for ${esc(label || TEAM.season)}.</p>`;
+  const g = t.statGames;
+  const n = t.qGames;
+
+  return `
+    <div class="modal-stats tstat-top">
+      <div class="ms"><span>Record</span><b>${rec.w}–${rec.l}</b></div>
+      <div class="ms"><span>Points For</span><b>${t.points}</b></div>
+      <div class="ms"><span>Points Ag.</span><b>${t.pointsAgainst}</b></div>
+    </div>
+
+    <section class="bs-sec">
+      <h3 class="bs-h">Team Leaders</h3>
+      <div class="lead-grid">
+        ${Object.keys(LEADER_CATS).map(k => leaderCard(k, games)).join("")}
+      </div>
+    </section>
+
+    <section class="bs-sec">
+      <h3 class="bs-h">Scoring</h3>
+      <div class="tbl">
+        ${tblRow("Points", t.points)}
+        ${tblRow("Points per Game", per(t.points, t.games))}
+        ${g ? tblRow("Field Goals", ma(t.fgm, t.fga)) : ""}
+        ${g ? tblRow("&nbsp;&nbsp;FG %", pct(t.fgm, t.fga)) : ""}
+        ${g ? tblRow("3-Pointers", ma(t.tpm, t.tpa)) : ""}
+        ${g ? tblRow("Free Throws", ma(t.ftm, t.fta)) : ""}
+        ${g ? tblRow("&nbsp;&nbsp;FT %", pct(t.ftm, t.fta)) : ""}
+      </div>
+    </section>
+
+    ${g ? `
+    <section class="bs-sec">
+      <h3 class="bs-h">Rebounds &amp; Ball Control</h3>
+      <div class="tbl">
+        ${tblRow("Rebounds", t.reb)}
+        ${tblRow("Rebounds per Game", per(t.reb, g))}
+        ${tblRow("&nbsp;&nbsp;Offensive", t.oreb)}
+        ${tblRow("&nbsp;&nbsp;Defensive", t.dreb)}
+        ${tblRow("Assists", t.ast)}
+        ${tblRow("Turnovers", t.to)}
+        ${tblRow("Fouls", t.fouls)}
+      </div>
+    </section>` : ""}
+
+    <section class="bs-sec">
+      <h3 class="bs-h">Defense</h3>
+      <div class="tbl">
+        ${tblRow("Points Allowed", t.pointsAgainst)}
+        ${tblRow("Allowed per Game", per(t.pointsAgainst, t.games))}
+        ${g ? tblRow("Steals", t.stl) : ""}
+        ${g ? tblRow("Blocks", t.blk) : ""}
+      </div>
+    </section>
+
+    ${n ? `
+    <section class="bs-sec">
+      <h3 class="bs-h">Points by Quarter</h3>
+      ${lineScore(t.qUs, t.qThem, "Opponents")}
+    </section>` : ""}`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RENDER — views
+   ═══════════════════════════════════════════════════════════ */
+function visiblePlayers() {
+  const s = state.q.trim().toLowerCase();
+  return ROSTER
+    .filter(p => {
+      if (!s) return true;
+      return p.name.toLowerCase().includes(s)
+        || p.nickname.toLowerCase().includes(s)
+        || p.position.toLowerCase().includes(s)
+        || String(p.num).includes(s);
+    })
+    .sort((a, b) => state.sort === "num" ? a.num - b.num : a.last.localeCompare(b.last));
+}
+
+function render() {
+  const tab = state.tab;
+
+  // nav + tab bar
+  const navTab = navTabFor(tab);
+  document.querySelectorAll(".nav-item").forEach(b => {
+    const on = b.dataset.tab === navTab;
+    b.classList.toggle("is-active", on);
+    b.setAttribute("aria-current", on ? "page" : "false");
+  });
+
+  // header copy
+  const boxGame = state.box && gameById(state.box);
+  const sn = state.season && seasonByYear(state.season);
+  const snLabel = sn ? sn.label : "";
+  $("#page-title").textContent =
+    tab === "players"  ? "Meet the Team"
+  : tab === "coaches"  ? "Coaching Staff"
+  : tab === "menu"     ? "Menu"
+  : tab === "seasons"  ? (boxGame ? `${TEAM.name} vs ${boxGame.opp}`
+                          : state.leaders ? LEADER_CATS[state.leaders].label
+                          : sn ? snLabel : "Past Seasons")
+  : tab === "stats"    ? (state.leaders ? LEADER_CATS[state.leaders].label : "Team Stats")
+  : boxGame            ? `${TEAM.name} vs ${boxGame.opp}`
+  :                      "Game Schedule";
+  $("#page-sub").textContent =
+    tab === "players"  ? ""
+  : tab === "coaches"  ? `${COACHES.length} coaches guiding the Saints`
+  : tab === "menu"     ? "More from the Saints hub"
+  : tab === "seasons"  ? (boxGame ? `Box score · ${fmtDate(boxGame.date, { month:"long", day:"numeric", year:"numeric" })}`
+        : state.leaders ? `Every player · ${snLabel}`
+        : sn ? "Schedule and team stats"
+        : `${PAST_SEASONS.length} previous season${PAST_SEASONS.length === 1 ? "" : "s"}`)
+  : tab === "stats"    ? (state.leaders
+        ? `Every player · ${TEAM.season}`
+        : `${TEAM.season} · ${PLAYED.length} game${PLAYED.length === 1 ? "" : "s"} played`)
+  : boxGame            ? `Box score · ${fmtDate(boxGame.date)}`
+  :                      `${TEAM.season} · ${PLAYED.length} of ${GAMES.length} games played`;
+
+  // Breadcrumb: one element, retargeted to whatever we can back out of.
+  const crumb = $("#crumb");
+  const back =
+      state.box      ? { attr:"data-back",         label:sn ? `${snLabel} schedule` : "All games" }
+    : state.leaders  ? { attr:"data-back-leaders", label:sn ? `${snLabel} Team Stats` : "Team Stats" }
+    : state.season   ? { attr:"data-back-season",  label:"Past Seasons" }
+    : null;
+  ["data-back", "data-back-leaders", "data-back-season"].forEach(a => crumb.removeAttribute(a));
+  crumb.hidden = !back;
+  if (back) { crumb.setAttribute(back.attr, "1"); $("#crumb-txt").textContent = back.label; }
+
+  const film = $("#filmlink");
+  if (boxGame && boxGame.video) { film.href = boxGame.video; film.hidden = false; }
+  else film.hidden = true;
+
+  $("#page-sub").hidden = !$("#page-sub").textContent;
+  $("#searchwrap").hidden = tab !== "players";
+  $("#toolbar").hidden = tab !== "players";
+  $("#q-clear").hidden = !state.q;
+
+  // toolbar state
+  document.querySelectorAll("#sortgrp .segbtn").forEach(b =>
+    b.classList.toggle("is-on", b.dataset.sort === state.sort));
+  document.querySelectorAll("#menu .menu-item").forEach(b => {
+    const on = b.dataset.style === state.style;
+    b.classList.toggle("is-on", on);
+    b.setAttribute("aria-checked", String(on));
+  });
+
+  // body
+  const view = $("#view");
+  if (tab === "players") {
+    const list = visiblePlayers();
+    view.innerHTML = placeholderNote("roster") + (list.length
+      ? `<div class="grid">${list.map(playerCard).join("")}</div>`
+      : `<p class="empty">No players match “${esc(state.q)}”.</p>`);
+  } else if (tab === "coaches") {
+    view.innerHTML = placeholderNote("coaching staff")
+      + `<div class="grid grid-coach">${COACHES.map(coachCard).join("")}</div>`;
+  } else if (tab === "stats") {
+    view.innerHTML = state.leaders ? leadersView(state.leaders) : teamStatsView();
+  } else if (tab === "menu") {
+    view.innerHTML = menuView();
+  } else if (tab === "seasons") {
+    view.innerHTML =
+        state.box               ? boxScoreView(state.box)
+      : state.leaders && sn     ? leadersView(state.leaders, playedIn(sn.games))
+      : sn                      ? seasonDetailView(state.season)
+      :                           seasonsView();
+  } else if (state.box) {
+    view.innerHTML = boxScoreView(state.box);
+  } else {
+    view.innerHTML = placeholderNote("schedule")
+      + `<div class="sched">${GAMES.map(gameRow).join("")}</div>`;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DETAIL SHEET
+   ═══════════════════════════════════════════════════════════ */
+let lastFocus = null;
+
+// Season stat groups on the full card. A tile is only drawn when the player
+// actually has that number, so nothing shows an empty box.
+const STAT_GROUPS = [
+  { label:"Scoring", tiles:(s) => [
+      ["Points", s.pts], ["PPG", s.pts != null ? per(s.pts, s.gp) : null],
+      ["FG", (s.fgm != null || s.fga != null) ? ma(s.fgm, s.fga) : null],
+      ["FG %", s.fga ? pct(s.fgm, s.fga) : null],
+      ["3PT", (s.tpm != null || s.tpa != null) ? ma(s.tpm, s.tpa) : null],
+      ["FT", (s.ftm != null || s.fta != null) ? ma(s.ftm, s.fta) : null] ] },
+  { label:"Rebounding", tiles:(s) => [
+      ["Rebounds", s.reb], ["RPG", s.reb != null ? per(s.reb, s.gp) : null],
+      ["Offensive", s.oreb], ["Defensive", s.dreb] ] },
+  { label:"Playmaking & Defense", tiles:(s) => [
+      ["Assists", s.ast], ["Steals", s.stl], ["Blocks", s.blk], ["Turnovers", s.to] ] },
+  { label:"Fouls", tiles:(s) => [
+      ["Fouls", s.fouls], ["Per Game", s.fouls != null ? per(s.fouls, s.gp) : null] ] },
+];
+
+function statsSection(st, name) {
+  const groups = !st.gp ? "" : STAT_GROUPS
+    .map(g => {
+      const tiles = g.tiles(st)
+        .filter(([, val]) => val !== undefined && val !== null && !Number.isNaN(val))
+        .map(([k, val]) => `<div class="st"><span>${k}</span><b>${val}</b></div>`)
+        .join("");
+      return tiles ? `<div class="statgrp">
+        <div class="statgrp-h">${g.label}</div>
+        <div class="statrow">${tiles}</div>
+      </div>` : "";
+    }).join("");
+
+  return `<section class="stats">
+    <div class="stats-h">
+      <h3>Season Stats</h3>
+      <span>${TEAM.season} · ${st.gp} of ${PLAYED.length} game${PLAYED.length === 1 ? "" : "s"} played</span>
+    </div>
+    ${groups || `<p class="stats-empty">No stats recorded for ${esc(name)} yet this season.</p>`}
+  </section>`;
+}
+
+function openPlayer(id) {
+  const p = ROSTER.find(x => x.id === id);
+  if (!p) return;
+  lastFocus = document.activeElement;
+
+  $("#modal-photo").className = "modal-photo photo-host";
+  $("#modal-photo").innerHTML = `
+    <div class="modal-bg"></div>
+    <div class="modal-hex" aria-hidden="true"></div>
+    <div class="ph" aria-hidden="true"><span class="ph-mono">${initials(p)}</span></div>
+    ${img(p.photo, p.name, "")}
+    <div class="modal-shade"></div>
+    <div class="modal-num">${p.num}</div>
+    <div class="modal-plate">
+      <div class="modal-nick">“${esc(p.nickname)}”</div>
+      <div class="modal-name" id="modal-name">${esc(p.first)} <b>${esc(p.last)}</b></div>
+    </div>`;
+
+  const st = seasonStats(p.num);
+  $("#modal-info").innerHTML = `
+    <div class="modal-pos">${p.position}</div>
+    <div class="modal-stats">
+      <div class="ms"><span>Jersey</span><b>#${p.num}</b></div>
+      <div class="ms ms-pos"><span>Positions</span><b>${p.position}</b></div>
+      <div class="ms"><span>Games</span><b>${st.gp}</b></div>
+    </div>
+    <div class="modal-fact">
+      <div class="modal-fact-h">Fun fact</div>
+      <p>${esc(p.fact)}</p>
+    </div>
+    ${statsSection(st, p.first)}
+    ${careerSection(p)}`;
+
+  $("#modal").hidden = false;
+  document.body.classList.add("is-locked");
+  $("#modal-x").focus();
+}
+
+function closePlayer() {
+  $("#modal").hidden = true;
+  document.body.classList.remove("is-locked");
+  if (lastFocus && lastFocus.isConnected) lastFocus.focus();
+  lastFocus = null;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   EVENTS
+   ═══════════════════════════════════════════════════════════ */
+// Tapping the tab you're already on returns it to its root view, rather
+// than leaving a box score or breakdown open underneath.
+function goTab(id) {
+  if (!TABS.includes(id)) return;
+  state.tab = id;
+  state.box = null;
+  state.leaders = null;
+  state.season = null;
+  state.seasonTab = "schedule";
+  history.replaceState(null, "", location.search + "#" + id);
+  render();
+  $("#main").scrollIntoView({ block: "start" });
+  window.scrollTo(0, 0);
+}
+
+let menuOpen = false;
+function setMenu(open) {
+  menuOpen = open;
+  $("#menu").hidden = !open;
+  $("#menu-btn").setAttribute("aria-expanded", String(open));
+  $("#menu-btn").classList.toggle("is-on", open);
+}
+
+document.addEventListener("click", (e) => {
+  if (e.target.closest("#menu-btn")) { setMenu(!menuOpen); return; }
+  if (menuOpen && !e.target.closest("#menu")) setMenu(false);
+
+  const nav = e.target.closest("[data-tab]");
+  if (nav) return goTab(nav.dataset.tab);
+
+  // Schedule → box score, and back again.
+  const box = e.target.closest("[data-box]");
+  if (box) { state.box = Number(box.dataset.box); state.boxTab = "stats"; render(); window.scrollTo(0, 0); return; }
+  if (e.target.closest("[data-back]")) { state.box = null; render(); window.scrollTo(0, 0); return; }
+
+  const sea = e.target.closest("[data-season]");
+  if (sea) { state.season = Number(sea.dataset.season); state.seasonTab = "schedule"; state.leaders = null; render(); window.scrollTo(0, 0); return; }
+  if (e.target.closest("[data-back-season]")) { state.season = null; state.leaders = null; render(); window.scrollTo(0, 0); return; }
+
+  const stab = e.target.closest("[data-seasontab]");
+  if (stab) { state.seasonTab = stab.dataset.seasontab; render(); return; }
+
+  const ld = e.target.closest("[data-leaders]");
+  if (ld) { state.leaders = ld.dataset.leaders; render(); window.scrollTo(0, 0); return; }
+  if (e.target.closest("[data-back-leaders]")) { state.leaders = null; render(); window.scrollTo(0, 0); return; }
+
+  const bt = e.target.closest("[data-boxtab]");
+  if (bt) { state.boxTab = bt.dataset.boxtab; render(); return; }
+
+  const sort = e.target.closest("[data-sort]");
+  if (sort) { state.sort = sort.dataset.sort; return render(); }
+
+  const style = e.target.closest("[data-style]");
+  if (style) {
+    state.style = style.dataset.style;
+    try { localStorage.setItem(LS_KEY, state.style); } catch (err) { /* private mode */ }
+    setMenu(false);
+    return render();
+  }
+
+  // "View full card" sits on the flipped back — handle it before the flip.
+  const open = e.target.closest("[data-open]");
+  if (open) { e.stopPropagation(); return openPlayer(Number(open.dataset.open)); }
+
+  const card = e.target.closest("[data-flip]");
+  if (card) flipCard(card);
+});
+
+function flipCard(card) {
+  const id = Number(card.dataset.flip);
+  const nowFlipped = !state.flipped.has(id);
+  nowFlipped ? state.flipped.add(id) : state.flipped.delete(id);
+  card.classList.toggle("is-flipped", nowFlipped);
+  card.setAttribute("aria-pressed", String(nowFlipped));
+  // inert keeps the face that's turned away out of the tab order and the
+  // accessibility tree — backface-visibility alone still leaves it focusable.
+  card.querySelector(".tc-front").inert = nowFlipped;
+  card.querySelector(".tc-back").inert = !nowFlipped;
+}
+
+// The card shell is a div with role=button, so Enter/Space need wiring by hand.
+$("#view").addEventListener("keydown", (e) => {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  const card = e.target.closest("[data-flip]");
+  if (!card || card !== e.target) return;
+  e.preventDefault();
+  flipCard(card);
+});
+
+$("#q").addEventListener("input", (e) => { state.q = e.target.value; render(); });
+$("#q-clear").addEventListener("click", () => {
+  state.q = ""; $("#q").value = ""; render(); $("#q").focus();
+});
+
+$("#modal-x").addEventListener("click", closePlayer);
+$("#modal").addEventListener("click", (e) => { if (e.target.id === "modal") closePlayer(); });
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  if (!$("#modal").hidden) closePlayer();
+  else if (menuOpen) { setMenu(false); $("#menu-btn").focus(); }
+});
+
+window.addEventListener("hashchange", () => {
+  const h = location.hash.replace("#", "");
+  if (TABS.includes(h)) goTab(h);
+});
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ── PASSWORD GATE ─────────────────────────────────────────────
+   Deliberately lightweight: the code lives in this file, so it keeps casual
+   visitors out, nothing more. Don't put anything genuinely private behind it. */
+const GATE_CODE = "1985";
+const GATE_KEY  = "shiloh-bb.gate";   // must match the pre-paint check in <head>
+
+(function initGate() {
+  const gate = $("#gate"), form = $("#gate-form"), err = $("#gate-err");
+  const pin = $("#pin"), boxes = [...pin.querySelectorAll("input")];
+
+  const unlock = () => {
+    try { localStorage.setItem(GATE_KEY, "ok"); } catch (e) { /* private mode */ }
+    document.documentElement.classList.add("unlocked");
+    gate.setAttribute("hidden", "");
+  };
+
+  const fail = (msg) => {
+    err.textContent = msg;
+    pin.classList.add("is-bad");
+    setTimeout(() => pin.classList.remove("is-bad"), 400);
+    boxes.forEach(b => { b.value = ""; });
+    boxes[0].focus();
+  };
+
+  const submit = () => {
+    const code = boxes.map(b => b.value).join("");
+    if (code.length < 4) return fail("Enter all four digits.");
+    if (code === GATE_CODE) unlock();
+    else fail("That code isn't right. Try again.");
+  };
+
+  boxes.forEach((box, i) => {
+    box.addEventListener("input", () => {
+      box.value = box.value.replace(/\D/g, "").slice(0, 1);
+      err.textContent = "";
+      if (box.value && i < boxes.length - 1) boxes[i + 1].focus();
+      if (boxes.every(b => b.value)) submit();          // auto-submit on the 4th digit
+    });
+    box.addEventListener("keydown", (e) => {
+      if (e.key === "Backspace" && !box.value && i > 0) boxes[i - 1].focus();
+      if (e.key === "ArrowLeft"  && i > 0) boxes[i - 1].focus();
+      if (e.key === "ArrowRight" && i < boxes.length - 1) boxes[i + 1].focus();
+    });
+    // Let a pasted code fill the whole row.
+    box.addEventListener("paste", (e) => {
+      const digits = (e.clipboardData.getData("text") || "").replace(/\D/g, "").slice(0, 4);
+      if (!digits) return;
+      e.preventDefault();
+      digits.split("").forEach((d, n) => { if (boxes[n]) boxes[n].value = d; });
+      boxes[Math.min(digits.length, 3)].focus();
+      if (boxes.every(b => b.value)) submit();
+    });
+  });
+
+  form.addEventListener("submit", (e) => { e.preventDefault(); submit(); });
+
+  if (!document.documentElement.classList.contains("unlocked")) boxes[0].focus();
+  else gate.setAttribute("hidden", "");
+})();
+
+renderChrome();
+render();
+probePhotos();
+auditGames();
+</script>
+</body>
+</html>
