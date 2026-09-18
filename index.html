@@ -1283,6 +1283,7 @@ const COACHES = [
      { name, cat, src, url, video?, desc }
      cat: warm ball pass shoot foot def reb off fun scrim
      src: "btb" Breakthrough Basketball · "usab" USA Basketball
+          "jrnba" Jr. NBA · "bfc" Basketball For Coaches (written guides)
    PRACTICES: 60-minute plans. Each block = { min, drill, note? }. `date` is
    null until the practice schedule is set — add "2026-11-10" style dates and
    the list sorts itself. */
@@ -1292,7 +1293,8 @@ const CATS = {
   reb:   "Rebounding",    off:  "Team Offense",   fun:  "Fun Game",
   scrim: "Scrimmage",
 };
-const SOURCES = { btb: "Breakthrough Basketball", usab: "USA Basketball" };
+const SOURCES = { btb: "Breakthrough Basketball", usab: "USA Basketball",
+                  jrnba: "Jr. NBA", bfc: "Basketball For Coaches" };
 const YT = (id, t) => `https://www.youtube.com/watch?v=${id}${t ? "&t=" + t + "s" : ""}`;
 
 const DRILLS = {
@@ -1473,6 +1475,84 @@ const DRILLS = {
   usDeny:     { name:"Deny the Ball", cat:"def", src:"usab",
                 url:"https://www.usab.com/videos/2017/11/deny-the-ball",
                 desc:"One pass away: hand in the passing lane, see the ball and your player. Beat the cutter to the spot." },
+  /* ── Jr. NBA (official Jr. NBA / MOJO videos) ── */
+  jnWarm:     { name:"Jr. NBA Dynamic Warm-up", cat:"warm", src:"jrnba",
+                url:"https://jr.nba.com/video/dynamic-warmup/", video:YT("DAjPcYxPPBg"),
+                desc:"A moving warm-up to open practice: skips, lunges, shuffles and light sprints baseline to baseline so legs are loose before the first drill." },
+  jnGatesD:   { name:"Gates Dribbling", cat:"ball", src:"jrnba",
+                url:"https://jr.nba.com/video/gates-dribbling/", video:YT("7PVlahzbgBw"),
+                desc:"Pairs of cones make gates all over the floor. Players speed dribble through as many gates as they can, changing direction after each one." },
+  jnDuck:     { name:"Duck Tails", cat:"ball", src:"jrnba",
+                url:"https://jr.nba.com/video/duck-tails/", video:YT("ZYKoCcL_QhI"),
+                desc:"Everyone dribbles with a pinnie tucked in the back of their shorts as a tail. Protect your tail, pull the others. Heads up and explode out of trouble." },
+  jnFreeze:   { name:"Freeze Tag with a Ball", cat:"ball", src:"jrnba",
+                url:"https://jr.nba.com/video/freeze-tag-2/", video:YT("89PdzbwKCVg"),
+                desc:"Playground freeze tag where every runner dribbles. Tagged players freeze until a teammate frees them, so it's change of speed and direction under pressure." },
+  jnSharks:   { name:"Sharks and Minnows", cat:"fun", src:"jrnba",
+                url:"https://jr.nba.com/video/sharks-and-minnows/", video:YT("uD9Lbag_z_0"),
+                desc:"Minnows dribble baseline to baseline through an ocean of sharks. Get tagged and you become a shark. Last minnow swimming wins." },
+  jnKnockout: { name:"Dribble Knockout", cat:"fun", src:"jrnba",
+                url:"https://jr.nba.com/video/dribble-knockout-2/", video:YT("Y7Bnc3T-S8o"),
+                desc:"Everyone dribbles inside a shrinking boundary and tries to knock the others' balls out while protecting their own. Lose your ball, you're out." },
+  jnRiver:    { name:"Cross the River", cat:"ball", src:"jrnba",
+                url:"https://jr.nba.com/video/cross-the-river/", video:YT("qrk2NQtVpzU"),
+                desc:"Head-to-head: get from one end of the court to the other without losing possession while a defender tries to take it. Dribble low and keep the body between." },
+  jnShield:   { name:"Shield-Steal", cat:"ball", src:"jrnba",
+                url:"https://jr.nba.com/video/shield-steal/", video:YT("ax0o5yZkQ5A"),
+                desc:"Partners: one shields the ball with body and off arm, the other tries to poke it away. Switch on the whistle. Teaches ball protection without traveling." },
+  jnGatesP:   { name:"Gates Passing", cat:"pass", src:"jrnba",
+                url:"https://jr.nba.com/video/gates-passing/", video:YT("-hUHl2TaSSs"),
+                desc:"Cone gates scattered around the floor; partners pass to each other through a gate, then move to a new one. Count gates in a minute and try to beat it." },
+  jnDiamond:  { name:"Diamond Passing", cat:"pass", src:"jrnba",
+                url:"https://jr.nba.com/video/diamond-passing/", video:YT("H_RY_RrYdX4"),
+                desc:"Four spots in a diamond. Pass, follow your pass to the next spot with a jump stop and pivot. Keeps the ball and the feet moving together." },
+  jnRock:     { name:"Pass the Rock", cat:"pass", src:"jrnba",
+                url:"https://jr.nba.com/video/pass-the-rock/", video:YT("k9DtRH442uA"),
+                desc:"Groups race the clock to complete as many catches and passes as they can in a short window. Loud target hands, crisp chest passes." },
+  jnLava:     { name:"The Floor is Lava", cat:"pass", src:"jrnba",
+                url:"https://jr.nba.com/video/the-floor-is-lava/", video:YT("XZ2gfk8hAa0"),
+                desc:"The floor is lava, so the ball can only move by passing. The team works together to get it down the court without a dribble or a drop." },
+  jnPop:      { name:"Pop-a-Shot", cat:"shoot", src:"jrnba",
+                url:"https://jr.nba.com/video/pop-a-shot/", video:YT("hQ3henlWoXg"),
+                desc:"Arcade-style head-to-head shooting: two players at one basket race to sink as many close shots as they can before time runs out." },
+  jnMakeIt:   { name:"Make It, Take It", cat:"shoot", src:"jrnba",
+                url:"https://jr.nba.com/video/make-it-take-it/", video:YT("VRGavwUFlJc"),
+                desc:"A fast shooting game where a make earns you the ball back. Shooting under pressure with a rebound and quick reset every rep." },
+  jnFTGolf:   { name:"Free Throw Golf", cat:"shoot", src:"jrnba",
+                url:"https://jr.nba.com/video/free-throw-golf/", video:YT("Z-SbJIJAFOE"),
+                desc:"Nine holes of free throws. Each miss is a stroke, so the low score wins. Same routine every shot, just like a putt." },
+  jnDuos:     { name:"Scoring Duos", cat:"off", src:"jrnba",
+                url:"https://jr.nba.com/video/scoring-duos/", video:YT("8PEb7HMJbj0"),
+                desc:"It takes two to score: pairs run simple two-player actions like give-and-go and pass-and-cut to a finish at the rim." },
+  jnSwitch:   { name:"Switch Up", cat:"def", src:"jrnba",
+                url:"https://jr.nba.com/video/switch-up/", video:YT("w7CiPJgVqtM"),
+                desc:"Players go from offense to defense and back on the coach's call. Score, then sprint back and guard. Both ends of the floor in one rep." },
+  jnGauntlet: { name:"The Gauntlet", cat:"def", src:"jrnba",
+                url:"https://jr.nba.com/video/the-gauntlet/", video:YT("g7kyJZOLEf8"),
+                desc:"A dribbler takes on a line of defenders one zone at a time, each one harder than the last. Defense stays in a stance and moves its feet." },
+  jnPacman:   { name:"Pac-Man", cat:"fun", src:"jrnba",
+                url:"https://jr.nba.com/video/pac-man/", video:YT("2V0QrZMzsKo"),
+                desc:"Tag on the lines of the court: everyone dribbles and can only travel along painted lines. Kids learn the court while dodging the ghosts." },
+  jnMusical:  { name:"Musical Basketballs", cat:"fun", src:"jrnba",
+                url:"https://jr.nba.com/video/musical-basketball/", video:YT("IizOFVB2kmA"),
+                desc:"Musical chairs with basketballs. When the music stops, grab a ball and be the first to score. Silly, loud and a great finish to practice." },
+  jnFlying:   { name:"Flying Numbers", cat:"scrim", src:"jrnba",
+                url:"https://jr.nba.com/video/flying-numbers/", video:YT("dILJPoK7Uqw"),
+                desc:"Coach calls a number and that many players from each team fly onto the court: 1v1, 2v2, 3v3 up to 5v5. Everyone plays, every situation comes up." },
+
+  /* ── Basketball For Coaches (classic games and drills, written guides) ── */
+  bfcKnockout:{ name:"Knockout", cat:"fun", src:"bfc",
+                url:"https://www.basketballforcoaches.com/knockout-basketball/",
+                desc:"The gym-class classic. Shoot from the line; if the player behind you scores first, you're out. Rebound, layup, pass to the next in line. Last one standing." },
+  bfcWorld:   { name:"Around the World", cat:"shoot", src:"bfc",
+                url:"https://www.basketballforcoaches.com/around-the-world-basketball/",
+                desc:"Nine spots around the key, from the blocks out to the free-throw line. Make it to move on; miss and choose to stay or risk a second shot that sends you back." },
+  bfcKing:    { name:"King of the Court", cat:"def", src:"bfc",
+                url:"https://www.basketballforcoaches.com/king-of-the-court/",
+                desc:"Continuous 1v1, make-it-take-it. Score and you stay on as king; the next challenger steps in. Attacking and guarding in a line that never stops." },
+  bfcMikan:   { name:"Mikan Drill", cat:"shoot", src:"bfc",
+                url:"https://www.basketballforcoaches.com/mikan-drill/",
+                desc:"Under the basket, alternate right-hand and left-hand layups off the correct foot, catching each one before it hits the floor. Twenty makes, no dribble." },
 };
 
 const PRACTICES = [
@@ -2789,7 +2869,7 @@ const outIcon  = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" st
 // the source's own video page. Write-ups with no video get a "Read" button.
 function drillLink(d) {
   const href = d.video || d.url;
-  const isVideo = !!d.video || d.src === "usab";
+  const isVideo = !!d.video || d.src === "usab" || d.src === "jrnba";
   return `<a class="vid${isVideo ? "" : " read"}" href="${esc(href)}" target="_blank" rel="noopener noreferrer">
     ${isVideo ? playIcon : ""}${isVideo ? "Watch the drill" : "Read the drill"} ${outIcon}
   </a>`;

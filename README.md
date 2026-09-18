@@ -85,8 +85,9 @@ Drill Library tab renders everything in `DRILLS` grouped by category. Set a
 practice's `date` ("2026-11-10") once the schedule is known and the list sorts
 by date.
 
-Sources: Breakthrough Basketball youth drills and USA Basketball's
-foundational skills and drills.
+Sources: Breakthrough Basketball youth drills, USA Basketball's foundational
+skills and drills, the Jr. NBA drill videos and Basketball For Coaches'
+written guides to the classic games.
 
 Coaches can also build their own plan on the Practice tab ("Build a
 practice"): pick drills from the library, set minutes and order, add notes,
