@@ -867,6 +867,95 @@ button.game{width:100%;text-align:left;font:inherit;cursor:pointer;}
 .drill-desc{font-size:13px;color:var(--ink);line-height:1.45;margin-top:4px;}
 @media (hover:hover) and (pointer:fine){ .vid:hover{filter:brightness(1.07);} }
 
+/* ── PRACTICE BUILDER ─────────────────────────────────────── */
+.mrow.mrow-cta{border-style:dashed;border-color:var(--accent);background:rgba(37,150,190,.06);}
+.mrow-cta .mrow-ico{background:var(--accent);color:#fff;}
+.mlist-h{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:12px;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--accent);margin:8px 0 -2px;}
+.prow-n.custom{background:var(--navy);font-size:13px;}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:0;border-radius:12px;
+  padding:12px 16px;font:inherit;font-weight:700;font-size:14px;color:#fff;background:var(--accent);
+  cursor:pointer;transition:filter .16s,transform .16s;min-height:44px;}
+.btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--line);}
+.btn.danger{background:#fff;color:var(--loss);border:1px solid rgba(216,85,63,.4);}
+.btn.wide{width:100%;}
+.btn:active{transform:translateY(1px);}
+.btn[disabled]{opacity:.5;cursor:default;}
+.plan-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;max-width:640px;}
+.plan-actions .btn{flex:1 1 140px;}
+
+.bld{max-width:640px;display:flex;flex-direction:column;gap:14px;}
+.fld{display:flex;flex-direction:column;gap:6px;}
+.fld>span{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:11px;letter-spacing:1.1px;
+  text-transform:uppercase;color:var(--accent);}
+.fld input,.fld textarea{font:inherit;font-size:16px;color:var(--ink);background:#fff;
+  border:1px solid var(--line);border-radius:12px;padding:11px 13px;outline:none;width:100%;}
+.fld textarea{min-height:64px;resize:vertical;line-height:1.4;}
+.fld input:focus,.fld textarea:focus,.bblk textarea:focus,.stepper input:focus{border-color:var(--accent);}
+.fld-row{display:grid;grid-template-columns:1fr 150px;gap:10px;}
+@media(max-width:420px){ .fld-row{grid-template-columns:1fr;} }
+
+.bar-wrap{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;}
+.bar{height:10px;background:#e7ebf0;border-radius:6px;overflow:hidden;}
+.bar-fill{height:100%;background:var(--accent);border-radius:6px;transition:width .2s;}
+.bar-wrap.is-full .bar-fill{background:var(--win);}
+.bar-wrap.is-over .bar-fill{background:var(--loss);}
+.bar-txt{display:flex;justify-content:space-between;margin-top:8px;font-size:12.5px;color:var(--muted);}
+.bar-txt b{font-family:"Roboto Condensed",sans-serif;font-size:15px;color:var(--navy);}
+.bar-wrap.is-over .bar-txt b{color:var(--loss);}
+
+.bblk{display:grid;grid-template-columns:52px 1fr;gap:10px;background:#fff;border:1px solid var(--line);
+  border-radius:16px;padding:12px 14px 12px 12px;}
+.bblk .blk-when{padding-top:4px;}
+.bblk-top{display:flex;align-items:flex-start;gap:8px;}
+.bblk-top .blk-name{flex:1;min-width:0;font-size:16px;}
+.bblk-top .cat{margin-top:2px;}
+.iconbtn{flex:0 0 auto;width:32px;height:32px;border:1px solid var(--line);background:#fff;border-radius:9px;
+  color:var(--muted);display:grid;place-items:center;font-size:16px;line-height:1;}
+.iconbtn.del{color:var(--loss);}
+.iconbtn[disabled]{opacity:.35;}
+.bblk-ctl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px;}
+.stepper{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;}
+.stepper button{width:36px;height:36px;border:0;background:var(--paper);color:var(--navy);font-size:18px;font-weight:700;}
+.stepper input{width:52px;height:36px;border:0;text-align:center;font-family:"Roboto Condensed",sans-serif;
+  font-weight:700;font-size:16px;color:var(--navy);outline:none;-moz-appearance:textfield;}
+.stepper input::-webkit-outer-spin-button,.stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+.stepper-l{font-size:12px;color:var(--muted);margin-left:2px;}
+.bblk-move{display:inline-flex;gap:6px;margin-left:auto;}
+.bblk textarea{width:100%;margin-top:10px;font:inherit;font-size:13.5px;color:var(--ink);background:#fbfcfd;
+  border:1px solid var(--line);border-radius:10px;padding:9px 11px;min-height:40px;resize:vertical;outline:none;line-height:1.4;}
+.bld-empty{text-align:center;color:var(--muted);font-size:14px;padding:22px 16px;background:#fff;
+  border:1px dashed var(--line);border-radius:16px;}
+.bld-foot{display:flex;gap:8px;flex-wrap:wrap;padding-top:4px;}
+.bld-foot .btn{flex:1 1 140px;}
+
+/* drill picker sheet */
+.sheet-card{display:flex;flex-direction:column;background:#fff;position:relative;width:100%;
+  max-height:90vh;max-height:90dvh;border-radius:24px 24px 0 0;box-shadow:0 40px 80px -20px rgba(0,0,0,.6);
+  animation:sheet .3s cubic-bezier(.2,.8,.3,1);overflow:hidden;}
+.sheet-h{padding:18px 20px 12px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:10px;}
+.sheet-title{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:20px;color:var(--navy);padding-right:44px;}
+.sheet-h .search{padding:10px 12px;}
+.chips{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;scrollbar-width:none;}
+.chips::-webkit-scrollbar{display:none;}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:var(--muted);font:inherit;font-size:12.5px;
+  font-weight:500;padding:6px 11px;border-radius:20px;white-space:nowrap;}
+.chip.is-on{background:var(--navy);border-color:var(--navy);color:#fff;font-weight:700;}
+.sheet-body{overflow:auto;-webkit-overflow-scrolling:touch;padding:10px 14px;display:flex;flex-direction:column;gap:8px;flex:1;}
+.pick{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px 12px 11px 14px;}
+.pick-txt{flex:1;min-width:0;}
+.pick-name{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:15.5px;color:var(--navy);line-height:1.15;}
+.pick-sub{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:11.5px;color:var(--muted);}
+.pick-add{flex:0 0 auto;border:0;background:var(--accent);color:#fff;font:inherit;font-weight:700;font-size:13px;
+  padding:9px 13px;border-radius:10px;min-width:64px;}
+.pick-add.is-added{background:var(--win);}
+.sheet-f{padding:12px 16px calc(env(safe-area-inset-bottom, 0px) + 12px);border-top:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted);}
+.sheet-f b{font-family:"Roboto Condensed",sans-serif;font-size:15px;color:var(--navy);}
+@media (min-width:560px){ .sheet-card{max-width:560px;border-radius:24px;max-height:86vh;} }
+@media (hover:hover) and (pointer:fine){ .btn:hover{filter:brightness(1.06);} .iconbtn:hover{border-color:var(--accent);color:var(--navy);} .pick-add:hover{filter:brightness(1.08);} }
+
 /* ═══════════════════════════════════════════════════════════
    TABLET — two-up cards, roomier gutters
    ═══════════════════════════════════════════════════════════ */
@@ -1125,6 +1214,9 @@ button.game{width:100%;text-align:left;font:inherit;cursor:pointer;}
     <div id="view"></div>
   </main>
 </div>
+
+<!-- ── DRILL PICKER SHEET (practice builder) ─────────────── -->
+<div class="modal" id="sheet" hidden></div>
 
 <!-- ── PLAYER DETAIL SHEET ────────────────────────────────── -->
 <div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-name">
@@ -1812,6 +1904,9 @@ const state = {
   seasonTab: "schedule", // "schedule" | "stats" within a past season
   practice: null,     // open practice plan id
   practiceTab: "plans",  // "plans" | "drills" on the Practice tab
+  builder: null,      // practice being built/edited (see Practice builder)
+  picker: { open:false, q:"", cat:"all" },
+  shared: null,       // a plan that arrived through a ?plan= share link
   style: STYLES.includes(urlCard) ? urlCard : (STYLES.includes(stored) ? stored : "bold"),
   flipped: new Set(),
 };
@@ -2467,8 +2562,218 @@ function teamStatsView(games, label) {
     </section>` : ""}`;
 }
 
+/* ── Practice builder ─────────────────────────────────────────
+   Coaches assemble their own plan from the drill library. Saved plans live
+   in this browser (localStorage) and can be shared as a link that carries
+   the whole plan in the URL, so nothing needs a server. */
+const CUSTOM_KEY = "shiloh-bb.practices";
+const DRAFT_KEY  = "shiloh-bb.practiceDraft";
+const TARGET_MIN = 60;
+
+const validPlan = (p) => !!p && typeof p.title === "string" && Array.isArray(p.blocks)
+  && p.blocks.length > 0 && p.blocks.every(b => DRILLS[b.drill] && b.min > 0);
+const lsGet = (k, fallback) => { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? fallback : v; } catch (e) { return fallback; } };
+const lsSet = (k, v) => { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* private mode */ } };
+
+let CUSTOM = (lsGet(CUSTOM_KEY, []) || []).filter(validPlan);
+const saveCustom = () => lsSet(CUSTOM_KEY, CUSTOM);
+const newId = () => "c" + Date.now().toString(36);
+
+// A plan in the compact form that travels in a share link.
+const encodePlan = (p) => {
+  const j = JSON.stringify({ t:p.title, d:p.date || "", g:p.goal || "",
+    b:p.blocks.map(b => [b.drill, b.min, b.note || ""]) });
+  return btoa(unescape(encodeURIComponent(j))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+};
+const decodePlan = (s) => {
+  try {
+    const j = decodeURIComponent(escape(atob(s.replace(/-/g, "+").replace(/_/g, "/"))));
+    const o = JSON.parse(j);
+    const p = { id:"shared", custom:true, shared:true,
+      title: String(o.t || "Shared practice").slice(0, 80),
+      date: /^\d{4}-\d{2}-\d{2}$/.test(o.d || "") ? o.d : null,
+      goal: String(o.g || "").slice(0, 400),
+      blocks: (Array.isArray(o.b) ? o.b : []).map(x => ({
+        drill:String(x[0]), min:Math.max(1, Math.min(120, Math.round(Number(x[1]) || 0))), note:String(x[2] || "").slice(0, 400) })) };
+    return validPlan(p) ? p : null;
+  } catch (e) { return null; }
+};
+const shareUrl = (p) => location.origin + location.pathname + "?plan=" + encodePlan(p) + "#practice";
+
+// A blank draft, or a copy of an existing plan to customize.
+const blankDraft = (from) => ({
+  id: from && from.custom && !from.shared ? from.id : null,
+  title: from ? (from.custom && !from.shared ? from.title : from.title + " (copy)") : "",
+  date: from ? from.date : null,
+  goal: from ? from.goal || "" : "",
+  blocks: from ? from.blocks.map(b => ({ drill:b.drill, min:b.min, note:b.note || "" })) : [],
+});
+const draftMinutes = (d) => d.blocks.reduce((n, b) => n + (Number(b.min) || 0), 0);
+const saveDraft = () => lsSet(DRAFT_KEY, state.builder);
+
+function openBuilder(from) {
+  state.builder = blankDraft(from);
+  state.practice = null; state.shared = null;
+  saveDraft();
+  render(); window.scrollTo(0, 0);
+}
+
+function builderView() {
+  const d = state.builder;
+  const total = draftMinutes(d);
+  const cls = total === TARGET_MIN ? "is-full" : total > TARGET_MIN ? "is-over" : "";
+  const left = TARGET_MIN - total;
+  let at = 0;
+  const rows = d.blocks.map((b, i) => {
+    const dr = DRILLS[b.drill];
+    const row = `<div class="bblk">
+      <div class="blk-when"><span class="blk-at">${clock(at)}</span></div>
+      <div class="blk-body">
+        <div class="bblk-top">
+          ${catChip(dr.cat)}<span class="blk-name">${esc(dr.name)}</span>
+          <button class="iconbtn del" data-bdel="${i}" aria-label="Remove ${esc(dr.name)}">×</button>
+        </div>
+        <div class="bblk-ctl">
+          <span class="stepper">
+            <button type="button" data-bmin="${i}:-1" aria-label="One minute less">−</button>
+            <input type="number" inputmode="numeric" min="1" max="120" value="${b.min}" data-bminput="${i}" aria-label="Minutes" />
+            <button type="button" data-bmin="${i}:1" aria-label="One minute more">+</button>
+          </span><span class="stepper-l">min</span>
+          <span class="bblk-move">
+            <button class="iconbtn" data-bmove="${i}:-1" ${i === 0 ? "disabled" : ""} aria-label="Move up">↑</button>
+            <button class="iconbtn" data-bmove="${i}:1" ${i === d.blocks.length - 1 ? "disabled" : ""} aria-label="Move down">↓</button>
+          </span>
+        </div>
+        <textarea data-bnote="${i}" placeholder="Coach note (optional)" rows="1">${esc(b.note || "")}</textarea>
+      </div>
+    </div>`;
+    at += Number(b.min) || 0;
+    return row;
+  }).join("");
+
+  return `<div class="bld">
+    <div class="fld-row">
+      <label class="fld"><span>Practice name</span>
+        <input id="b-title" type="text" maxlength="80" placeholder="e.g. Tuesday — Defense" value="${esc(d.title)}" /></label>
+      <label class="fld"><span>Date</span>
+        <input id="b-date" type="date" value="${d.date || ""}" /></label>
+    </div>
+    <label class="fld"><span>Goal for the night</span>
+      <textarea id="b-goal" maxlength="400" placeholder="What should the kids walk away with?">${esc(d.goal || "")}</textarea></label>
+
+    <div class="bar-wrap ${cls}">
+      <div class="bar"><div class="bar-fill" style="width:${Math.min(100, total / TARGET_MIN * 100)}%"></div></div>
+      <div class="bar-txt"><span><b>${total}</b> of ${TARGET_MIN} minutes</span>
+        <span>${left > 0 ? left + " to go" : left === 0 ? "Right on time" : (-left) + " over"}</span></div>
+    </div>
+
+    ${rows || `<div class="bld-empty">No drills yet. Add one from the library to start the clock.</div>`}
+
+    <button class="btn wide" data-pick>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+      Add a drill from the library
+    </button>
+
+    <div class="bld-foot">
+      <button class="btn" data-bsave ${d.blocks.length ? "" : "disabled"}>Save practice</button>
+      <button class="btn ghost" data-bcancel>${d.id ? "Discard changes" : "Discard"}</button>
+    </div>
+  </div>`;
+}
+
+/* Drill picker sheet — search + category chips over the whole library. */
+function pickerListHtml() {
+  const q = state.picker.q.trim().toLowerCase();
+  const cat = state.picker.cat;
+  const inDraft = new Set(state.builder.blocks.map(b => b.drill));
+  const list = Object.keys(DRILLS).map(k => ({ k, d:DRILLS[k] }))
+    .filter(({ d }) => (cat === "all" || d.cat === cat)
+      && (!q || d.name.toLowerCase().includes(q) || d.desc.toLowerCase().includes(q) || CATS[d.cat].toLowerCase().includes(q)))
+    .sort((a, b) => a.d.cat === b.d.cat ? a.d.name.localeCompare(b.d.name)
+      : Object.keys(CATS).indexOf(a.d.cat) - Object.keys(CATS).indexOf(b.d.cat));
+  if (!list.length) return `<p class="empty">No drills match “${esc(state.picker.q)}”.</p>`;
+  return list.map(({ k, d }) => `<div class="pick">
+    <div class="pick-txt">
+      <div class="pick-name">${esc(d.name)}</div>
+      <div class="pick-sub">${catChip(d.cat)} ${SOURCES[d.src]}</div>
+    </div>
+    <button class="pick-add${inDraft.has(k) ? " is-added" : ""}" data-pkadd="${k}">${inDraft.has(k) ? "Add again" : "Add"}</button>
+  </div>`).join("");
+}
+
+function renderPicker() {
+  const sheet = $("#sheet");
+  if (!state.picker.open) { sheet.hidden = true; return; }
+  const d = state.builder;
+  sheet.innerHTML = `<div class="sheet-card" role="dialog" aria-modal="true" aria-label="Add a drill">
+    <button class="modal-x" data-pkdone aria-label="Done">×</button>
+    <div class="sheet-h">
+      <div class="sheet-title">Add a drill</div>
+      <div class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+        <input id="pk-q" type="search" autocomplete="off" placeholder="Search drills…" value="${esc(state.picker.q)}" />
+      </div>
+      <div class="chips">
+        <button class="chip ${state.picker.cat === "all" ? "is-on" : ""}" data-pkcat="all">All</button>
+        ${Object.keys(CATS).map(c => `<button class="chip ${state.picker.cat === c ? "is-on" : ""}" data-pkcat="${c}">${CATS[c]}</button>`).join("")}
+      </div>
+    </div>
+    <div class="sheet-body" id="pk-list">${pickerListHtml()}</div>
+    <div class="sheet-f">
+      <span><b>${d.blocks.length}</b> drill${d.blocks.length === 1 ? "" : "s"} · <b>${draftMinutes(d)}</b> min</span>
+      <button class="btn" data-pkdone>Done</button>
+    </div>
+  </div>`;
+  sheet.hidden = false;
+}
+
+function openPicker() {
+  state.picker = { open:true, q:"", cat:"all" };
+  renderPicker();
+  document.body.classList.add("is-locked");
+  const q = $("#pk-q"); if (q && matchMedia("(min-width:900px)").matches) q.focus();
+}
+function closePicker() {
+  state.picker.open = false;
+  renderPicker();
+  document.body.classList.remove("is-locked");
+  render();
+}
+
+function saveBuilder() {
+  const d = state.builder;
+  if (!d.blocks.length) return;
+  const plan = { id: d.id || newId(), custom:true,
+    title: (d.title || "").trim() || "My practice",
+    date: d.date || null, goal: (d.goal || "").trim(),
+    blocks: d.blocks.map(b => ({ drill:b.drill, min:Math.max(1, Number(b.min) || 1), note:(b.note || "").trim() })),
+    updated: new Date().toISOString().slice(0, 10) };
+  const i = CUSTOM.findIndex(p => p.id === plan.id);
+  if (i >= 0) CUSTOM[i] = plan; else CUSTOM.unshift(plan);
+  saveCustom();
+  state.builder = null; lsSet(DRAFT_KEY, null);
+  state.practice = plan.id;
+  render(); window.scrollTo(0, 0);
+}
+
+function discardBuilder() {
+  if (state.builder.blocks.length && !confirm("Throw away this practice?")) return;
+  state.builder = null; lsSet(DRAFT_KEY, null);
+  render(); window.scrollTo(0, 0);
+}
+
+function sharePlan(p, btn) {
+  const url = shareUrl(p);
+  const done = () => { if (btn) { btn.textContent = "Link copied"; setTimeout(() => { btn.textContent = "Share link"; }, 2000); } };
+  if (navigator.share) { navigator.share({ title: `${TEAM.name} practice: ${p.title}`, url }).catch(() => {}); return; }
+  if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, () => prompt("Copy this link:", url));
+  else prompt("Copy this link:", url);
+}
+
 /* ── Practice plans ───────────────────────────────────────── */
-const practiceById = (id) => PRACTICES.find(p => p.id === id);
+const practiceById = (id) => PRACTICES.find(p => p.id === id) || CUSTOM.find(p => p.id === id)
+  || (state.shared && state.shared.id === id ? state.shared : null);
+const parseId = (v) => /^\d+$/.test(v) ? Number(v) : v;
 const practiceMinutes = (p) => p.blocks.reduce((n, b) => n + b.min, 0);
 // The facets a practice covers, in the order they first appear (warm-up and
 // scrimmage are every week, so they're left off the summary chips).
@@ -2493,9 +2798,11 @@ function drillLink(d) {
 function practiceListView() {
   const sorted = [...PRACTICES].sort((a, b) =>
     (a.date && b.date) ? a.date.localeCompare(b.date) : a.id - b.id);
-  return `<div class="mlist">${sorted.map(p => `
+  const draft = lsGet(DRAFT_KEY, null);
+  const mine = [...CUSTOM].sort((a, b) => (a.date || "9").localeCompare(b.date || "9") || (b.updated || "").localeCompare(a.updated || ""));
+  const row = (p, chip) => `
     <button class="mrow" data-practice="${p.id}">
-      <span class="prow-n">P${p.id}</span>
+      <span class="prow-n${p.custom ? " custom" : ""}">${chip}</span>
       <span class="mrow-txt">
         <b>${esc(p.title)}</b>
         <span>${p.date ? fmtDate(p.date, { weekday:"short", month:"short", day:"numeric" }) : "Date TBD"} · ${practiceMinutes(p)} min</span>
@@ -2503,7 +2810,25 @@ function practiceListView() {
       </span>
       <svg class="mrow-go" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
            stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-    </button>`).join("")}</div>`;
+    </button>`;
+  return `<div class="mlist">
+    <button class="mrow mrow-cta" data-bnew>
+      <span class="mrow-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
+      <span class="mrow-txt"><b>Build a practice</b><span>Pick drills from the library, set the minutes, share it with the staff</span></span>
+      <svg class="mrow-go" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+    ${draft && draft.blocks && draft.blocks.length ? `
+    <button class="mrow" data-bresume>
+      <span class="prow-n custom">Draft</span>
+      <span class="mrow-txt"><b>${esc(draft.title || "Untitled practice")}</b><span>Unsaved · ${draftMinutes(draft)} min · tap to keep editing</span></span>
+      <svg class="mrow-go" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+    </button>` : ""}
+    ${mine.length ? `<div class="mlist-h">My practices</div>` + mine.map(p => row(p, "Mine")).join("") : ""}
+    ${mine.length ? `<div class="mlist-h">Season plans</div>` : ""}
+    ${sorted.map(p => row(p, "P" + p.id)).join("")}
+  </div>`;
 }
 
 function practiceDetailView(id) {
@@ -2528,13 +2853,20 @@ function practiceDetailView(id) {
 
   return `
     <div class="plan-head">
-      <div class="plan-meta">Practice ${p.id} · ${practiceMinutes(p)} minutes · ${p.date ? fmtDate(p.date, { weekday:"long", month:"long", day:"numeric" }) : "Date TBD"}</div>
+      <div class="plan-meta">${p.shared ? "Shared practice" : p.custom ? "My practice" : "Practice " + p.id} · ${practiceMinutes(p)} minutes · ${p.date ? fmtDate(p.date, { weekday:"long", month:"long", day:"numeric" }) : "Date TBD"}</div>
       <div class="plan-title">${esc(p.title)}</div>
       <p class="plan-goal">${esc(p.goal)}</p>
       <div class="plan-tags">${practiceCats(p).map(catChip).join("")}</div>
     </div>
     <div class="plan">${rows}</div>
-    <p class="plan-foot">Times are a guide: if a drill is clicking, let it run and trim the next one. Water break between any two blocks.</p>`;
+    <p class="plan-foot">Times are a guide: if a drill is clicking, let it run and trim the next one. Water break between any two blocks.</p>
+    <div class="plan-actions">
+      ${p.shared ? `<button class="btn" data-adopt>Save to my practices</button>` : ""}
+      ${p.custom && !p.shared ? `<button class="btn" data-edit="${p.id}">Edit</button>` : ""}
+      ${p.custom && !p.shared ? `<button class="btn ghost" data-share="${p.id}">Share link</button>` : ""}
+      ${!p.custom || p.shared ? `<button class="btn ghost" data-edit="${p.id}">Customize a copy</button>` : ""}
+      ${p.custom && !p.shared ? `<button class="btn danger" data-delete="${p.id}">Delete</button>` : ""}
+    </div>`;
 }
 
 function drillLibraryView() {
@@ -2556,6 +2888,7 @@ function drillLibraryView() {
 }
 
 function practiceView() {
+  if (state.builder) return builderView();
   if (state.practice) return practiceDetailView(state.practice);
   const tab = state.practiceTab;
   return `
@@ -2602,7 +2935,9 @@ function render() {
   const prac = state.practice && practiceById(state.practice);
   $("#page-title").textContent =
     tab === "players"  ? "Meet the Team"
-  : tab === "practice" ? (prac ? `Practice ${prac.id}` : state.practiceTab === "drills" ? "Drill Library" : "Practice")
+  : tab === "practice" ? (state.builder ? (state.builder.id ? "Edit Practice" : "Build a Practice")
+                          : prac ? (prac.shared ? "Shared Practice" : prac.custom ? "My Practice" : `Practice ${prac.id}`)
+                          : state.practiceTab === "drills" ? "Drill Library" : "Practice")
   : tab === "coaches"  ? "Coaching Staff"
   : tab === "menu"     ? "Menu"
   : tab === "seasons"  ? (boxGame ? `${TEAM.name} vs ${boxGame.opp}`
@@ -2613,7 +2948,8 @@ function render() {
   :                      "Game Schedule";
   $("#page-sub").textContent =
     tab === "players"  ? ""
-  : tab === "practice" ? (prac ? esc(prac.title)
+  : tab === "practice" ? (state.builder ? "Pick drills, set the minutes, save it to this phone"
+        : prac ? esc(prac.title)
         : state.practiceTab === "drills" ? `${Object.keys(DRILLS).length} drills and games with videos`
         : `${PRACTICES.length} practice plans · 60 minutes each`)
   : tab === "coaches"  ? `${COACHES.length} coaches guiding the Saints`
@@ -2634,7 +2970,7 @@ function render() {
       state.box      ? { attr:"data-back",         label:sn ? `${snLabel} schedule` : "All games" }
     : state.leaders  ? { attr:"data-back-leaders", label:sn ? `${snLabel} Team Stats` : "Team Stats" }
     : state.season   ? { attr:"data-back-season",  label:"Past Seasons" }
-    : state.practice ? { attr:"data-back-practice", label:"All practices" }
+    : (state.practice || state.builder) ? { attr:"data-back-practice", label:"All practices" }
     : null;
   ["data-back", "data-back-leaders", "data-back-season", "data-back-practice"].forEach(a => crumb.removeAttribute(a));
   crumb.hidden = !back;
@@ -2792,6 +3128,8 @@ function goTab(id) {
   state.seasonTab = "schedule";
   state.practice = null;
   state.practiceTab = "plans";
+  state.builder = null;
+  state.shared = null;
   history.replaceState(null, "", location.search + "#" + id);
   render();
   $("#main").scrollIntoView({ block: "start" });
@@ -2823,8 +3161,54 @@ document.addEventListener("click", (e) => {
   if (e.target.closest("[data-back-season]")) { state.season = null; state.leaders = null; render(); window.scrollTo(0, 0); return; }
 
   const pr = e.target.closest("[data-practice]");
-  if (pr) { state.practice = Number(pr.dataset.practice); render(); window.scrollTo(0, 0); return; }
-  if (e.target.closest("[data-back-practice]")) { state.practice = null; render(); window.scrollTo(0, 0); return; }
+  if (pr) { state.practice = parseId(pr.dataset.practice); render(); window.scrollTo(0, 0); return; }
+  if (e.target.closest("[data-back-practice]")) { state.practice = null; state.builder = null; render(); window.scrollTo(0, 0); return; }
+
+  // Practice builder
+  if (e.target.closest("[data-bnew]")) return openBuilder(null);
+  if (e.target.closest("[data-bresume]")) { const d = lsGet(DRAFT_KEY, null); if (d) { state.builder = d; state.practice = null; render(); window.scrollTo(0, 0); } return; }
+  const ed = e.target.closest("[data-edit]");
+  if (ed) { const p = practiceById(parseId(ed.dataset.edit)); if (p) openBuilder(p); return; }
+  const sh = e.target.closest("[data-share]");
+  if (sh) { const p = practiceById(parseId(sh.dataset.share)); if (p) sharePlan(p, sh); return; }
+  const del = e.target.closest("[data-delete]");
+  if (del) {
+    const p = practiceById(parseId(del.dataset.delete));
+    if (p && confirm(`Delete “${p.title}”? This can't be undone.`)) {
+      CUSTOM = CUSTOM.filter(x => x.id !== p.id); saveCustom();
+      state.practice = null; render(); window.scrollTo(0, 0);
+    }
+    return;
+  }
+  if (e.target.closest("[data-adopt]") && state.shared) {
+    const p = Object.assign({}, state.shared, { id:newId(), shared:false, updated:new Date().toISOString().slice(0, 10) });
+    CUSTOM.unshift(p); saveCustom();
+    history.replaceState(null, "", location.pathname + "#practice");
+    state.shared = null; state.practice = p.id; render(); window.scrollTo(0, 0);
+    return;
+  }
+  if (state.builder) {
+    const bm = e.target.closest("[data-bmin]");
+    if (bm) { const [i, dlt] = bm.dataset.bmin.split(":").map(Number); const b = state.builder.blocks[i];
+      if (b) { b.min = Math.max(1, Math.min(120, (Number(b.min) || 0) + dlt)); saveDraft(); render(); } return; }
+    const mv = e.target.closest("[data-bmove]");
+    if (mv) { const [i, dlt] = mv.dataset.bmove.split(":").map(Number); const bl = state.builder.blocks; const j = i + dlt;
+      if (bl[i] && bl[j]) { [bl[i], bl[j]] = [bl[j], bl[i]]; saveDraft(); render(); } return; }
+    const bd = e.target.closest("[data-bdel]");
+    if (bd) { state.builder.blocks.splice(Number(bd.dataset.bdel), 1); saveDraft(); render(); return; }
+    if (e.target.closest("[data-pick]")) return openPicker();
+    if (e.target.closest("[data-bsave]")) return saveBuilder();
+    if (e.target.closest("[data-bcancel]")) return discardBuilder();
+    if (e.target.closest("[data-pkdone]")) return closePicker();
+    const pc = e.target.closest("[data-pkcat]");
+    if (pc) { state.picker.cat = pc.dataset.pkcat; renderPicker(); return; }
+    const pa = e.target.closest("[data-pkadd]");
+    if (pa) { state.builder.blocks.push({ drill:pa.dataset.pkadd, min:8, note:"" }); saveDraft();
+      $("#pk-list").innerHTML = pickerListHtml(); const f = $(".sheet-f span");
+      if (f) f.innerHTML = `<b>${state.builder.blocks.length}</b> drill${state.builder.blocks.length === 1 ? "" : "s"} · <b>${draftMinutes(state.builder)}</b> min`;
+      pa.textContent = "Added ✓"; pa.classList.add("is-added"); return; }
+    if (state.picker.open && e.target.id === "sheet") return closePicker();
+  }
   const ptab = e.target.closest("[data-practicetab]");
   if (ptab) { state.practiceTab = ptab.dataset.practicetab; render(); return; }
 
@@ -2883,11 +3267,31 @@ $("#q-clear").addEventListener("click", () => {
   state.q = ""; $("#q").value = ""; render(); $("#q").focus();
 });
 
+// Builder fields update the draft without re-rendering, so typing keeps focus.
+document.addEventListener("input", (e) => {
+  if (!state.builder) return;
+  const t = e.target;
+  if (t.id === "b-title") state.builder.title = t.value;
+  else if (t.id === "b-date") state.builder.date = t.value || null;
+  else if (t.id === "b-goal") state.builder.goal = t.value;
+  else if (t.dataset.bnote != null) { const b = state.builder.blocks[Number(t.dataset.bnote)]; if (b) b.note = t.value; }
+  else if (t.id === "pk-q") { state.picker.q = t.value; $("#pk-list").innerHTML = pickerListHtml(); return; }
+  else return;
+  saveDraft();
+});
+document.addEventListener("change", (e) => {
+  if (!state.builder) return;
+  const t = e.target;
+  if (t.dataset.bminput != null) { const b = state.builder.blocks[Number(t.dataset.bminput)];
+    if (b) { b.min = Math.max(1, Math.min(120, Math.round(Number(t.value) || 1))); saveDraft(); render(); } }
+});
+
 $("#modal-x").addEventListener("click", closePlayer);
 $("#modal").addEventListener("click", (e) => { if (e.target.id === "modal") closePlayer(); });
 document.addEventListener("keydown", (e) => {
   if (e.key !== "Escape") return;
-  if (!$("#modal").hidden) closePlayer();
+  if (state.picker.open) closePicker();
+  else if (!$("#modal").hidden) closePlayer();
   else if (menuOpen) { setMenu(false); $("#menu-btn").focus(); }
 });
 
@@ -2955,6 +3359,15 @@ const GATE_KEY  = "shiloh-bb.gate";   // must match the pre-paint check in <head
 
   if (!document.documentElement.classList.contains("unlocked")) boxes[0].focus();
   else gate.setAttribute("hidden", "");
+})();
+
+// A practice arriving by share link opens straight away.
+(() => {
+  const enc = params.get("plan");
+  if (!enc) return;
+  const p = decodePlan(enc);
+  if (!p) return;
+  state.shared = p; state.tab = "practice"; state.practice = p.id;
 })();
 
 renderChrome();

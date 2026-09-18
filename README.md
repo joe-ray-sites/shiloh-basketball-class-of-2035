@@ -88,6 +88,15 @@ by date.
 Sources: Breakthrough Basketball youth drills and USA Basketball's
 foundational skills and drills.
 
+Coaches can also build their own plan on the Practice tab ("Build a
+practice"): pick drills from the library, set minutes and order, add notes,
+save. Saved plans live in that browser's localStorage under
+`shiloh-bb.practices` (a draft in progress is kept under
+`shiloh-bb.practiceDraft`), so they're per device — "Share link" packs the
+whole plan into a `?plan=` URL that opens on any phone with a "Save to my
+practices" button. Any stock plan can be copied into the builder with
+"Customize a copy".
+
 ## Access code
 
 The landing screen asks for a 4-digit code. It is a deterrent, not security —
