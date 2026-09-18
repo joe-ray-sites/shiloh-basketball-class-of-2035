@@ -810,6 +810,63 @@ button.game{width:100%;text-align:left;font:inherit;cursor:pointer;}
 /* order:1 keeps the chevron trailing the result on the mobile two-row layout. */
 .game-go{order:1;margin-left:10px;color:var(--muted);display:flex;flex:0 0 auto;}
 
+/* ── PRACTICE PLANS ───────────────────────────────────────── */
+.prow-n{flex:0 0 auto;min-width:56px;height:40px;display:grid;place-items:center;
+  border-radius:12px;background:var(--accent);color:#fff;
+  font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:16px;}
+.mrow-txt .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
+.cat{display:inline-block;font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:10px;
+  letter-spacing:.8px;text-transform:uppercase;padding:3px 7px;border-radius:6px;
+  background:rgba(7,26,46,.08);color:var(--navy);white-space:nowrap;}
+.cat.warm{background:#fff1d6;color:#8a5a00;}
+.cat.ball{background:rgba(37,150,190,.14);color:#1a6f8e;}
+.cat.pass{background:#e8e4f7;color:#5b45a8;}
+.cat.shoot{background:rgba(31,157,87,.14);color:#177a44;}
+.cat.foot{background:#e3eef7;color:#2d5f8a;}
+.cat.def{background:rgba(216,85,63,.13);color:#b23f2c;}
+.cat.reb{background:#f3e3d3;color:#8a4a12;}
+.cat.off{background:#dff2ef;color:#1f6f66;}
+.cat.fun{background:#fde4f0;color:#a8306d;}
+.cat.scrim{background:var(--navy);color:#fff;}
+
+.plan-head{background:var(--navy);color:#fff;border-radius:18px;padding:16px 20px;max-width:640px;}
+.plan-meta{font-size:11.5px;letter-spacing:.6px;text-transform:uppercase;color:#8fa6ba;margin-bottom:6px;}
+.plan-title{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:24px;line-height:1.1;}
+.plan-goal{font-size:13.5px;color:#dce6ef;margin-top:8px;line-height:1.45;}
+.plan-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.plan-tags .cat{background:rgba(255,255,255,.12);color:#fff;}
+
+.plan{margin-top:18px;max-width:640px;display:flex;flex-direction:column;gap:10px;}
+.blk{display:grid;grid-template-columns:62px 1fr;gap:12px;background:#fff;border:1px solid var(--line);
+  border-radius:16px;padding:14px 16px 14px 14px;}
+.blk-when{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding-top:2px;}
+.blk-at{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:17px;color:var(--navy);line-height:1;}
+.blk-min{font-size:11px;font-weight:700;letter-spacing:.4px;color:var(--muted);text-transform:uppercase;}
+.blk-body{min-width:0;}
+.blk-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.blk-name{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:17px;color:var(--navy);line-height:1.15;}
+.blk-desc{font-size:13.5px;color:var(--ink);line-height:1.45;margin-top:6px;}
+.blk-note{font-size:12.5px;color:var(--muted);line-height:1.45;margin-top:5px;}
+.blk-note b{color:var(--navy);font-weight:700;}
+.blk-src{font-size:11px;color:var(--muted);margin-top:8px;}
+.vid{display:inline-flex;align-items:center;gap:7px;margin-top:9px;text-decoration:none;
+  font-size:12.5px;font-weight:700;color:#fff;background:linear-gradient(180deg,#e2382b 0%,#c4291e 100%);
+  padding:7px 12px 7px 9px;border-radius:9px;box-shadow:0 6px 14px -8px rgba(196,41,30,.8);}
+.vid.read{background:var(--navy);box-shadow:none;}
+.vid svg{flex:0 0 auto;}
+.plan-foot{margin-top:16px;max-width:640px;font-size:12.5px;color:var(--muted);line-height:1.5;}
+
+/* drill library */
+.lib{display:flex;flex-direction:column;gap:22px;max-width:640px;}
+.lib-grp h3{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:17px;letter-spacing:.5px;
+  text-transform:uppercase;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.lib-grp h3 span{font-size:12px;color:var(--muted);font-family:"Roboto",sans-serif;font-weight:500;letter-spacing:0;text-transform:none;}
+.lib-list{display:flex;flex-direction:column;gap:8px;}
+.drill{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 16px;}
+.drill-name{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:16px;color:var(--navy);}
+.drill-desc{font-size:13px;color:var(--ink);line-height:1.45;margin-top:4px;}
+@media (hover:hover) and (pointer:fine){ .vid:hover{filter:brightness(1.07);} }
+
 /* ═══════════════════════════════════════════════════════════
    TABLET — two-up cards, roomier gutters
    ═══════════════════════════════════════════════════════════ */
@@ -1126,6 +1183,319 @@ const COACHES = [
   { id:2, name:"Assistant Coach TBD", role:"Assistant Coach", tag:"Assistant" },
 ];
 
+/* ── PRACTICE PLANS ────────────────────────────────────────────
+   DRILLS is the library: every drill or game the practices draw from, with a
+   link to the video (YouTube where the source page embeds one, otherwise the
+   source's own video page or write-up). Practices reference drills by key so
+   a link only ever lives in one place.
+     { name, cat, src, url, video?, desc }
+     cat: warm ball pass shoot foot def reb off fun scrim
+     src: "btb" Breakthrough Basketball · "usab" USA Basketball
+   PRACTICES: 60-minute plans. Each block = { min, drill, note? }. `date` is
+   null until the practice schedule is set — add "2026-11-10" style dates and
+   the list sorts itself. */
+const CATS = {
+  warm:  "Warm-up",       ball: "Ball Handling",  pass: "Passing",
+  shoot: "Shooting",      foot: "Footwork",       def:  "Defense",
+  reb:   "Rebounding",    off:  "Team Offense",   fun:  "Fun Game",
+  scrim: "Scrimmage",
+};
+const SOURCES = { btb: "Breakthrough Basketball", usab: "USA Basketball" };
+const YT = (id, t) => `https://www.youtube.com/watch?v=${id}${t ? "&t=" + t + "s" : ""}`;
+
+const DRILLS = {
+  /* ── Breakthrough Basketball ── */
+  form1:      { name:"1-Hand Form Shooting", cat:"shoot", src:"btb",
+                url:"https://www.breakthroughbasketball.com/fundamentals/shooting-drills", video:YT("Xznq21bL4Hg"),
+                desc:"Close to the basket, shooting hand only. Elbow under the ball, snap the wrist, hold the follow-through until it hits the net." },
+  layup3:     { name:"Lay-Up Progressions", cat:"shoot", src:"btb",
+                url:"https://www.breakthroughbasketball.com/drills/lay-up-progressions", video:YT("Tm7N2HU4noQ"),
+                desc:"Three steps: one-step layups from the block, then two steps, then a full dribble drive. Right side first, then the left hand." },
+  dematha:    { name:"DeMatha Team Finishing", cat:"shoot", src:"btb",
+                url:"https://www.breakthroughbasketball.com/coaching/dematha-finishing-drill", video:YT("yVmks9hqIyA"),
+                desc:"Two lines at half court, continuous layups with a pass, a cut and a rebound. Everyone moves, nobody stands still." },
+  trailer:    { name:"2-on-1 Fast Break with Trailer", cat:"off", src:"btb",
+                url:"https://www.breakthroughbasketball.com/drills/2on1Trailer", video:YT("hOGlfLZTrk8"),
+                desc:"Two attackers against one defender with a trailer chasing. Teaches when to pass and when to keep it on the break." },
+  chaser:     { name:"1v1 Layup with a Chaser", cat:"shoot", src:"btb",
+                url:"https://www.breakthroughbasketball.com/coaching/chaser-finishing-drill", video:YT("gyKaon9eIkc"),
+                desc:"Attack the rim with a defender chasing from behind. Finish strong and off the correct foot with pressure coming." },
+  grass:      { name:"Kill the Grass", cat:"ball", src:"btb",
+                url:"https://www.breakthroughbasketball.com/drills/kill-the-grass-dribbling", video:YT("h1avoHBvaNY"),
+                desc:"Dribble inside a small box using every move you know — crossover, between the legs, behind the back — and never stop moving your feet." },
+  d210:       { name:"2-1-0 Dribble Moves", cat:"ball", src:"btb",
+                url:"https://www.breakthroughbasketball.com/drills/0-1-2-dribbling",
+                desc:"Learn a move with two dribbles before it, then one, then none. The same move gets quicker each round." },
+  speed1v1:   { name:"1v1 Speed Dribble", cat:"ball", src:"btb",
+                url:"https://www.breakthroughbasketball.com/drills/1on1speeddribble", video:YT("hdtElmwLIOQ"),
+                desc:"Full-court race: the dribbler pushes with the weak hand while the defender tries to cut them off before the layup." },
+  monkey:     { name:"Monkey in the Middle", cat:"pass", src:"btb",
+                url:"https://www.breakthroughbasketball.com/drills/bigelow-2-passing-drills", video:YT("qt6Q2DRY8Po"),
+                desc:"Two passers, one defender in the middle. Pass fakes, step-through passes and moving to get open." },
+  wall:       { name:"Wall Passing", cat:"pass", src:"btb",
+                url:"https://www.breakthroughbasketball.com/drills/wall-passing-bigelow", video:YT("O1fV8QagnVo"),
+                desc:"Chest and bounce passes off a wall, both hands, quick catch and release. Great for a station while others shoot." },
+  tenrow:     { name:"10 in a Row Passing Game", cat:"pass", src:"btb",
+                url:"https://www.breakthroughbasketball.com/play.asp?id=1656", video:YT("Hpyg18buShA", 401),
+                desc:"Teams keep the ball away without dribbling. Ten straight completed passes scores a point." },
+  pairpivot:  { name:"Partner Pass & Pivot", cat:"foot", src:"btb",
+                url:"https://www.breakthroughbasketball.com/play.asp?id=75", video:YT("6zQjdtye3Xs"),
+                desc:"Catch, jump stop, front pivot, pass. Seven progressions that build footwork and passing at the same time." },
+  redlight:   { name:"Red Light, Green Light", cat:"warm", src:"btb",
+                url:"https://www.breakthroughbasketball.com/fundamentals/bigelow-footwork-body-control", video:YT("D7R0bruSygg"),
+                desc:"Dribble on green, jump stop on red, pivot on yellow. Body control disguised as a playground game." },
+  closeout:   { name:"3v3 Live from a Closeout", cat:"def", src:"btb",
+                url:"https://www.breakthroughbasketball.com/drills/closeout-to-live", video:YT("atQEeH61_e0"),
+                desc:"Defense closes out on a pass, then it's live 3v3. Short, choppy steps and high hands on the closeout." },
+  slide:      { name:"Defensive Slides", cat:"def", src:"btb",
+                url:"https://www.breakthroughbasketball.com/defense/step-slide", video:YT("myd2ozcpiwg"),
+                desc:"Stay low, push off the back foot, never cross the feet. Coach calls the direction." },
+  shell:      { name:"Shell Drill", cat:"def", src:"btb",
+                url:"https://www.breakthroughbasketball.com/defense/shell-drill-sucks", video:YT("t9GWqQI-XVM"),
+                desc:"4v4 half court, offense passes around the perimeter, defense moves on every pass: ball, help, deny." },
+  creighton:  { name:"Creighton 3v3 Rebounding", cat:"reb", src:"btb",
+                url:"https://www.breakthroughbasketball.com/coaching/creighton-rebounding-drill", video:YT("r4tTFly3rIU"),
+                desc:"Coach shoots, three defenders box out three attackers. Defense scores by securing the board, offense by tipping it in." },
+  passcut:    { name:"5v0 Pass & Cut", cat:"off", src:"btb",
+                url:"https://www.breakthroughbasketball.com/play.asp?id=7704", video:YT("inc4zoIjzEI"),
+                desc:"Five out, no defense: pass, cut hard to the basket, fill the open spot. The base of the offense." },
+  twodrib:    { name:"4v4 Two-Dribble Limit", cat:"scrim", src:"btb",
+                url:"https://www.breakthroughbasketball.com/coaching/youth-offense-dribbling-drill", video:YT("9rmqHLkkHpo"),
+                desc:"Live 4v4 where nobody may take more than two dribbles. Forces passing, cutting and quick decisions." },
+  passtag:    { name:"Passing Tag", cat:"fun", src:"btb",
+                url:"https://www.breakthroughbasketball.com/coaching/passing-tag", video:YT("RmYhWqzj9nI"),
+                desc:"Two taggers share one ball and can only move it by passing; they tag by touching a runner while holding the ball." },
+  rps:        { name:"Rock Paper Scissors 1v1", cat:"fun", src:"btb",
+                url:"https://www.breakthroughbasketball.com/coaching/rock-paper-scissors-game", video:YT("k-9w4SddOGo"),
+                desc:"Partners play rock-paper-scissors at the elbow; the winner attacks, the loser defends, live to the rim." },
+  dribbletag: { name:"Dribble Tag – Everyone It", cat:"fun", src:"btb",
+                url:"https://www.breakthroughbasketball.com/play.asp?id=1717", video:YT("Hpyg18buShA", 1340),
+                desc:"Everyone dribbles inside the half court and tries to tag others while protecting their own ball. Lose your dribble, do five jumping jacks and rejoin." },
+  beginner10: { name:"10 Best Beginner Drills", cat:"ball", src:"btb",
+                url:"https://www.breakthroughbasketball.com/coaching/best-beginner-drills", video:YT("YvQMWnNV__8"),
+                desc:"A grab bag of foundational drills and games for the youngest players. Good rainy-day reference for the coaches." },
+  nopaint:    { name:"No Paint Defense", cat:"def", src:"btb",
+                url:"https://www.breakthroughbasketball.com/drills/no-paint",
+                desc:"3v3 where the offense scores a point every time the ball or a dribbler gets into the paint. Defense learns to keep the ball outside." },
+  pirate:     { name:"Pirate Dribbling, Mr. Fox & Coin Drop", cat:"fun", src:"btb",
+                url:"https://www.breakthroughbasketball.com/drills/3-simple-and-fun-youth-drills",
+                desc:"Three quick games: dribble with one eye covered, sneak up on the fox with stop-and-go dribbles, and pick up a coin without losing the ball." },
+  cone:       { name:"Cone Touch Dribbling Game", cat:"fun", src:"btb",
+                url:"https://www.breakthroughbasketball.com/drills/cone-touch-dribbling-drill",
+                desc:"Dribble to cones and touch as many as you can in 30 seconds while keeping your eyes up. Twelve variations to keep it fresh." },
+  pivot21:    { name:"Pivot & Finishing Game to 21", cat:"fun", src:"btb",
+                url:"https://www.breakthroughbasketball.com/drills/pivot21",
+                desc:"Shoot from the elbow, chase the rebound, pivot and finish. Two points for the shot, one for the putback, first to 21." },
+  scorestops: { name:"Score for Stops", cat:"def", src:"btb",
+                url:"https://www.breakthroughbasketball.com/drills/defensivechallenge",
+                desc:"Live play where only the defense keeps score: a stop is a point, a rebound is a point. Kids fight for stops." },
+  jumpstop:   { name:"Jump Stop & Pivots", cat:"foot", src:"btb",
+                url:"https://www.breakthroughbasketball.com/drills/jumpstops",
+                desc:"Dribble, jump stop on two feet, pivot front and reverse without traveling. The fix for most youth turnovers." },
+
+  /* ── USA Basketball ── */
+  usEgg:      { name:"Stationary Ball Handling – Eggbeater & Rhythm", cat:"warm", src:"usab",
+                url:"https://www.usab.com/videos/2017/03/stationary-ball-handling-eggbeater-rhythm-dribble",
+                desc:"Two-ball and one-ball stationary handling to start practice. Eyes up, dribble below the knee, pound it." },
+  usSpeed:    { name:"Speed Dribble on the Move", cat:"ball", src:"usab",
+                url:"https://www.usab.com/videos/2022/04/dribbling-on-the-move-speed-dribble",
+                desc:"Push the ball out in front and run. Full court down and back, right hand there, left hand back." },
+  usHuman:    { name:"Human Cone Dribbling", cat:"ball", src:"usab",
+                url:"https://www.usab.com/videos/2022/04/dribbling-on-the-move-human-cone-dribbling",
+                desc:"Teammates stand as cones; the dribbler weaves through with a change of hands at each one, then swap." },
+  usCross:    { name:"Crossover on the Move", cat:"ball", src:"usab",
+                url:"https://www.usab.com/videos/2022/04/dribbling-on-the-move-crossover-dribble",
+                desc:"Low, quick crossover at each cone with a change of pace out of it." },
+  usHes:      { name:"Hesitation Dribble", cat:"ball", src:"usab",
+                url:"https://www.usab.com/videos/2018/01/hesitation-dribble",
+                desc:"Slow down like you're stopping, then explode past. Sell it with the eyes and shoulders." },
+  usWeave:    { name:"Five-Player Weave", cat:"pass", src:"usab",
+                url:"https://www.usab.com/videos/2017/11/passing-with-two-players-on-the-move-five-player-weave",
+                desc:"Pass and follow behind your pass, full court, finishing with a layup. Start with three players if five is too many." },
+  usFour:     { name:"Four-Corner Passing", cat:"pass", src:"usab",
+                url:"https://www.usab.com/videos/2017/03/four-corner-passing",
+                desc:"Four lines on the corners of the key; pass, follow to the next line. Chest passes first, then bounce passes." },
+  us2on1:     { name:"Full-Court 2-on-1 Passing", cat:"off", src:"usab",
+                url:"https://www.usab.com/videos/2017/02/passing-in-advantage-situations-full-court-two-on-one",
+                desc:"Two attackers, one defender, full court. Make the defender commit, then pass for the layup." },
+  usSCS:      { name:"Side-Center-Side Passing", cat:"pass", src:"usab",
+                url:"https://www.usab.com/videos/2017/02/passing-with-two-players-on-the-move-side-center-side-passing",
+                desc:"Three lanes, two players on the move, the ball goes side to center to side without a dribble." },
+  usShoot:    { name:"USA Basketball Shooting Drills", cat:"shoot", src:"usab",
+                url:"https://www.usab.com/videos/2021/05/usa-basketball-shooting-drills",
+                desc:"A set of short shooting drills that build from form to game shots." },
+  usBEEF:     { name:"BEEF Shooting Form", cat:"shoot", src:"usab",
+                url:"https://www.usab.com/videos/2021/04/beef-acronym-for-shooting-form",
+                desc:"Balance, Eyes, Elbow, Follow-through. The four words every player should be able to say back to you." },
+  usFT:       { name:"Free Throws", cat:"shoot", src:"usab",
+                url:"https://www.usab.com/videos/2017/12/free-throws",
+                desc:"Same routine every time: feet set, breathe, dribble, shoot. Shoot them tired, in pairs, and keep a team count." },
+  usSelfPass: { name:"Two-Hand Shooting from a Self-Pass", cat:"shoot", src:"usab",
+                url:"https://www.usab.com/videos/2017/11/two-hand-shooting-from-a-self-pass",
+                desc:"Toss it to yourself, catch in your shot pocket on a hop, and shoot. Builds a quick, balanced release." },
+  usFTRebD:   { name:"Free Throw Rebounding – Defense", cat:"reb", src:"usab",
+                url:"https://www.usab.com/videos/2018/01/free-throw-rebounding-defense",
+                desc:"Box out on the free throw and go get the ball. Everyone has a job on a missed free throw." },
+  usOutlet:   { name:"Rebound, Pivot & Outlet Pass", cat:"reb", src:"usab",
+                url:"https://www.usab.com/videos/2017/03/rebound-pivot-and-outlet-pass",
+                desc:"Grab the rebound with two hands, chin it, pivot to the outside and throw the outlet to start the break." },
+  usBlockout: { name:"Basic Pivots to Block Out", cat:"reb", src:"usab",
+                url:"https://www.usab.com/videos/2015/08/basic-pivots-to-block-out",
+                desc:"Find your player, pivot into them, arms wide, then go get the ball. Hit first, then rebound." },
+  usRebDrill: { name:"Foundational Rebounding Drill", cat:"reb", src:"usab",
+                url:"https://www.usab.com/videos/2015/06/foundational-level-rebounding-drill",
+                desc:"Coach tosses it off the glass, players attack the ball at its highest point and land ready to pivot." },
+  usStance:   { name:"Proper Defensive Stance", cat:"def", src:"usab",
+                url:"https://www.usab.com/videos/2017/12/proper-defensive-stance",
+                desc:"Feet wider than the shoulders, knees bent, back straight, hands active. Hold it, then move from it." },
+  usPivot:    { name:"Pivoting", cat:"foot", src:"usab",
+                url:"https://www.usab.com/videos/2017/02/pivoting",
+                desc:"Front and reverse pivots on both feet with the ball protected. The pivot foot stays glued to the floor." },
+  usZigzag:   { name:"Full-Court Zigzag", cat:"def", src:"usab",
+                url:"https://www.usab.com/videos/2017/02/full-court-zigzag-no-offense-and-controlled-player-beat-off-the-dribble",
+                desc:"Slide corner to corner the length of the floor, then add a dribbler at half speed to guard." },
+  usDPP:      { name:"Dribble, Pivot, Pass", cat:"foot", src:"usab",
+                url:"https://www.usab.com/videos/2017/02/dribble-pivot-pass",
+                desc:"Dribble to a spot, jump stop, pivot away from pressure and make the pass. Three skills in one rep." },
+  usScreen:   { name:"Setting & Using the Screen", cat:"off", src:"usab",
+                url:"https://www.usab.com/videos/2018/01/setting-and-using-the-screen",
+                desc:"Screener sets feet and stays still; the cutter waits, then comes off shoulder to shoulder." },
+  usCuts:     { name:"Types of Cuts", cat:"off", src:"usab",
+                url:"https://www.usab.com/videos/2017/02/types-of-cuts-reacting-to-the-cuts",
+                desc:"V-cut, back cut and basket cut, and how the passer reads each one." },
+  us3PC:      { name:"3-Player Pass & Cut", cat:"off", src:"usab",
+                url:"https://www.usab.com/videos/2015/06/foundational-offense-3-player-pass-and-cut",
+                desc:"Three players on the perimeter: pass, cut to the basket, replace. Add a coach on defense when it looks clean." },
+  us5on0:     { name:"5-on-0 Screening with Layup", cat:"off", src:"usab",
+                url:"https://www.usab.com/videos/2014/12/5-on-0-screening-with-layup",
+                desc:"Walk through the offense with screens and finish every possession with a layup. Then jog it, then run it." },
+  us5on5:     { name:"5-on-5 Play", cat:"scrim", src:"usab",
+                url:"https://www.usab.com/videos/2014/12/5-on-5-play",
+                desc:"Live scrimmage. Coaches stop play to teach only when the whole group needs the same fix." },
+  usJab:      { name:"On-Ball Defense – Jab Step", cat:"def", src:"usab",
+                url:"https://www.usab.com/videos/2020/05/on-ball-defense-defending-the-jab-step",
+                desc:"Stay down on the jab, react to the ball not the fake. One arm's length away." },
+  usCloseout: { name:"Closing Out on a Shooter", cat:"def", src:"usab",
+                url:"https://www.usab.com/videos/2018/01/closing-out-on-a-shooter",
+                desc:"Sprint, then chop the feet with a hand up. Take away the shot without flying past." },
+  usDeny:     { name:"Deny the Ball", cat:"def", src:"usab",
+                url:"https://www.usab.com/videos/2017/11/deny-the-ball",
+                desc:"One pass away: hand in the passing lane, see the ball and your player. Beat the cutter to the spot." },
+};
+
+const PRACTICES = [
+  { id:1, title:"Ball in Hand", date:null,
+    goal:"First practice: get a ball in every hand, learn the words we'll use all season and finish with a game.",
+    blocks:[
+      { min:5,  drill:"usEgg",     note:"Every player has a ball. Eyes up the whole time." },
+      { min:10, drill:"usSpeed",   note:"Down with the right, back with the left. Add Crossover on the Move for the last 4 minutes." },
+      { min:8,  drill:"usFour",    note:"Chest pass first, bounce pass second. Call the receiver's name." },
+      { min:10, drill:"layup3",    note:"Right side only today. Outside foot, inside knee, soft off the glass." },
+      { min:7,  drill:"jumpstop",  note:"Two-foot stop, then front pivot. No travels counts as a win." },
+      { min:10, drill:"dribbletag", note:"Everyone is it. Lose your dribble, five jumping jacks, back in." },
+      { min:10, drill:"us3PC",     note:"3v3 half court, pass and cut every time. No dribbling for the first 5 minutes." },
+    ] },
+  { id:2, title:"Pass & Move", date:null,
+    goal:"Passing with a purpose, moving without the ball, and the first look at real defensive stance.",
+    blocks:[
+      { min:5,  drill:"redlight",  note:"Green = dribble, red = jump stop, yellow = pivot." },
+      { min:8,  drill:"usHuman",   note:"Change hands at every human cone. Swap cones and dribblers every minute." },
+      { min:12, drill:"monkey",    note:"6 minutes Monkey in the Middle, 6 minutes 10 in a Row (see the Drill Library)." },
+      { min:10, drill:"dematha",   note:"Keep the lines moving. Miss a layup, get your own rebound." },
+      { min:8,  drill:"usStance",  note:"Hold the stance for 10 seconds, then 4 minutes of Defensive Slides on the coach's call." },
+      { min:7,  drill:"passtag",   note:"Two taggers, one ball, passes only." },
+      { min:10, drill:"passcut",   note:"5v0 for 4 minutes, then 5v5 running the same pass-and-cut." },
+    ] },
+  { id:3, title:"Layup Day", date:null,
+    goal:"Finishing at the rim with both hands and with a defender coming, plus the closeout on defense.",
+    blocks:[
+      { min:5,  drill:"usEgg",     note:"Add a rhythm dribble between the legs for players who are ready." },
+      { min:8,  drill:"grass",     note:"Small box, every move you own, feet never stop." },
+      { min:15, drill:"chaser",    note:"8 minutes with a chaser, then 7 minutes of DeMatha Finishing on the left side." },
+      { min:8,  drill:"usSCS",     note:"No dribbles. If the pass is late, the runner slows down, not the other way round." },
+      { min:9,  drill:"usCloseout", note:"Sprint, chop, hand up. Finish with 3v3 Live from a Closeout." },
+      { min:8,  drill:"rps",       note:"Winner attacks, loser defends, live to the rim. Rotate partners every 2 minutes." },
+      { min:7,  drill:"twodrib",   note:"4v4, two dribbles max. Reward the extra pass out loud." },
+    ] },
+  { id:4, title:"Defense First", date:null,
+    goal:"Stance, slides, help and box-outs. Defense wins 4th-grade games, so it gets the biggest block tonight.",
+    blocks:[
+      { min:5,  drill:"redlight",  note:"Faster calls this week." },
+      { min:7,  drill:"usHes",     note:"Slow, then go. Sell it with the shoulders." },
+      { min:18, drill:"shell",     note:"5 minutes Proper Defensive Stance, 6 minutes Full-Court Zigzag, then 7 minutes of Shell Drill: ball, help, deny on every pass." },
+      { min:8,  drill:"usBlockout", note:"Find, hit, then go get it. Every rebound counts for the defense." },
+      { min:7,  drill:"usBEEF",    note:"Say the four words back to the coach, then Two-Hand Shooting from a Self-Pass." },
+      { min:8,  drill:"pirate",    note:"Pirate dribbling, Mr. Fox, then Coin Drop. Loud and silly on purpose." },
+      { min:7,  drill:"closeout",  note:"3v3 live from the closeout. Defense gets a point for every stop." },
+    ] },
+  { id:5, title:"Fast Break", date:null,
+    goal:"Rebound, outlet, run. Turning defense into easy baskets.",
+    blocks:[
+      { min:5,  drill:"usEgg" },
+      { min:8,  drill:"usSpeed",   note:"Push the ball out in front. Race a partner." },
+      { min:10, drill:"us2on1",    note:"Make the defender pick, then pass. Layups only." },
+      { min:10, drill:"trailer",   note:"Add the trailer once the 2-on-1 looks clean." },
+      { min:7,  drill:"usOutlet",  note:"Chin it, pivot outside, outlet. Guard calls 'ball!'" },
+      { min:10, drill:"cone",      note:"30-second rounds, count your cones. Eyes up or the touch doesn't count." },
+      { min:10, drill:"us5on5",    note:"Full court. Every made basket, the other team pushes it fast." },
+    ] },
+  { id:6, title:"Shooting Form", date:null,
+    goal:"Slow down and build the shot: form shooting, free throws, then a game that rewards good shots.",
+    blocks:[
+      { min:5,  drill:"usEgg" },
+      { min:18, drill:"form1",     note:"6 minutes one-hand form, 6 minutes USA Basketball Shooting Drills, 6 minutes Free Throws with a team count." },
+      { min:8,  drill:"d210",      note:"Pick one move (crossover). Two dribbles in, one dribble in, then none." },
+      { min:7,  drill:"usWeave",   note:"Start with the three-player weave. Layup at each end." },
+      { min:7,  drill:"usDeny",    note:"One pass away: hand in the lane, see both." },
+      { min:8,  drill:"pivot21",   note:"Elbow shot is 2, putback is 1, first to 21." },
+      { min:7,  drill:"twodrib",   note:"4v4 two-dribble limit. Only open shots count." },
+    ] },
+  { id:7, title:"Team Offense", date:null,
+    goal:"Cuts, screens and spacing. Learning to play together without the ball.",
+    blocks:[
+      { min:5,  drill:"redlight" },
+      { min:7,  drill:"usCross",   note:"Low and quick at every cone, change of pace out of it." },
+      { min:15, drill:"usCuts",    note:"5 minutes Types of Cuts, 5 minutes 3-Player Pass & Cut, 5 minutes Setting & Using the Screen." },
+      { min:8,  drill:"layup3",    note:"Left side tonight. Left hand, off the right foot." },
+      { min:8,  drill:"nopaint",   note:"3v3, offense scores if the ball gets into the paint. Defense keeps it out." },
+      { min:7,  drill:"dribbletag", note:"Everyone it, half court only." },
+      { min:10, drill:"us5on5",    note:"Run the pass-and-cut. A screen or a cut before every shot." },
+    ] },
+  { id:8, title:"Rebound & Run", date:null,
+    goal:"Owning the glass on both ends, then getting out and running with it.",
+    blocks:[
+      { min:5,  drill:"usEgg" },
+      { min:12, drill:"creighton", note:"6 minutes Foundational Rebounding Drill off the glass, then 6 minutes of Creighton 3v3." },
+      { min:8,  drill:"usSCS",     note:"Full court, no dribble, finish with a layup." },
+      { min:8,  drill:"dematha",   note:"Both sides. Count team makes in 8 minutes and beat it next week." },
+      { min:7,  drill:"usJab",     note:"Stay down on the jab. React to the ball, not the fake." },
+      { min:10, drill:"rps",       note:"Add a second defender chasing from the baseline for players who want it." },
+      { min:10, drill:"us5on5",    note:"Full court. Defensive rebound, outlet, run. Every time." },
+    ] },
+  { id:9, title:"Competition Day", date:null,
+    goal:"Everything is a contest tonight: races, 1v1s and a long scrimmage. Keep score, celebrate effort.",
+    blocks:[
+      { min:5,  drill:"grass",     note:"Warm-up in the box, then 30 seconds of the fastest dribbling you've got." },
+      { min:8,  drill:"speed1v1",  note:"Weak hand only. Loser of each race does the next one too." },
+      { min:8,  drill:"chaser",    note:"Score a point for every finish through the chaser." },
+      { min:8,  drill:"tenrow",    note:"First team to three rounds of ten in a row." },
+      { min:8,  drill:"scorestops", note:"Only the defense keeps score." },
+      { min:8,  drill:"passtag",   note:"Last runner standing picks the next game." },
+      { min:15, drill:"us5on5",    note:"Two 7-minute halves with a running clock. Free throws on every foul." },
+    ] },
+  { id:10, title:"Game Ready", date:null,
+    goal:"Put it all together the way it looks on game day: free throws, the offense, the defense, then play.",
+    blocks:[
+      { min:5,  drill:"usEgg" },
+      { min:7,  drill:"usHes",     note:"Hesitation into a layup, both sides." },
+      { min:10, drill:"usFT",      note:"4 minutes of free throws in pairs, then 6 minutes of Lay-Up Progressions at game speed." },
+      { min:8,  drill:"us5on0",    note:"Walk it, jog it, run it. Layup on every possession." },
+      { min:8,  drill:"shell",     note:"4v4 shell, then let it go live for the last 3 minutes." },
+      { min:7,  drill:"pirate",    note:"Coach picks the crowd favorite." },
+      { min:15, drill:"us5on5",    note:"Game-day rules and substitutions. Coaches only stop play for a teaching moment everyone needs." },
+    ] },
+];
+
 /* ── SCHEDULE + GAME STATS ─────────────────────────────────────
    One entry per game. Add `final:true`, the score and a `stats` block when a
    game gets played and everything else — each player's season totals, the
@@ -1401,13 +1771,15 @@ const fmtDate = (iso, opts) =>
 const NAV = [
   { id:"schedule", label:"Schedule",   icon:"M8 2v4M16 2v4M3 9h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" },
   { id:"players",  label:"Players",    icon:"M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" },
-  { id:"stats",    label:"Team Stats", icon:"M4 20V10M10 20v-7M16 20V4M22 20H2" },
+  { id:"practice", label:"Practice",   icon:"M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 12h6M9 16h4" },
   { id:"menu",     label:"Menu",       icon:"M4 7h16M4 12h16M4 17h16" },
 ];
 const HOME_TAB = NAV[0].id;   // the logo returns here
 
 // Pages reached through Menu rather than the bar itself.
 const MENU_PAGES = [
+  { id:"stats", label:"Team Stats", desc:"Season totals, leaders and box scores",
+    icon:"M4 20V10M10 20v-7M16 20V4M22 20H2" },
   { id:"coaches", label:"Coaches", desc:"The staff guiding the Saints",
     icon:"M12 2l2.4 5 5.6.6-4.2 3.9 1.2 5.5L12 19.3 6.9 22l1.2-5.5L4 12.6 9.6 12z" },
   { id:"seasons", label:"Past Seasons", desc:"Schedules and team stats from previous years",
@@ -1438,6 +1810,8 @@ const state = {
   leaders: null,      // open Team Stats breakdown ("pts" | "reb" | ...)
   season: null,       // open past season (year)
   seasonTab: "schedule", // "schedule" | "stats" within a past season
+  practice: null,     // open practice plan id
+  practiceTab: "plans",  // "plans" | "drills" on the Practice tab
   style: STYLES.includes(urlCard) ? urlCard : (STYLES.includes(stored) ? stored : "bold"),
   flipped: new Set(),
 };
@@ -2093,6 +2467,107 @@ function teamStatsView(games, label) {
     </section>` : ""}`;
 }
 
+/* ── Practice plans ───────────────────────────────────────── */
+const practiceById = (id) => PRACTICES.find(p => p.id === id);
+const practiceMinutes = (p) => p.blocks.reduce((n, b) => n + b.min, 0);
+// The facets a practice covers, in the order they first appear (warm-up and
+// scrimmage are every week, so they're left off the summary chips).
+const practiceCats = (p) => [...new Set(p.blocks.map(b => DRILLS[b.drill].cat))]
+  .filter(c => c !== "warm" && c !== "scrim");
+const catChip = (c) => `<span class="cat ${c}">${CATS[c]}</span>`;
+const clock = (min) => `${Math.floor(min / 60)}:${String(min % 60).padStart(2, "0")}`;
+
+const playIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>`;
+const outIcon  = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>`;
+
+// Link to the drill's video: YouTube when the source page embeds one, else
+// the source's own video page. Write-ups with no video get a "Read" button.
+function drillLink(d) {
+  const href = d.video || d.url;
+  const isVideo = !!d.video || d.src === "usab";
+  return `<a class="vid${isVideo ? "" : " read"}" href="${esc(href)}" target="_blank" rel="noopener noreferrer">
+    ${isVideo ? playIcon : ""}${isVideo ? "Watch the drill" : "Read the drill"} ${outIcon}
+  </a>`;
+}
+
+function practiceListView() {
+  const sorted = [...PRACTICES].sort((a, b) =>
+    (a.date && b.date) ? a.date.localeCompare(b.date) : a.id - b.id);
+  return `<div class="mlist">${sorted.map(p => `
+    <button class="mrow" data-practice="${p.id}">
+      <span class="prow-n">P${p.id}</span>
+      <span class="mrow-txt">
+        <b>${esc(p.title)}</b>
+        <span>${p.date ? fmtDate(p.date, { weekday:"short", month:"short", day:"numeric" }) : "Date TBD"} · ${practiceMinutes(p)} min</span>
+        <span class="tags">${practiceCats(p).map(catChip).join("")}</span>
+      </span>
+      <svg class="mrow-go" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+    </button>`).join("")}</div>`;
+}
+
+function practiceDetailView(id) {
+  const p = practiceById(id);
+  if (!p) return `<p class="empty">Unknown practice.</p>`;
+  let at = 0;
+  const rows = p.blocks.map(b => {
+    const d = DRILLS[b.drill];
+    const row = `<div class="blk">
+      <div class="blk-when"><span class="blk-at">${clock(at)}</span><span class="blk-min">${b.min} min</span></div>
+      <div class="blk-body">
+        <div class="blk-top">${catChip(d.cat)}<span class="blk-name">${esc(d.name)}</span></div>
+        <p class="blk-desc">${esc(d.desc)}</p>
+        ${b.note ? `<p class="blk-note"><b>Coach:</b> ${esc(b.note)}</p>` : ""}
+        ${drillLink(d)}
+        <div class="blk-src">${SOURCES[d.src]}</div>
+      </div>
+    </div>`;
+    at += b.min;
+    return row;
+  }).join("");
+
+  return `
+    <div class="plan-head">
+      <div class="plan-meta">Practice ${p.id} · ${practiceMinutes(p)} minutes · ${p.date ? fmtDate(p.date, { weekday:"long", month:"long", day:"numeric" }) : "Date TBD"}</div>
+      <div class="plan-title">${esc(p.title)}</div>
+      <p class="plan-goal">${esc(p.goal)}</p>
+      <div class="plan-tags">${practiceCats(p).map(catChip).join("")}</div>
+    </div>
+    <div class="plan">${rows}</div>
+    <p class="plan-foot">Times are a guide: if a drill is clicking, let it run and trim the next one. Water break between any two blocks.</p>`;
+}
+
+function drillLibraryView() {
+  const groups = Object.keys(CATS).map(c => {
+    const list = Object.values(DRILLS).filter(d => d.cat === c)
+      .sort((a, b) => a.name.localeCompare(b.name));
+    if (!list.length) return "";
+    return `<section class="lib-grp">
+      <h3>${CATS[c]} <span>${list.length}</span></h3>
+      <div class="lib-list">${list.map(d => `<div class="drill">
+        <div class="drill-name">${esc(d.name)}</div>
+        <p class="drill-desc">${esc(d.desc)}</p>
+        ${drillLink(d)}
+        <div class="blk-src">${SOURCES[d.src]}</div>
+      </div>`).join("")}</div>
+    </section>`;
+  }).join("");
+  return `<div class="lib">${groups}</div>`;
+}
+
+function practiceView() {
+  if (state.practice) return practiceDetailView(state.practice);
+  const tab = state.practiceTab;
+  return `
+    <div class="bstabs" role="tablist">
+      <button class="bstab ${tab === "plans" ? "is-on" : ""}" data-practicetab="plans"
+              role="tab" aria-selected="${tab === "plans"}">Practice Plans</button>
+      <button class="bstab ${tab === "drills" ? "is-on" : ""}" data-practicetab="drills"
+              role="tab" aria-selected="${tab === "drills"}">Drill Library</button>
+    </div>
+    ${tab === "drills" ? drillLibraryView() : practiceListView()}`;
+}
+
 /* ═══════════════════════════════════════════════════════════
    RENDER — views
    ═══════════════════════════════════════════════════════════ */
@@ -2124,8 +2599,10 @@ function render() {
   const boxGame = state.box && gameById(state.box);
   const sn = state.season && seasonByYear(state.season);
   const snLabel = sn ? sn.label : "";
+  const prac = state.practice && practiceById(state.practice);
   $("#page-title").textContent =
     tab === "players"  ? "Meet the Team"
+  : tab === "practice" ? (prac ? `Practice ${prac.id}` : state.practiceTab === "drills" ? "Drill Library" : "Practice")
   : tab === "coaches"  ? "Coaching Staff"
   : tab === "menu"     ? "Menu"
   : tab === "seasons"  ? (boxGame ? `${TEAM.name} vs ${boxGame.opp}`
@@ -2136,6 +2613,9 @@ function render() {
   :                      "Game Schedule";
   $("#page-sub").textContent =
     tab === "players"  ? ""
+  : tab === "practice" ? (prac ? esc(prac.title)
+        : state.practiceTab === "drills" ? `${Object.keys(DRILLS).length} drills and games with videos`
+        : `${PRACTICES.length} practice plans · 60 minutes each`)
   : tab === "coaches"  ? `${COACHES.length} coaches guiding the Saints`
   : tab === "menu"     ? "More from the Saints hub"
   : tab === "seasons"  ? (boxGame ? `Box score · ${fmtDate(boxGame.date, { month:"long", day:"numeric", year:"numeric" })}`
@@ -2154,8 +2634,9 @@ function render() {
       state.box      ? { attr:"data-back",         label:sn ? `${snLabel} schedule` : "All games" }
     : state.leaders  ? { attr:"data-back-leaders", label:sn ? `${snLabel} Team Stats` : "Team Stats" }
     : state.season   ? { attr:"data-back-season",  label:"Past Seasons" }
+    : state.practice ? { attr:"data-back-practice", label:"All practices" }
     : null;
-  ["data-back", "data-back-leaders", "data-back-season"].forEach(a => crumb.removeAttribute(a));
+  ["data-back", "data-back-leaders", "data-back-season", "data-back-practice"].forEach(a => crumb.removeAttribute(a));
   crumb.hidden = !back;
   if (back) { crumb.setAttribute(back.attr, "1"); $("#crumb-txt").textContent = back.label; }
 
@@ -2189,6 +2670,8 @@ function render() {
       + `<div class="grid grid-coach">${COACHES.map(coachCard).join("")}</div>`;
   } else if (tab === "stats") {
     view.innerHTML = state.leaders ? leadersView(state.leaders) : teamStatsView();
+  } else if (tab === "practice") {
+    view.innerHTML = practiceView();
   } else if (tab === "menu") {
     view.innerHTML = menuView();
   } else if (tab === "seasons") {
@@ -2307,6 +2790,8 @@ function goTab(id) {
   state.leaders = null;
   state.season = null;
   state.seasonTab = "schedule";
+  state.practice = null;
+  state.practiceTab = "plans";
   history.replaceState(null, "", location.search + "#" + id);
   render();
   $("#main").scrollIntoView({ block: "start" });
@@ -2336,6 +2821,12 @@ document.addEventListener("click", (e) => {
   const sea = e.target.closest("[data-season]");
   if (sea) { state.season = Number(sea.dataset.season); state.seasonTab = "schedule"; state.leaders = null; render(); window.scrollTo(0, 0); return; }
   if (e.target.closest("[data-back-season]")) { state.season = null; state.leaders = null; render(); window.scrollTo(0, 0); return; }
+
+  const pr = e.target.closest("[data-practice]");
+  if (pr) { state.practice = Number(pr.dataset.practice); render(); window.scrollTo(0, 0); return; }
+  if (e.target.closest("[data-back-practice]")) { state.practice = null; render(); window.scrollTo(0, 0); return; }
+  const ptab = e.target.closest("[data-practicetab]");
+  if (ptab) { state.practiceTab = ptab.dataset.practicetab; render(); return; }
 
   const stab = e.target.closest("[data-seasontab]");
   if (stab) { state.seasonTab = stab.dataset.seasontab; render(); return; }

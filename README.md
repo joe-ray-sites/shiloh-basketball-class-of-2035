@@ -1,8 +1,8 @@
 # Shiloh Saints Basketball — Team Hub
 
 Mobile-first team hub for Shiloh 4th Grade Basketball (Class of 2035):
-roster, coaching staff, schedule, team stats, per-game box scores and
-play-by-play. Sister site to the football hub, same architecture.
+roster, coaching staff, schedule, practice plans, team stats, per-game box
+scores and play-by-play. Sister site to the football hub, same architecture.
 
 `index.html` is the whole app — no build step, no dependencies. Open it in a
 browser and it runs. Live at
@@ -74,6 +74,19 @@ dictated team total disagrees with the player lines.
 
 Open the page with `?demo=1` to see a made-up box score while the season
 hasn't started; the live site never shows it.
+
+## Practice plans
+
+The Practice tab lists 60-minute plans built from the `PRACTICES` array in
+`index.html`. Each block is `{ min, drill, note? }` and `drill` is a key into
+`DRILLS`, the library of drills and games (name, category, source, video link,
+description). Add a drill to `DRILLS` once and reference it from any plan; the
+Drill Library tab renders everything in `DRILLS` grouped by category. Set a
+practice's `date` ("2026-11-10") once the schedule is known and the list sorts
+by date.
+
+Sources: Breakthrough Basketball youth drills and USA Basketball's
+foundational skills and drills.
 
 ## Access code
 
