@@ -108,6 +108,13 @@ To publish it, paste that text into Claude with "add this as a season plan"
 (or drop the entry into `PRACTICES` by hand with the next id), then commit
 and push. Set `ADMIN.email` in `index.html` to enable the Email button.
 
+## Basketball Philosophy
+
+Menu → Basketball Philosophy renders the coach's write-up from the
+`PHILOSOPHY_MD` string in `index.html` (headings, paragraphs, lists, bold and
+italic are supported). The line `*[Graphs go here]*` is where the three shot
+charts are inserted; their data lives in `SHOT_PCT` / `SHOT_PPS` next to it.
+
 ## Access code
 
 The landing screen asks for a 4-digit code. It is a deterrent, not security —
