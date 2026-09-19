@@ -86,8 +86,8 @@ practice's `date` ("2026-11-10") once the schedule is known and the list sorts
 by date.
 
 Sources: Breakthrough Basketball youth drills, USA Basketball's foundational
-skills and drills, the Jr. NBA drill videos and Basketball For Coaches'
-written guides to the classic games.
+skills and drills, the Jr. NBA drill videos, Basketball For Coaches' written
+guides to the classic games, and the Read & React teaching videos.
 
 Every plan, season or coach-made, can be edited, duplicated, shared and
 deleted from its page, and the list can be filtered (All / Mine / Season
@@ -114,6 +114,15 @@ Menu → Basketball Philosophy renders the coach's write-up from the
 `PHILOSOPHY_MD` string in `index.html` (headings, paragraphs, lists, bold and
 italic are supported). The line `*[Graphs go here]*` is where the three shot
 charts are inserted; their data lives in `SHOT_PCT` / `SHOT_PPS` next to it.
+
+## Coaching pages
+
+Menu also holds Defensive Levels, Transition Defense and Read & React
+Offense, transcribed from the coaching spreadsheet into `DEF_LEVELS_MD`,
+`DEF_TRANSITION_MD` and `READ_REACT_MD` (same markdown mini-format; indent
+two spaces to nest a bullet, `[text](url)` for links). The Read & React
+layers table comes from `RR_GROUPS`; every R&R teaching video is also a
+drill in the library (keys starting with `rr`).
 
 ## Access code
 

@@ -1032,6 +1032,30 @@ button.game{width:100%;text-align:left;font:inherit;cursor:pointer;}
 .court .hex.warm{opacity:.75;}
 @media(max-width:400px){ .court-pair{grid-template-columns:1fr;} }
 
+/* ── COACHING PAGES (article extras) ──────────────────────── */
+.article h3{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:16px;letter-spacing:.6px;
+  text-transform:uppercase;color:var(--accent);margin:18px 0 6px;}
+.article ul ul,.article ol ul,.article ul ol,.article ol ol{margin:6px 0 4px;padding-left:20px;}
+.article li li{font-size:14.5px;margin-bottom:5px;}
+.article a{color:var(--accent);font-weight:700;text-decoration:none;border-bottom:1.5px solid rgba(37,150,190,.35);}
+.article a:hover{border-bottom-color:var(--accent);}
+.rr-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;background:#fff;border:1px solid var(--line);border-radius:14px;margin:16px 0 4px;}
+.rr{width:100%;border-collapse:collapse;font-size:13px;min-width:520px;}
+.rr th,.rr td{padding:8px 8px;text-align:center;white-space:nowrap;border-bottom:1px solid var(--line);}
+.rr thead th{font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);font-weight:700;}
+.rr th.name,.rr td.name{text-align:left;white-space:normal;min-width:180px;}
+.rr td.n{font-family:"Roboto Condensed",sans-serif;font-weight:700;color:var(--muted);width:28px;}
+.rr td{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:15px;color:var(--navy);}
+.rr td.name{font-family:"Roboto",sans-serif;font-weight:400;font-size:13.5px;color:var(--ink);}
+.rr tr.grp td{background:var(--paper);text-align:left;font-family:"Roboto Condensed",sans-serif;font-weight:700;
+  font-size:11.5px;letter-spacing:1px;text-transform:uppercase;color:var(--accent);white-space:normal;line-height:1.35;}
+.rr tr.grp td:not(:first-child){text-align:center;color:var(--navy);font-size:11px;letter-spacing:.3px;text-transform:none;font-family:"Roboto",sans-serif;font-weight:500;}
+.rr .is-us{background:rgba(37,150,190,.10);}
+.rr thead th.is-us{color:var(--navy);}
+.rr tr.is-ours td.name{color:var(--navy);font-weight:500;}
+.rr tr.tot td{border-top:2px solid var(--navy);background:var(--paper);}
+.rr tr.tot td:first-child{text-align:left;font-family:"Roboto Condensed",sans-serif;font-size:12.5px;letter-spacing:.5px;text-transform:uppercase;}
+
 /* ═══════════════════════════════════════════════════════════
    TABLET — two-up cards, roomier gutters
    ═══════════════════════════════════════════════════════════ */
@@ -1368,7 +1392,7 @@ const CATS = {
   scrim: "Scrimmage",
 };
 const SOURCES = { btb: "Breakthrough Basketball", usab: "USA Basketball",
-                  jrnba: "Jr. NBA", bfc: "Basketball For Coaches" };
+                  jrnba: "Jr. NBA", bfc: "Basketball For Coaches", rr: "Read & React · Better Basketball" };
 const YT = (id, t) => `https://www.youtube.com/watch?v=${id}${t ? "&t=" + t + "s" : ""}`;
 
 const DRILLS = {
@@ -1627,6 +1651,88 @@ const DRILLS = {
   bfcMikan:   { name:"Mikan Drill", cat:"shoot", src:"bfc",
                 url:"https://www.basketballforcoaches.com/mikan-drill/",
                 desc:"Under the basket, alternate right-hand and left-hand layups off the correct foot, catching each one before it hits the floor. Twenty makes, no dribble." },
+  /* ── Read & React (Better Basketball / Rick Torbett) ── */
+  rrIntro:    { name:"R&R: What is the Read & React Offense", cat:"off", src:"rr",
+                url:YT("g22S0Z2WA2o"), video:YT("g22S0Z2WA2o"),
+                desc:"Rick Torbett explains the whole system in one sitting: no plays, just reactions taught in layers. Coaches' viewing, 25 minutes." },
+  rrPlan:     { name:"R&R: 90/10 Practice Planning", cat:"off", src:"rr",
+                url:YT("R6BrkpIk1W0"), video:YT("R6BrkpIk1W0"),
+                desc:"How to split practice time while installing the offense: 90% offense to start, then shift the balance." },
+  rrL1:       { name:"R&R Layer 1: Pass & Cut", cat:"off", src:"rr",
+                url:YT("7xAzANFC74c"), video:YT("7xAzANFC74c"),
+                desc:"Pass to a teammate one spot away and cut hard to the basket; everyone fills toward the ball. The foundation of the whole offense." },
+  rrL1Warm:   { name:"R&R Layer 1: Warm-up Drill", cat:"warm", src:"rr",
+                url:YT("aUWaZdiho44"), video:YT("aUWaZdiho44"),
+                desc:"A simple pass-and-cut warm-up with no defense. Gets the cutting habit going before practice starts." },
+  rrDevelop:  { name:"R&R: Develop Players While Building the Offense", cat:"off", src:"rr",
+                url:YT("KmW-9qjeEuY"), video:YT("KmW-9qjeEuY"),
+                desc:"How skill work and offense installation fit in the same drill, so nobody stands around while the offense gets taught." },
+  rrL2:       { name:"R&R Layer 2: Laker Cut", cat:"off", src:"rr",
+                url:YT("z4qMLFGKQho"), video:YT("z4qMLFGKQho"),
+                desc:"Feed the post, then cut over the top or under (the Laker cut). Post players learn to look for the cutter first." },
+  rrL3:       { name:"R&R Layer 3: Dribble At", cat:"off", src:"rr",
+                url:YT("dBZnhQO---8"), video:YT("dBZnhQO---8"),
+                desc:"When the ball is dribbled at you, back cut. Adds the power-dribble hand-off read that grows out of the same action." },
+  rrDrills13: { name:"R&R Drills: Layers 1–3", cat:"off", src:"rr",
+                url:YT("xeAhL3cHw3U"), video:YT("xeAhL3cHw3U"),
+                desc:"Breakdown drills that rep pass and cut, the Laker cut and dribble-at together. Our 4th-grade core." },
+  rrPlays13:  { name:"R&R Plays: Layers 1–3", cat:"off", src:"rr",
+                url:YT("dbtfknjzL5k"), video:YT("dbtfknjzL5k"),
+                desc:"Simple scoring actions that come straight out of the first three layers, so the kids see why the reactions matter." },
+  rrTest13:   { name:"R&R Diagnostics: Testing Layers 1–3", cat:"off", src:"rr",
+                url:YT("omtJTzgkT7Y"), video:YT("omtJTzgkT7Y"),
+                desc:"A checklist drill to see whether the team really has the first three layers before adding more." },
+  rrL4:       { name:"R&R Layer 4: Circle Movement", cat:"off", src:"rr",
+                url:YT("1t8Y1cVFsT4"), video:YT("1t8Y1cVFsT4"),
+                desc:"On a north-south drive, everyone circles one spot in the direction of the drive. Teaches spacing off dribble penetration." },
+  rrL4Cone:   { name:"R&R Layer 4: Cone & Tennis Ball Drill", cat:"off", src:"rr",
+                url:YT("VBthpjt3rJc"), video:YT("VBthpjt3rJc"),
+                desc:"Circle movement taught with cones as spots and a tennis ball as the trigger. Great for the first week of Layer 4." },
+  rrTest34:   { name:"R&R Diagnostics: Testing Layers 3–4", cat:"off", src:"rr",
+                url:YT("XdzbuNyQSas"), video:YT("XdzbuNyQSas"),
+                desc:"Quick test of dribble-at and circle movement before moving on." },
+  rrL5:       { name:"R&R Layer 5: Basic Post Slides", cat:"off", src:"rr",
+                url:YT("EFxEWyfp0Zo"), video:YT("EFxEWyfp0Zo"),
+                desc:"When the ball is driven, the post slides away from the drive to open the lane and stay a passing option." },
+  rrL5Drill:  { name:"R&R Layer 5: Post & Perimeter Drill", cat:"off", src:"rr",
+                url:YT("sm1vwxIzU54"), video:YT("sm1vwxIzU54"),
+                desc:"Two-man reps of the wing drive and post slide, both sides of the floor." },
+  rrL7:       { name:"R&R Layer 7: Pin & Skip Progression", cat:"off", src:"rr",
+                url:YT("ShA7ShcXw28"), video:YT("ShA7ShcXw28"),
+                desc:"When the help defense overplays, pin the deepest defender and skip the ball. Taught in a progression from two players up." },
+  rrL7Rules:  { name:"R&R Layer 7: Pin & Skip Rules", cat:"off", src:"rr",
+                url:YT("NiH3PKuwj2s"), video:YT("NiH3PKuwj2s"),
+                desc:"The rules for who pins, when, and where the skip pass goes." },
+  rrScreens1: { name:"R&R Screening Options, Part 1", cat:"off", src:"rr",
+                url:YT("TmulczU5QQM"), video:YT("TmulczU5QQM"),
+                desc:"Rick Torbett on the screening layers (post, back, multiple and ball screens). For the coaches; older grades run these." },
+  rrScreens2: { name:"R&R Screening Options, Part 2", cat:"off", src:"rr",
+                url:YT("IRKBghBvyRA"), video:YT("IRKBghBvyRA"),
+                desc:"Second half of the screening clinic." },
+  rrZone:     { name:"R&R: Attacking 1-3-1 Zones", cat:"off", src:"rr",
+                url:YT("QA_P-6QwB0w"), video:YT("QA_P-6QwB0w"),
+                desc:"Running the same layers against a zone: slower cuts, hook and look, and where the gaps are." },
+  rrOReb:     { name:"R&R: 5-Out Offensive Rebounding", cat:"reb", src:"rr",
+                url:YT("qIWKd2JSeIE"), video:YT("qIWKd2JSeIE"),
+                desc:"Who crashes and who gets back when a shot goes up out of a five-out offense." },
+  rrForce:    { name:"R&R: Forcing the Defense into Situations", cat:"off", src:"rr",
+                url:YT("ClK8nPpS9qE"), video:YT("ClK8nPpS9qE"),
+                desc:"Using the layers on purpose to make the defense switch, help and rotate until someone is open." },
+  rrPitch1:   { name:"R&R Drill Progression, Part 1 (natural pitch)", cat:"off", src:"rr",
+                url:YT("VQLheQEkW5o"), video:YT("VQLheQEkW5o"),
+                desc:"Drive, bounce off and pitch to the natural pitch spot. Part one of a three-part progression by TJ Rosen." },
+  rrPitch2:   { name:"R&R Drill Progression, Part 2", cat:"off", src:"rr",
+                url:YT("PxedcBi8mQs"), video:YT("PxedcBi8mQs"),
+                desc:"Adds the second reaction to the natural pitch drill." },
+  rrPitch3:   { name:"R&R Drill Progression, Part 3", cat:"off", src:"rr",
+                url:YT("Me1wJBRNDhs"), video:YT("Me1wJBRNDhs"),
+                desc:"Finishes the progression with live decisions." },
+  rrCombine:  { name:"R&R: Reaction Drills to Combine Layers", cat:"off", src:"rr",
+                url:YT("90MWTFmWF4U"), video:YT("90MWTFmWF4U"),
+                desc:"Rick Torbett's drills for shuffling the deck: several layers in one possession, players making the decisions." },
+  rrImplement:{ name:"R&R: Practice Implementation (12-day install)", cat:"off", src:"rr",
+                url:"https://www.youtube.com/playlist?list=PLD553F8BD3CDBCFA5", video:YT("LPEMQGn8I9Y"),
+                desc:"Part one of a twenty-video series that installs the offense over twelve practices. The rest of the series is in the playlist." },
 };
 
 const PRACTICES = [
@@ -2026,6 +2132,12 @@ const MENU_PAGES = [
     icon:"M4 20V10M10 20v-7M16 20V4M22 20H2" },
   { id:"philosophy", label:"Basketball Philosophy", desc:"How the Saints play, and why",
     icon:"M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" },
+  { id:"deflevels", label:"Defensive Levels", desc:"The four levels of a defender, and the drills for each",
+    icon:"M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3zM9 12l2 2 4-4" },
+  { id:"deftrans", label:"Transition Defense", desc:"Get back, guard the team, split the court",
+    icon:"M3 12h13M11 6l6 6-6 6M19 5v14" },
+  { id:"readreact", label:"Read & React Offense", desc:"The layers we run and the teaching videos",
+    icon:"M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17l9 5 9-5" },
   { id:"coaches", label:"Coaches", desc:"The staff guiding the Saints",
     icon:"M12 2l2.4 5 5.6.6-4.2 3.9 1.2 5.5L12 19.3 6.9 22l1.2-5.5L4 12.6 9.6 12z" },
   { id:"seasons", label:"Past Seasons", desc:"Schedules and team stats from previous years",
@@ -3297,25 +3409,36 @@ If your son genuinely wants to play at the next level, he needs to be excellent 
 // escaped text, so nothing in the markdown can inject markup.
 function mdToHtml(md) {
   const inline = (s) => esc(s)
+    .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*(.+?)\*/g, "<em>$1</em>");
+    .replace(/(^|[^*])\*([^*]+?)\*(?!\*)/g, "$1<em>$2</em>");
   const out = [];
-  let list = null;                       // "ul" | "ol" while inside a list
-  const closeList = () => { if (list) { out.push(`</${list}>`); list = null; } };
+  const stack = [];                        // open lists: { tag, level, li }
+  const closeTo = (level) => { while (stack.length && stack[stack.length - 1].level >= level) {
+    const l = stack.pop(); out.push((l.li ? "</li>" : "") + `</${l.tag}>`); } };
   md.split("\n").forEach(raw => {
     const line = raw.trim();
-    if (!line) { closeList(); return; }
-    if (line.startsWith("# ")) { closeList(); return; }                 // page title lives in the header
-    if (line.startsWith("## ")) { closeList(); out.push(`<h2>${inline(line.slice(3))}</h2>`); return; }
-    if (line === "*[Graphs go here]*") { closeList(); out.push("<!--charts-->"); return; }
-    let m;
-    if ((m = line.match(/^- (.*)$/))) { if (list !== "ul") { closeList(); out.push("<ul>"); list = "ul"; } out.push(`<li>${inline(m[1])}</li>`); return; }
-    if ((m = line.match(/^\d+\. (.*)$/))) { if (list !== "ol") { closeList(); out.push("<ol>"); list = "ol"; } out.push(`<li>${inline(m[1])}</li>`); return; }
-    closeList();
+    if (!line) return;                                                   // blank lines don't end lists
+    const m = raw.match(/^(\s*)(-|\d+\.) (.*)$/);
+    if (m) {
+      const level = Math.floor(m[1].length / 2), tag = m[2] === "-" ? "ul" : "ol";
+      closeTo(level + 1);                                                // drop deeper lists
+      const top = stack[stack.length - 1];
+      if (top && top.level === level && top.tag === tag) { out.push("</li>"); }
+      else { if (top && top.level === level) closeTo(level); out.push(`<${tag}>`); stack.push({ tag, level, li:false }); }
+      out.push(`<li>${inline(m[3])}`); stack[stack.length - 1].li = true;
+      return;
+    }
+    closeTo(0);
+    if (line.startsWith("# ")) return;                                   // page title lives in the header
+    if (line.startsWith("## ")) { out.push(`<h2>${inline(line.slice(3))}</h2>`); return; }
+    if (line.startsWith("### ")) { out.push(`<h3>${inline(line.slice(4))}</h3>`); return; }
+    if (line === "*[Graphs go here]*") { out.push("<!--charts-->"); return; }
+    if (/^<!--\w+-->$/.test(line)) { out.push(line); return; }
     if (/^\*\*[^*]+\*\*$/.test(line)) { out.push(`<p class="callout">${inline(line)}</p>`); return; }
     out.push(`<p>${inline(line)}</p>`);
   });
-  closeList();
+  closeTo(0);
   return out.join("\n");
 }
 
@@ -3471,6 +3594,339 @@ function chartLeave(e) {
   const tip = chart.querySelector("[data-tip]"); if (tip) tip.classList.remove("is-on");
 }
 
+/* ── Coaching pages from the team spreadsheet ─────────────────
+   Defensive Levels, Transition Defense and Read & React, transcribed
+   from the coaching sheet. Same markdown mini-format as the philosophy:
+   ##, ###, bullets (indent two spaces to nest), 1. lists, **bold**,
+   *italic*, [links](url). */
+const DEF_LEVELS_MD = String.raw`
+## The Four Levels of a Defender
+
+From Dick Helm, fifteen years an NBA and college coach, by way of Betterbasketball.com. A defender grows through these levels in order, and the team is only as good as its weakest level.
+
+- **Level 0 · Rebounding.** Every possession ends with the ball in our hands.
+- **Level 1 · Guard the ball** *(individual)*. Keep the ball out of the middle third of the floor. Be able to stay in front of the ball.
+- **Level 2 · Guard away from the ball** *(individual)*. Be in position to help a teammate stop the ball from being shot, driven or passed into the middle third. Block cutters and deny passes into the highway.
+- **Level 3 · Guard situations** *(team)*. Be able to switch, hedge and rotate when you're required to.
+- **Level 4 · Help everyone recover** *(team)*. Help everyone rotate back to their original responsibilities without giving up a basket.
+
+A word we use everywhere: the **Highway** is the middle third of the floor. The **Alley** is the sideline third on either side. We want the ball in the alley.
+
+## Level 0 · Rebounding
+
+### The keys
+
+- **War Zone** = the ten-foot square around the basket. **Outside** = anything not in the War Zone.
+- In the War Zone: **B.O.W.Z.** = Block Out in the War Zone. Your power base on the opponent's power base.
+  - Step through, or reverse pivot. You must know both.
+  - Block out and PURSUE the ball. **DNA** = Dadgum Nasty Attitude: assume the rebound is a pass to you.
+- Outside: **C.A.P.** = Check, Arc, Pursue.
+  - Check position is your shoulders at a 90-degree angle to your opponent. Use the forearm.
+  - If your opponent pursues the ball, use your forearm to arc them away from the basket.
+  - If your opponent is stronger and gets into the War Zone, use the arm bar to get into power position.
+  - If your opponent does not pursue the ball, sprint to the elbow and get ready to chase the long rebound.
+- Once you secure the rebound, **rebound like a quarterback**: three points of contact on the ball. When your feet hit the floor, snap your eyes to our goal and read: 1) is a press forming? 2) is there a quick outlet? 3) is there space to dribble?
+
+### Drills
+
+- **Shooter and offside low post.** A three-point shot goes up. The defender guarding the shooter CAPs him. The defender on the low post practices the hardest move in basketball: step away from the goal and BOWZ the offensive man. The drill ends when the defense **R.O.A.R.s** = Rebound, Outlet And Run.
+- **Line under the basket to the low post.** One on offense, one on defense, go twice on D, two coaches on the wings. The coach looks to enter the ball to the low post. If he passes, go from Level 2 to Level 1 and keep the ball out of the highway. If the coach skip passes, jump to the ball, coach shoots, block off, outlet to the coach.
+
+## Level 1 · Guard the Ball
+
+Keep the ball out of the middle third of the floor.
+
+1. On dead balls: eat up space.
+2. Keep the ball outside the arc and out of the highway.
+3. Cut off the baseline on baseline drives.
+4. Hands are up. Hands down = **E.S.P.** = External Signs of Passivity.
+5. Interrupt the rhythm of the shot.
+  - Make them hang in the air longer than they want.
+  - Make them move the ball out of their shot pocket and adjust the shot.
+  - Anything to take them out of the rhythm of their shot.
+6. If they catch the ball in the highway, force a **U drive** to help, not a V drive.
+  - The minute the ball is dribbled once, go forearm to elbow, showing hands to the official, and force the dribble to the sideline out of the highway.
+  - Same for dribblers coming into the highway: don't force a direction change, keep the ball moving through the highway to the other side and out.
+  - If the ball must be dribbled into the highway, arc it as far from the goal as you can, help it across the highway as fast as possible, then keep it in the alley once it's there.
+7. Must be able to take a charge effectively.
+
+If the offense picks up the dribble, become a **close talker**. Three positions we call: Twilight, Midnight, and Substitution Position.
+
+### Stance
+
+- Hips lower than the man you are defending.
+- Be in a position to move laterally very quickly: one foot planted, the other moves six to eight inches.
+- A Level 1 defender has to be able to get up on his man. Today's ball handlers will shake and bake you if they have space. Close talker.
+- Force everything sideline or baseline, never highway.
+- Hand out in the direction of the drive, off hand down to take away the crossover.
+- On the wing or point: in his face, shoulders to the highway. When they drive baseline, take one step-slide with the off arm, then turn and run with them.
+
+### Taking the charge on the ball
+
+1. **The four-inch fall.** The closer the offense gets, the lower you get to the floor. No statues: low and athletic.
+2. **Firm forearm** at 45 degrees, not up at 90. Firm. They will push you back. Sell the call.
+3. Fall on both cheeks on the line of the attack. Crumbling to one side tells the ref you weren't square, and that's a blocking call.
+4. Fall in the direction of the penetration.
+5. Roll and get your feet high, pointing to the sky.
+6. Hands up, no bracing the fall. It's only four inches. Get the off hand up to protect yourself.
+7. Like martial arts: exhale and make a sound on contact. Sell the call.
+
+### Why we force the ball baseline
+
+Don't let the ball drive into the highway; force it to the baseline and corners. Why?
+
+1. The offense is shrinking the amount of usable court they have to work with.
+2. The baseline becomes a defensive sixth man.
+3. Shooting angles are worse than from the middle of the floor.
+4. Natural passing angles are fewer and harder.
+5. Off-ball defenders drop to the goal more easily than when the ball is driven into the middle.
+
+Hips are the **doors to the highway**. If the ball handler forces you to open the door, do not keep step-sliding: sprint to close it. Step-slide to the sideline, on the pivot sprint to the highway, recover the bubble and close the door. You can't close your hips until your head is lower than the offensive player's shoulders, or they'll call the foul.
+
+### Level 1 drills
+
+- Four-inch fall: teaching technique, then group technique.
+- Guard the ball: line under the basket, coach with the ball at the point. Offense breaks open, defense closes and defends. Don't let him into the highway.
+  - Half-court alley one on one.
+  - Full-court alley one on one.
+- Recover the bubble: defense sprints ahead to recover correct position after being beaten.
+
+### Grades of a Level 1 defender
+
+- **Great.** Takes away all three options of the triple threat: the shot, the pass and the dribble into the highway. Close talker. Forces the ball into Twilight position so it's hard to pass into the highway. Gets under the elbows and encourages the offense to move the ball into Substitution Position (Statue of Liberty). Never opens the hips, never opens the gate, on the first or second dribble.
+- **Good.** Takes away at least two of the three threats. Usually gives up daylight instead of Twilight.
+- **OK.** Takes away at least one of the three threats. High talker, plays outside the bubble.
+
+## Level 2 · Guard Away from the Ball
+
+Be in a position to help a teammate stop the ball from being shot, driven or passed into the middle third of the floor.
+
+**Goal:** guard two-thirds of the floor and keep the ball out of the highway while offensive situations are happening, and do it without switching.
+
+- How close to the ball should you be on the weak side? It depends on the player: close enough that the ball can't get into the highway.
+- **Help and recover** must be one word. You must be able to help and recover to your man without giving up a shot in the highway. A proper close out matters here.
+  - Ball passed = move your feet during the air time of the pass. Don't wait to see it caught.
+  - Stop the dribble and recover = usually a drop step and a sprint back to your man. Recover on an angle, not a straight line, knowing the drive path of the receiver.
+- A Level 2 charge is taken with your help, not on the ball.
+- **Skirmish**: give the impression you'll take the charge, then recover to your player. Make the dribbler unsure. Rapid movement with hands, feet and face. Either skirmish and recover, or skirmish and take the charge. Very effective from the low post.
+- **Close out priorities**: 1) stop the catch and shoot, 2) block the highway drive, 3) cut off the baseline drive. The other four defenders close out to their Level 2 help positions on the air time of the pass.
+- **Post defense**: deny or discourage the pass into the post.
+  - Dead front: negative, you give up rebound position and can be sealed. Positive, no pass gets in and you can help more easily.
+  - Three-quarter deny on the top side: what most use. If the pass goes in, you have the air time of the pass to recover to Level 1.
+  - On a perimeter pass, get up the line and on the line, same rules as everyone. Not on the post's hips, he'll use you.
+
+### Level 2 drills
+
+1. **Close out, Level 2 charge.** Four offense, two defense. Offense drives middle or baseline, off-ball defender closes out and takes the charge. Stay in your stance.
+2. **Transition 120** (Levels 1, 2 and 0). Offense drives the full-court alley, defense keeps it in the alley. At the offensive end: pass to the point, defense adjusts; pass to the corner, adjust; corner drives, stop it before the highway; offense skips out; defense closes out on the shooter, blocks off and gets the rebound.
+3. **Help across, not up.** Point and wing with defenders. Point drives the defender's side, wing defender drops and helps and recovers, point pitches to the wing, defender closes out on the shot, blocks off, rebounds.
+4. **2 on 2 help and recover.** Groups of four, one ball. Drive, help, recover.
+5. **3 on 3 help and recover.** Same, teammates move one spot in the direction of the drive.
+6. **Defend the post.** Wing, point and post with defenders. Move on the post entry to Level 1, kick out, defender moves up the line, deflect the second pass.
+7. **Air time of the pass.** Stationary shell.
+8. **Help behind the help.** Shell with dribble drives: jump from Level 1 to Level 2 on the pass.
+9. **Jump from 1 to 2 on a cutter.**
+10. **4-out position check.** Ball rotates around, check post defense, everyone rotates into the post to check position.
+11. **Make 'em bounce off.** Ball drives once right then once left, offense moves one spot in that direction, defense helps and recovers.
+12. **Post flash and cutters.** Weak-side post flashes to the ball: meet and greet. Then weak-side perimeter players flash: meet and greet.
+
+## Level 3 · Guard Situations
+
+Be able to switch and/or rotate when you're required to.
+
+A **situation** is any breakdown in Level 1 that Level 2 can't handle. It requires switching or double-teaming to stop the ball from scoring.
+
+- **Surprise situations**: the ball gets beaten cleanly and is driving the lane. Level 3 sees it, swaps bubbles, stops the ball.
+- **Planned situations**: the coach defines them. Post feeds, ball screens, zone traps on baseline out-of-bounds.
+  - Baseline drive: on a right-side baseline drive, the opposite-corner defender stops the drive and everyone rotates one player to the right.
+  - Ball screens: 1) switch (swap bubbles), 2) show and recover, 3) press up and go under.
+  - Post feeds: double on 1) the pass in the air, 2) the post catch, or 3) the post move. Coach decides where the double comes from.
+  - Failed traps.
+  - Communication: 1) no talk, 2) talk without much useful information, or 3) useful information. We want the third.
+
+## Level 4 · Help Everyone Recover
+
+Help everyone rotate back to their original responsibilities without giving up a basket.
+
+1. Can you rotate out of a situation without giving up a basket or an entry into the highway?
+2. When rotations leave you in a mismatch, a Level 4 player knows when and where to switch back to a better matchup.
+3. A great Level 4 knows how everyone should be rotating and talks them through it until everyone is back where we want them.
+`;
+
+const DEF_TRANSITION_MD = String.raw`
+## Transition Defense
+
+From Andrej Lemanis, head coach of the Australian national team. Watch his clinic: [Drills for Transition Defense (FIBA)](https://www.youtube.com/watch?v=l5uZmj_qzXU).
+
+1. In transition, **your man is not your man**. Guard the team.
+2. **No buddy running.** Sprint to protect the basket.
+3. Pick up the ball before the three-point line and force it out of the highway. Shrink the open space; the other players help.
+4. **Last big down** goes low to the ball, usually the top of the key. No buddy running: he is free help while the other big trails.
+5. Bigger players kick the smalls out of the paint so we match up with shooters.
+
+## Drill progression
+
+### 1 on 1 on 1
+
+- Start one on one from half court. Force the ball out of the highway.
+- An offensive teammate waits at half court, one team on each side.
+- After the shot, the defender becomes offense and the offense becomes defense. Force it out of the highway again.
+- When the ball crosses half court the new defender picks up and the old one comes off.
+- Slow the basketball down. No pace makes it easier to defend. **Split the court.**
+- The waiting defender talks: tell the player where to guide the ball so you can defend it.
+- Five seconds to score.
+
+### 2 on 2 on 2
+
+- Start the same way.
+- In transition keep the ball on one side of the court. Don't turn him.
+- It's easier for a half-court defense to pick up on the sideline: fewer options.
+- The off defender sprints back to make the floor narrow for the ball.
+- Talk about what position and which ball you have.
+- The off defender fakes and drops to buy time for the ball defender.
+- The one thing you can't do is get beat. Stay in front of the ball.
+
+### 2 on 2 on 2, new players at the free-throw line extended
+
+- The outlet goes to a player who has to step inside the three-point line. The off player may sprint to the basket for the ball.
+- So the defense now has to stop the ball AND sprint back to protect the basket. If one is contesting the shot, the other covers back.
+- One team at each end in different jerseys.
+
+### 4 on 4 on 4 (three jersey colors)
+
+- Four on defense, four on offense, four at the other end: corner, point, corner, post.
+- Someone shoots, the defense outlets to the coach who throws ahead. Defense sprints back.
+- Defense must talk: who has the ball, who has the post.
+- Guard the ball and the basket first. You can't just find your man.
+- Normally the last one back guards the highest player on the weak side.
+
+### 5 on 5
+
+- The shooter must touch the baseline before getting back.
+- Defense covers the basket, covers the ball, splits the court; the trailer sprints back to help.
+- The offense decides how many go to the offensive boards and who; the rest get back.
+`;
+
+/* Read & React layers, from the coaching sheet. Each row: number, name and
+   the first grade band that runs it (3 = 3rd, 4 = 4th, 5 = 5th/6th,
+   7 = 7th/8th, 9 = 9th/10th). Our 4th graders run everything with from <= 4. */
+const RR_GROUPS = [
+  { name:"Foundation", layers:[
+    [1, "Pass & Cut", 3], [2, "Post Pass & Cut, north-south (Laker cut)", 3], [3, "Dribble At", 3],
+    [4, "Circle movement: dribble penetration, north-south", 4], [5, "Basic post slides: dribble penetration", 4],
+    [6, "Baseline dribble penetration", 5], [7, "Pin & Skip", 4], [8, "Circle reverse", 5] ] },
+  { name:"Enhanced", layers:[
+    [9, "Post screens", 5], [10, "Back screens", 5], [11, "Multiple screens", 7], [12, "Ball screens", 5],
+    [13, "Post pass & X cut, east-west", 4], [14, "Corners (pass & cut)", 7], [15, "Power dribble", 5], [16, "Advanced post slides", 7] ] },
+  { name:"Supplemental", layers:[
+    [17, "Transition offense", 5], [18, "Press break", 4], [19, "Full court trips", 7], [20, "Flow", 7] ] },
+];
+const RR_GRADES = [[3, "3rd"], [4, "4th"], [5, "5th–6th"], [7, "7th–8th"], [9, "9th–10th"]];
+const RR_BEST_AT = ["Passion", "Defense", "Passing", "Rebounding", "Offense", "Transition"];   // grade bands add one each
+const OUR_GRADE = 4;
+
+function rrLayersTable() {
+  const head = RR_GRADES.map(([g, l]) => `<th class="${g === OUR_GRADE ? "is-us" : ""}">${l}</th>`).join("");
+  const rows = RR_GROUPS.map(gr => `<tr class="grp"><td colspan="${2 + RR_GRADES.length}">${gr.name}</td></tr>` +
+    gr.layers.map(([n, name, from]) => `<tr class="${from <= OUR_GRADE ? "is-ours" : ""}">
+      <td class="n">${n}</td><td class="name">${esc(name)}</td>
+      ${RR_GRADES.map(([g]) => `<td class="${g === OUR_GRADE ? "is-us" : ""}">${g >= from ? "✓" : ""}</td>`).join("")}
+    </tr>`).join("")).join("");
+  const counts = RR_GRADES.map(([g]) => RR_GROUPS.flatMap(x => x.layers).filter(l => l[2] <= g).length);
+  const best = RR_GRADES.map(([g], i) => `<td class="${g === OUR_GRADE ? "is-us" : ""}">${RR_BEST_AT.slice(0, i + 2).join("<br>")}</td>`).join("");
+  return `<div class="rr-scroll"><table class="rr">
+    <thead><tr><th></th><th class="name">Layer</th>${head}</tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="2">We will be the best team we play at:</td>${best}</tr>
+      ${rows}
+      <tr class="tot"><td colspan="2">Layers by age group</td>${counts.map((c, i) => `<td class="${RR_GRADES[i][0] === OUR_GRADE ? "is-us" : ""}">${c}</td>`).join("")}</tr>
+    </tbody>
+  </table></div>
+  <p class="fig-cap">The highlighted column is us. A 4th-grade team runs eight layers: 1 through 5, Pin &amp; Skip, the X cut and the press break.</p>`;
+}
+
+const READ_REACT_MD = String.raw`
+## Read & React
+
+Our offense is Rick Torbett's **Read & React** (Betterbasketball.com). There are no set plays. Every player learns a small set of reactions to what the ball does, taught in **layers**, and the team can run whichever layers it has learned. Younger teams run fewer layers; each grade adds more.
+
+The intro, from the man who built it: [What is the Read & React Offense?](https://www.youtube.com/watch?v=g22S0Z2WA2o) (25 min). And how to split practice time while installing it, 90% offense to start: [90/10 Practice Planning](https://www.youtube.com/watch?v=R6BrkpIk1W0) (3 min).
+
+<!--layers-->
+
+## Teaching videos by layer
+
+Every video below is also in the Drill Library on the Practice tab, so a coach can drop it straight into a practice plan.
+
+### Layer 1 · Pass & Cut
+
+- [Layer 1: Pass & Cut excerpt](https://www.youtube.com/watch?v=7xAzANFC74c) · 6 min
+- [Layer 1 warm-up drill](https://www.youtube.com/watch?v=aUWaZdiho44) · 5 min
+- [Develop your players while building the Read & React](https://www.youtube.com/watch?v=KmW-9qjeEuY) · 3 min
+
+### Layer 2 · Post Pass & Cut (Laker cut)
+
+- [Deeper into Layer 2: the Laker cut](https://www.youtube.com/watch?v=z4qMLFGKQho) · 3 min
+
+### Layer 3 · Dribble At
+
+- [Dribble At's and Power Dribble hand-offs](https://www.youtube.com/watch?v=dBZnhQO---8)
+
+### Layers 1–3 together
+
+- [R&R drills, layers 1–3](https://www.youtube.com/watch?v=xeAhL3cHw3U) · 8 min
+- [Plays out of layers 1–3](https://www.youtube.com/watch?v=dbtfknjzL5k) · 4 min
+- [Diagnostics: testing layers 1–3](https://www.youtube.com/watch?v=omtJTzgkT7Y) · 6 min
+
+### Layer 4 · Circle movement (dribble penetration)
+
+- [Layer 4 training](https://www.youtube.com/watch?v=1t8Y1cVFsT4) · 9 min
+- [Cone and tennis ball drill to teach circle movement](https://www.youtube.com/watch?v=VBthpjt3rJc) · 20 min
+- [Diagnostics: testing layers 3 and 4](https://www.youtube.com/watch?v=XdzbuNyQSas) · 3 min
+
+### Layer 5 · Basic post slides
+
+- [Layer 5: basic post slides](https://www.youtube.com/watch?v=EFxEWyfp0Zo) · 8 min
+- [Post and perimeter drill](https://www.youtube.com/watch?v=sm1vwxIzU54)
+
+### Layer 6 · Baseline dribble penetration
+
+On a baseline drive the opposite corner does not circle up; he stays as the natural pitch. The layer 4–6 drills live in Torbett's [practice-planning playlist](https://www.youtube.com/playlist?list=PLD553F8BD3CDBCFA5).
+
+### Layer 7 · Pin & Skip
+
+- [Pin & Skip progression](https://www.youtube.com/watch?v=ShA7ShcXw28) · 9 min
+- [Layer 7 rules](https://www.youtube.com/watch?v=NiH3PKuwj2s)
+
+### Layers 8–12 · Screens
+
+- [Advanced screening options, part 1](https://www.youtube.com/watch?v=TmulczU5QQM) (Rick Torbett)
+- [Advanced screening options, part 2](https://www.youtube.com/watch?v=IRKBghBvyRA)
+
+## Add-ins
+
+- [Attacking 1-3-1 zones with Read & React](https://www.youtube.com/watch?v=QA_P-6QwB0w)
+- [5-out offensive rebounding with Read & React](https://www.youtube.com/watch?v=qIWKd2JSeIE) · 6 min
+- [Forcing the defense into situations](https://www.youtube.com/watch?v=ClK8nPpS9qE) · 9 min
+
+## Teaching drills · the natural pitch
+
+- [Drill progression, part 1](https://www.youtube.com/watch?v=VQLheQEkW5o) · 5 min
+- [Drill progression, part 2](https://www.youtube.com/watch?v=PxedcBi8mQs) · 4 min
+- [Drill progression, part 3](https://www.youtube.com/watch?v=Me1wJBRNDhs) · 3 min
+- [Reaction drills to combine layers, part 2](https://www.youtube.com/watch?v=90MWTFmWF4U) (Rick Torbett)
+
+## Advanced
+
+- [Practice implementation, 20 videos: teach it in 12 days](https://www.youtube.com/playlist?list=PLD553F8BD3CDBCFA5)
+`;
+
+function docView(md, fill) {
+  let html = mdToHtml(md);
+  Object.keys(fill || {}).forEach(k => { html = html.replace(`<!--${k}-->`, fill[k]); });
+  return `<article class="article">${html}</article>`;
+}
+
 /* ═══════════════════════════════════════════════════════════
    RENDER — views
    ═══════════════════════════════════════════════════════════ */
@@ -3510,6 +3966,9 @@ function render() {
                           : state.practiceTab === "drills" ? "Drill Library" : "Practice")
   : tab === "coaches"  ? "Coaching Staff"
   : tab === "philosophy" ? "Basketball Philosophy"
+  : tab === "deflevels" ? "Defensive Levels"
+  : tab === "deftrans" ? "Transition Defense"
+  : tab === "readreact" ? "Read & React Offense"
   : tab === "menu"     ? "Menu"
   : tab === "seasons"  ? (boxGame ? `${TEAM.name} vs ${boxGame.opp}`
                           : state.leaders ? LEADER_CATS[state.leaders].label
@@ -3525,6 +3984,9 @@ function render() {
         : `${allPlans().length} practice plans · tap one to open, Edit to change it`)
   : tab === "coaches"  ? `${COACHES.length} coaches guiding the Saints`
   : tab === "philosophy" ? "Our team philosophy: how we play, and why"
+  : tab === "deflevels" ? "Four levels of a defender · Pack Line principles and drills"
+  : tab === "deftrans" ? "Your man is not your man. Guard the team."
+  : tab === "readreact" ? "Our offense, taught in layers · videos for every layer"
   : tab === "menu"     ? "More from the Saints hub"
   : tab === "seasons"  ? (boxGame ? `Box score · ${fmtDate(boxGame.date, { month:"long", day:"numeric", year:"numeric" })}`
         : state.leaders ? `Every player · ${snLabel}`
@@ -3580,6 +4042,12 @@ function render() {
     view.innerHTML = state.leaders ? leadersView(state.leaders) : teamStatsView();
   } else if (tab === "philosophy") {
     view.innerHTML = philosophyView();
+  } else if (tab === "deflevels") {
+    view.innerHTML = docView(DEF_LEVELS_MD);
+  } else if (tab === "deftrans") {
+    view.innerHTML = docView(DEF_TRANSITION_MD);
+  } else if (tab === "readreact") {
+    view.innerHTML = docView(READ_REACT_MD, { layers: rrLayersTable() });
   } else if (tab === "practice") {
     view.innerHTML = practiceView();
   } else if (tab === "menu") {
