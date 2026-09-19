@@ -1333,7 +1333,7 @@ button.game{width:100%;text-align:left;font:inherit;cursor:pointer;}
    ═══════════════════════════════════════════════════════════ */
 /* Placeholder notices. Flip a flag to false once that list is real — it
    removes the notice at the top of that page. */
-const PLACEHOLDER = { roster:false, coaches:true, schedule:true };
+const PLACEHOLDER = { roster:false, coaches:false, schedule:true };
 
 // Player photos: drop a file per jersey number in assets/players/ — 23.jpg
 // (a .png of the same name is tried automatically before the initials fallback).
@@ -1369,8 +1369,9 @@ const ROSTER = RAW.map(([first, last, num, positions, nick, fact], i) => ({
    quotes. Add `motto` / `fact` per coach and the card picks them up.
    Photos: assets/coaches/<id>.jpg */
 const COACHES = [
-  { id:1, name:"Head Coach TBD",      role:"Head Coach",      tag:"Head Coach" },
-  { id:2, name:"Assistant Coach TBD", role:"Assistant Coach", tag:"Assistant" },
+  { id:1, name:"Coach Joe Ray",       role:"Head Coach",      tag:"Head Coach" },
+  { id:2, name:"Coach Matt Milliren", role:"Assistant Coach", tag:"Assistant" },
+  { id:3, name:"Coach Rodney Barnes", role:"Assistant Coach", tag:"Assistant" },
 ];
 
 /* ── PRACTICE PLANS ────────────────────────────────────────────
