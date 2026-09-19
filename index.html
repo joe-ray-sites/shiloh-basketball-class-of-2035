@@ -1254,10 +1254,9 @@ button.game{width:100%;text-align:left;font:inherit;cursor:pointer;}
 /* ═══════════════════════════════════════════════════════════
    DATA — Shiloh 4th Grade Basketball
    ═══════════════════════════════════════════════════════════ */
-/* PLACEHOLDER DATA. The roster, coaches and schedule below are stand-ins so
-   the shell can be built and deployed. Replace them with the real lists and
-   flip PLACEHOLDER to false — that removes the notice at the top of each page. */
-const PLACEHOLDER = true;
+/* Placeholder notices. Flip a flag to false once that list is real — it
+   removes the notice at the top of that page. */
+const PLACEHOLDER = { roster:false, coaches:true, schedule:true };
 
 // Player photos: drop a file per jersey number in assets/players/ — 23.jpg
 // (a .png of the same name is tried automatically before the initials fallback).
@@ -1265,25 +1264,24 @@ const playerPhoto = (num) => `assets/players/${num}.jpg`;
 
 // [first, last, #, positions, nickname, fun fact]
 // Positions are shown exactly as entered — kids play multiple spots, so the
-// whole list travels together and the first one is the primary.
+// whole list travels together and the first one is the primary. Leave the
+// positions blank until they're known and the cards simply skip that line.
 const RAW = [
-  ["Player", "One",   1,  "PG",    "TBD", "Placeholder — the real roster is on its way"],
-  ["Player", "Two",   2,  "PG,SG", "TBD", "Placeholder — the real roster is on its way"],
-  ["Player", "Three", 3,  "SG",    "TBD", "Placeholder — the real roster is on its way"],
-  ["Player", "Four",  4,  "SF",    "TBD", "Placeholder — the real roster is on its way"],
-  ["Player", "Five",  5,  "SF,PF", "TBD", "Placeholder — the real roster is on its way"],
-  ["Player", "Six",   10, "PF",    "TBD", "Placeholder — the real roster is on its way"],
-  ["Player", "Seven", 11, "C",     "TBD", "Placeholder — the real roster is on its way"],
-  ["Player", "Eight", 12, "SG,SF", "TBD", "Placeholder — the real roster is on its way"],
-  ["Player", "Nine",  13, "PG",    "TBD", "Placeholder — the real roster is on its way"],
-  ["Player", "Ten",   14, "PF,C",  "TBD", "Placeholder — the real roster is on its way"],
+  ["Hunter",  "Bierman",   2,  "", "Buckets",          "If it's open, he's shooting it"],
+  ["Alec",    "Booher",    6,  "", "Boo",              "Catches it on the wing and lets it fly"],
+  ["Graham",  "Milliren",  10, "", "Graham Slam",      "Loves a rebound almost as much as a bucket"],
+  ["Rhett",   "Barnes",    11, "", "Rocket",           "Keeps his cool when the press comes"],
+  ["Skyler",  "Rodriguez", 18, "", "Sky High",         "Runs the floor like the fast break is his"],
+  ["Coleman", "Claypool",  20, "", "Splash",           "Never met a loose ball he didn't dive for"],
+  ["Jacob",   "Ray",       24, "", "Ray Gun",          "Hands on offense, hustle on defense"],
+  ["Rhyden",  "Smith",     25, "", "Ridin' Lightning", "Downhill to the rim, every possession"],
 ];
 
 const ROSTER = RAW.map(([first, last, num, positions, nick, fact], i) => ({
   id: i + 1, first, last,
   name: first + " " + last,
   num,
-  pos: positions.split(",")[0].trim(),  // primary — used for the small front pill
+  pos: positions.split(",")[0].trim(),  // primary — used for the small front pill ("" until known)
   position: positions,                  // full list, shown as entered
   nickname: nick,
   fact,
@@ -1739,56 +1737,54 @@ const DEMO_STATS = {
     team:{ quarters:{ us:[8,9,6,8], them:[6,4,8,5] },
            opp:{ fgm:10, fga:30, tpm:1, tpa:4, ftm:2, fta:5, reb:20, ast:5, stl:7, blk:1, to:14, fouls:8 } },
     players:{
-      1:{ pts:8, fgm:4, fga:9, tpm:0, tpa:1, ftm:0, fta:2, oreb:1, dreb:2, ast:2, stl:3, blk:0, to:2, fouls:1 },
-      2:{ pts:6, fgm:3, fga:7, tpm:0, tpa:0, ftm:0, fta:0, oreb:2, dreb:3, ast:1, stl:2, blk:1, to:1, fouls:2 },
-      3:{ pts:5, fgm:2, fga:6, tpm:1, tpa:2, ftm:0, fta:0, oreb:0, dreb:2, ast:3, stl:1, blk:0, to:3, fouls:0 },
-      4:{ pts:4, fgm:2, fga:4, tpm:0, tpa:0, ftm:0, fta:0, oreb:3, dreb:3, ast:0, stl:1, blk:2, to:1, fouls:1 },
-      5:{ pts:4, fgm:1, fga:3, tpm:0, tpa:0, ftm:2, fta:4, oreb:1, dreb:3, ast:1, stl:0, blk:0, to:2, fouls:2 },
-      10:{ pts:2, fgm:1, fga:3, tpm:0, tpa:0, ftm:0, fta:0, oreb:0, dreb:1, ast:1, stl:1, blk:0, to:0, fouls:1 },
-      11:{ pts:2, fgm:1, fga:2, tpm:0, tpa:0, ftm:0, fta:0, oreb:1, dreb:1, ast:0, stl:0, blk:0, to:1, fouls:0 },
-      12:{ pts:0, fgm:0, fga:2, tpm:0, tpa:0, ftm:0, fta:0, oreb:1, dreb:2, ast:1, stl:1, blk:0, to:0, fouls:1 },
-      13:{ pts:0, fgm:0, fga:1, tpm:0, tpa:0, ftm:0, fta:0, oreb:0, dreb:1, ast:0, stl:0, blk:0, to:1, fouls:0 },
-      14:{ pts:0, fgm:0, fga:0, tpm:0, tpa:0, ftm:0, fta:0, oreb:0, dreb:0, ast:0, stl:1, blk:0, to:0, fouls:1 },
+      2:{ pts:8, fgm:4, fga:9, tpm:0, tpa:1, ftm:0, fta:2, oreb:1, dreb:2, ast:2, stl:3, blk:0, to:2, fouls:1 },
+      6:{ pts:6, fgm:3, fga:7, tpm:0, tpa:0, ftm:0, fta:0, oreb:2, dreb:3, ast:1, stl:2, blk:1, to:1, fouls:2 },
+      10:{ pts:5, fgm:2, fga:6, tpm:1, tpa:2, ftm:0, fta:0, oreb:0, dreb:2, ast:3, stl:1, blk:0, to:3, fouls:0 },
+      11:{ pts:4, fgm:2, fga:4, tpm:0, tpa:0, ftm:0, fta:0, oreb:3, dreb:3, ast:0, stl:1, blk:2, to:1, fouls:1 },
+      18:{ pts:4, fgm:1, fga:3, tpm:0, tpa:0, ftm:2, fta:4, oreb:1, dreb:3, ast:1, stl:0, blk:0, to:2, fouls:2 },
+      20:{ pts:2, fgm:1, fga:3, tpm:0, tpa:0, ftm:0, fta:0, oreb:0, dreb:1, ast:1, stl:1, blk:0, to:0, fouls:1 },
+      24:{ pts:2, fgm:1, fga:2, tpm:0, tpa:0, ftm:0, fta:0, oreb:1, dreb:1, ast:0, stl:0, blk:0, to:1, fouls:0 },
+      25:{ pts:0, fgm:0, fga:2, tpm:0, tpa:0, ftm:0, fta:0, oreb:1, dreb:2, ast:1, stl:1, blk:0, to:0, fouls:1 },
     },
     quarters:[
       { n:1, plays:[
-        { t:"#1 layup", pts:2 },
-        { t:"Demo Opponent jumper", pts:2, opp:true },
-        { t:"#3 3-pointer", pts:3 },
-        { t:"#2 steal", stl:true },
         { t:"#2 layup", pts:2 },
-        { t:"#5 free throw", pts:1 },
+        { t:"Demo Opponent jumper", pts:2, opp:true },
+        { t:"#10 3-pointer", pts:3 },
+        { t:"#6 steal", stl:true },
+        { t:"#6 layup", pts:2 },
+        { t:"#18 free throw", pts:1 },
         { t:"Demo Opponent layup", pts:2, opp:true },
-        { t:"#4 block", blk:true },
+        { t:"#11 block", blk:true },
         { t:"Demo Opponent layup", pts:2, opp:true },
-        { t:"#1 missed jumper", miss:true },
-        { t:"#4 rebound", reb:true } ] },
+        { t:"#2 missed jumper", miss:true },
+        { t:"#11 rebound", reb:true } ] },
       { n:2, plays:[
-        { t:"#1 layup", pts:2 },
-        { t:"Demo Opponent free throw", pts:1, opp:true },
         { t:"#2 layup", pts:2 },
-        { t:"#3 layup", pts:2 },
-        { t:"#5 free throw", pts:1 },
-        { t:"Demo Opponent jumper", pts:2, opp:true },
+        { t:"Demo Opponent free throw", pts:1, opp:true },
+        { t:"#6 layup", pts:2 },
         { t:"#10 layup", pts:2 },
-        { t:"#3 turnover", to:true },
+        { t:"#18 free throw", pts:1 },
+        { t:"Demo Opponent jumper", pts:2, opp:true },
+        { t:"#20 layup", pts:2 },
+        { t:"#10 turnover", to:true },
         { t:"Demo Opponent free throw", pts:1, opp:true } ] },
       { n:3, plays:[
-        { t:"#4 layup", pts:2 },
-        { t:"Demo Opponent 3-pointer", pts:3, opp:true },
-        { t:"#1 layup", pts:2 },
-        { t:"Demo Opponent layup", pts:2, opp:true },
-        { t:"Demo Opponent layup", pts:2, opp:true },
         { t:"#11 layup", pts:2 },
-        { t:"#2 foul", foul:true },
+        { t:"Demo Opponent 3-pointer", pts:3, opp:true },
+        { t:"#2 layup", pts:2 },
+        { t:"Demo Opponent layup", pts:2, opp:true },
+        { t:"Demo Opponent layup", pts:2, opp:true },
+        { t:"#24 layup", pts:2 },
+        { t:"#6 foul", foul:true },
         { t:"Demo Opponent free throw", pts:1, opp:true } ] },
       { n:4, plays:[
+        { t:"#6 layup", pts:2 },
         { t:"#2 layup", pts:2 },
-        { t:"#1 layup", pts:2 },
         { t:"Demo Opponent layup", pts:2, opp:true },
-        { t:"#5 jumper", pts:2 },
+        { t:"#18 jumper", pts:2 },
         { t:"Demo Opponent 3-pointer", pts:3, opp:true },
-        { t:"#4 layup", pts:2 },
+        { t:"#11 layup", pts:2 },
         { t:"Timeout — Shiloh", note:true } ] },
     ],
   },
@@ -2067,7 +2063,7 @@ function probePhotos() {
   });
 }
 
-const placeholderNote = (what) => !PLACEHOLDER ? "" :
+const placeholderNote = (what) => !PLACEHOLDER[what.split(" ")[0] === "coaching" ? "coaches" : what] ? "" :
   `<div class="note" role="note">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9L2.5 17.5A2 2 0 0 0 4.2 20.5h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
@@ -2112,12 +2108,12 @@ function photoFront(p, variant) {
     <div class="tcf-shade"></div>
     <div class="tcf-top">
       <div class="tcf-numchip">${p.num}</div>
-      <div class="tcf-pospill">${p.pos}</div>
+      ${p.pos ? `<div class="tcf-pospill">${p.pos}</div>` : ""}
     </div>
     <div class="tcf-plate">
       <div class="tcf-nick">“${esc(p.nickname)}”</div>
       <div class="tcf-name">${esc(p.first)} <b>${esc(p.last)}</b></div>
-      <div class="tcf-pos">${p.position}</div>
+      ${p.position ? `<div class="tcf-pos">${p.position}</div>` : ""}
     </div>
     <div class="tcf-foil" aria-hidden="true"></div>
   </div>`;
@@ -2132,7 +2128,7 @@ function modernFront(p) {
       <div class="tcm-numchip">#${p.num}</div>
     </div>
     <div class="tcm-body">
-      <div class="tcm-pos">${p.position}</div>
+      <div class="tcm-pos">${p.position || "Shiloh Saints"}</div>
       <div class="tcm-name">${esc(p.first)} <b>${esc(p.last)}</b></div>
       <div class="tcm-nick">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11 5H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2v3l4-3h0a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"/></svg>
@@ -2149,7 +2145,7 @@ function backRows(p) {
   const row = (k, v) => `<div class="tcb-row"><span class="tcb-k">${k}</span><span class="tcb-v">${v}</span></div>`;
   if (!s.gp) return [
     row("Jersey", `#${p.num}`),
-    row("Positions", p.position),
+    p.position ? row("Positions", p.position) : row("Team", TEAM.name),
     row("Nickname", `“${esc(p.nickname)}”`),
   ].join("");
   return [
@@ -2165,7 +2161,7 @@ function cardBack(p) {
       <div class="tcb-num">${p.num}</div>
       <div>
         <div class="tcb-name">${esc(p.name)}</div>
-        <div class="tcb-pos">${p.position}</div>
+        <div class="tcb-pos">${p.position || TEAM.full}</div>
       </div>
     </div>
     <div class="tcb-rows">${backRows(p)}</div>
@@ -2193,7 +2189,7 @@ function compactFront(p) {
     <div class="tcc-body">
       <div class="tcc-nick">“${esc(p.nickname)}”</div>
       <div class="tcc-name">${esc(p.first)} <b>${esc(p.last)}</b></div>
-      <div class="tcc-pos">${p.position}</div>
+      ${p.position ? `<div class="tcc-pos">${p.position}</div>` : ""}
     </div>
   </div>`;
 }
@@ -2222,7 +2218,7 @@ function playerCard(p) {
   const compact = NO_PHOTO.has(p.num);
   return `<div class="tc tc-${v}${flipped ? " is-flipped" : ""}${compact ? " is-compact" : ""}"
       role="button" tabindex="0" data-flip="${p.id}" data-num="${p.num}" aria-pressed="${flipped}"
-      aria-label="${esc(p.name)}, number ${p.num}, ${p.position}. Activate to flip the card.">
+      aria-label="${esc(p.name)}, number ${p.num}${p.position ? ", " + p.position : ""}. Activate to flip the card.">
     <div class="tc-inner">
       <div class="tc-face tc-front"${flipped ? " inert" : ""}>
         ${compact ? compactFront(p) : v === "modern" ? modernFront(p) : photoFront(p, v)}
@@ -3339,10 +3335,10 @@ function openPlayer(id) {
 
   const st = seasonStats(p.num);
   $("#modal-info").innerHTML = `
-    <div class="modal-pos">${p.position}</div>
+    <div class="modal-pos">${p.position || TEAM.full}</div>
     <div class="modal-stats">
       <div class="ms"><span>Jersey</span><b>#${p.num}</b></div>
-      <div class="ms ms-pos"><span>Positions</span><b>${p.position}</b></div>
+      ${p.position ? `<div class="ms ms-pos"><span>Positions</span><b>${p.position}</b></div>` : `<div class="ms"><span>Class of</span><b>2035</b></div>`}
       <div class="ms"><span>Games</span><b>${st.gp}</b></div>
     </div>
     <div class="modal-fact">
