@@ -53,9 +53,11 @@ mark, update `--logo-ratio` in the `:root` block of `index.html`.
 The Schedule tab merges two lists in `index.html` by date, grouped by month:
 
 - **`PRACTICE_DAYS`** holds practices, shown as white cards with black text.
-  Each one is `{ date, time, loc }`, where `loc` is a key in `GYMS`. Add
-  `optional:true` for an optional practice, or `{ date, off:true, note }` to
-  call out a day with no practice.
+  Each one is `{ date, time, loc, plan }`, where `loc` is a key in `GYMS`
+  and `plan` is the id of a season plan in `PRACTICES`. Tapping the card opens
+  that plan, and the plan shows its date(s) and sorts by them on the Practice
+  tab. Add `optional:true` for an optional practice, or
+  `{ date, off:true, note }` to call out a day with no practice.
 - **`GAMES`** holds games, shown as dark cards with white text. It is empty
   until the game schedule is out, and the tab says games are coming soon.
 

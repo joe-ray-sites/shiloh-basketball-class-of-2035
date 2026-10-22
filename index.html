@@ -565,6 +565,12 @@ html:not(.unlocked) #modal{display:none !important;}
   text-transform:uppercase;color:#000;border:1.5px dashed #000;padding:4px 10px;border-radius:9px;white-space:nowrap;
 }
 .prac.is-optional{border:1.5px dashed #8a96a3;}
+button.prac{width:100%;text-align:left;font:inherit;cursor:pointer;}
+.prac-plan{font-size:12.5px;color:#000;margin-top:6px;}
+.prac-plan b{font-weight:700;color:var(--accent);}
+.prac-go{order:1;margin-left:10px;color:#5b6b7c;display:flex;flex:0 0 auto;}
+.game-main + .prac-go{margin-left:auto;}
+.prac .game-right{display:flex;gap:8px;align-items:center;}
 .prac.is-off{background:transparent;border:1px dashed var(--line);}
 .prac.is-off .prac-title,.prac.is-off .prac-sub,.prac.is-off .game-week{color:var(--muted);}
 .prac.is-next{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,150,190,.15);}
@@ -1200,7 +1206,7 @@ button.game{width:100%;text-align:left;font:inherit;cursor:pointer;}
   .tc:hover .tc-front{box-shadow:0 0 0 1.5px var(--accent) inset, 0 22px 40px -12px rgba(7,26,46,.6);}
   .tc-modern:hover .tc-front{box-shadow:0 16px 34px -14px rgba(7,26,46,.5);}
   .cc:hover{transform:translateY(-3px);box-shadow:0 18px 32px -18px rgba(7,26,46,.5);}
-  button.game:hover{border-color:var(--accent);}
+  button.game:hover,button.prac:hover{border-color:var(--accent);}
   .tcb-open:hover{filter:brightness(1.08);}
 }
 
@@ -1881,8 +1887,10 @@ const PRACTICES = [
    One entry per practice. These show on the Schedule tab as white cards,
    merged by date with the games (dark cards).
 
-   Practice: { date:"2026-11-02", time:"5:30–7:00 PM", loc:"rec",
+   Practice: { date:"2026-11-02", time:"5:30–7:00 PM", loc:"rec", plan:3,
                optional?:true, note?:"..." }
+   `plan` is the id of the season plan in PRACTICES run that day. Tapping the
+   card on the Schedule tab opens it, and the plan shows the day(s) it's on.
    No-practice day worth calling out: { date, off:true, note:"Thanksgiving" }
    `loc` is a key in GYMS. */
 const GYMS = {
@@ -1890,20 +1898,20 @@ const GYMS = {
   fellowship: "Shiloh Christian Fellowship Gym",
 };
 const PRACTICE_DAYS = [
-  // Bonus October practices
-  { date:"2026-10-22", time:"7:30–8:30 PM", loc:"fellowship" },
-  { date:"2026-10-29", time:"7:30–8:30 PM", loc:"fellowship" },
+  // Bonus October practices (optional)
+  { date:"2026-10-22", time:"7:30–8:30 PM", loc:"fellowship", plan:1,  optional:true },
+  { date:"2026-10-29", time:"7:30–8:30 PM", loc:"fellowship", plan:2,  optional:true },
   // November: Mondays at the Rec Center, Thursdays at the Fellowship Gym
-  { date:"2026-11-02", time:"5:30–7:00 PM", loc:"rec" },
-  { date:"2026-11-03", time:"6:00–7:30 PM", loc:"rec", optional:true, note:"Extra touches before the season starts" },
-  { date:"2026-11-05", time:"7:30–8:30 PM", loc:"fellowship" },
-  { date:"2026-11-09", time:"5:30–7:00 PM", loc:"rec" },
-  { date:"2026-11-12", time:"7:30–8:30 PM", loc:"fellowship" },
-  { date:"2026-11-16", time:"5:30–7:00 PM", loc:"rec" },
-  { date:"2026-11-19", time:"7:30–8:30 PM", loc:"fellowship" },
-  { date:"2026-11-23", time:"5:30–7:00 PM", loc:"rec" },
+  { date:"2026-11-02", time:"5:30–7:00 PM", loc:"rec",        plan:3 },
+  { date:"2026-11-03", time:"6:00–7:30 PM", loc:"rec",        plan:6,  optional:true, note:"Extra touches before the season starts" },
+  { date:"2026-11-05", time:"7:30–8:30 PM", loc:"fellowship", plan:4 },
+  { date:"2026-11-09", time:"5:30–7:00 PM", loc:"rec",        plan:5 },
+  { date:"2026-11-12", time:"7:30–8:30 PM", loc:"fellowship", plan:7 },
+  { date:"2026-11-16", time:"5:30–7:00 PM", loc:"rec",        plan:8 },
+  { date:"2026-11-19", time:"7:30–8:30 PM", loc:"fellowship", plan:9 },
+  { date:"2026-11-23", time:"5:30–7:00 PM", loc:"rec",        plan:4,  note:"Defense again before games start" },
   { date:"2026-11-26", off:true, note:"Thanksgiving" },
-  { date:"2026-11-30", time:"5:30–7:00 PM", loc:"rec" },
+  { date:"2026-11-30", time:"5:30–7:00 PM", loc:"rec",        plan:10 },
 ];
 
 /* ── SCHEDULE + GAME STATS ─────────────────────────────────────
@@ -2519,21 +2527,30 @@ const todayISO = () => {
 
 function practiceRow(p, next, past) {
   const when = fmtDate(p.date, { weekday:"short", month:"short", day:"numeric" });
+  const plan = !p.off && p.plan != null ? practiceById(p.plan) : null;
   const cls = ["prac", p.optional ? "is-optional" : "", p.off ? "is-off" : "",
                next ? "is-next" : "", past ? "is-past" : ""].filter(Boolean).join(" ");
   const label = p.off ? "No Practice" : "Practice";
-  const right = next ? `<div class="game-badge">Next Up</div>`
-    : p.optional ? `<div class="prac-tag">Optional</div>` : "";
+  const right = [next ? `<div class="game-badge">Next Up</div>` : "",
+                 p.optional ? `<div class="prac-tag">Optional</div>` : ""].join("");
   const sub = p.off ? esc(p.note || "")
     : [esc(GYMS[p.loc] || p.loc || ""), p.note ? esc(p.note) : ""].filter(Boolean).join(" · ");
-  return `<article class="${cls}">
+  const inner = `
     <div class="game-week">${label}</div>
     <div class="game-main">
       <h3 class="prac-title">${when}${p.off ? "" : ` · ${esc(p.time)}`}</h3>
       ${sub ? `<div class="prac-sub">${sub}</div>` : ""}
+      ${plan ? `<div class="prac-plan">Plan: <b>${esc(plan.title)}</b></div>` : ""}
     </div>
-    ${right ? `<div class="game-right">${right}</div>` : ""}
-  </article>`;
+    ${right ? `<div class="game-right">${right}</div>` : ""}`;
+  return plan
+    ? `<button class="${cls}" data-day-plan="${plan.id}" aria-label="${when} practice plan: ${esc(plan.title)}">${inner}
+         <span class="prac-go" aria-hidden="true">
+           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+         </span>
+       </button>`
+    : `<article class="${cls}">${inner}</article>`;
 }
 
 function scheduleView() {
@@ -2975,13 +2992,24 @@ let ORDER  = lsGet(ORDER_KEY, []) || [];
 const savePlanState = () => { lsSet(EDITS_KEY, EDITS); lsSet(HIDDEN_KEY, HIDDEN); lsSet(ORDER_KEY, ORDER); };
 
 // A stock plan with any local edit laid over it.
+// Days on the practice schedule that run this season plan.
+const planDays = (id) => PRACTICE_DAYS.filter(d => d.plan === id && !d.off).map(d => d.date);
+// The date a plan shows: its next scheduled day, else the last one it ran.
+const scheduledDate = (id) => {
+  const days = planDays(id), today = todayISO();
+  return days.find(d => d >= today) || days[days.length - 1] || null;
+};
+
 function stockPlan(id) {
   const base = PRACTICES.find(p => p.id === id);
   if (!base) return null;
   const e = EDITS[id];
-  return e && validPlan(e)
+  const p = e && validPlan(e)
     ? Object.assign({}, base, e, { id, stock:true, edited:true })
     : Object.assign({}, base, { stock:true, edited:false });
+  p.days = planDays(id);
+  if (!p.date) p.date = base.date || scheduledDate(id);
+  return p;
 }
 
 // Every visible plan, in the coach's order. Until the coach reorders,
@@ -2990,7 +3018,10 @@ function stockPlan(id) {
 function allPlans() {
   const mine = [...CUSTOM].sort((a, b) => (b.updated || "").localeCompare(a.updated || ""))
     .map(p => Object.assign({}, p, { custom:true }));
-  const stock = PRACTICES.filter(p => !HIDDEN.includes(p.id)).map(p => stockPlan(p.id));
+  // Season plans run in schedule order (first day each one is on).
+  const first = (p) => p.days[0] || p.date || "9999";
+  const stock = PRACTICES.filter(p => !HIDDEN.includes(p.id)).map(p => stockPlan(p.id))
+    .map((p, i) => ({ p, i })).sort((a, b) => first(a.p).localeCompare(first(b.p)) || a.i - b.i).map(x => x.p);
   // Not yet placed: a new coach-made plan goes to the top, a restored season plan to the end.
   const pos = (id) => { const i = ORDER.indexOf(id); return i >= 0 ? i : (typeof id === "number" ? Infinity : -1); };
   return mine.concat(stock).map((p, i) => ({ p, i }))
@@ -3185,7 +3216,8 @@ function saveBuilder() {
     blocks: d.blocks.map(b => ({ drill:b.drill, min:Math.max(1, Number(b.min) || 1), note:(b.note || "").trim() })),
     updated: new Date().toISOString().slice(0, 10) };
   if (typeof plan.id === "number") {              // a season plan, edited in place
-    EDITS[plan.id] = { title:plan.title, date:plan.date, goal:plan.goal, blocks:plan.blocks, updated:plan.updated };
+    const date = plan.date === scheduledDate(plan.id) ? null : plan.date;   // keep following the schedule
+    EDITS[plan.id] = { title:plan.title, date, goal:plan.goal, blocks:plan.blocks, updated:plan.updated };
     savePlanState();
   } else {
     const i = CUSTOM.findIndex(p => p.id === plan.id);
@@ -3290,7 +3322,8 @@ function copySubmission() {
 
 /* ── Practice plans ───────────────────────────────────────── */
 const practiceById = (id) => allPlans().find(p => p.id === id)
-  || (state.shared && state.shared.id === id ? state.shared : null);
+  || (state.shared && state.shared.id === id ? state.shared : null)
+  || stockPlan(id);
 const parseId = (v) => /^\d+$/.test(v) ? Number(v) : v;
 const practiceMinutes = (p) => p.blocks.reduce((n, b) => n + b.min, 0);
 // The facets a practice covers, in the order they first appear (warm-up and
@@ -3378,7 +3411,9 @@ function practiceDetailView(id) {
 
   return `
     <div class="plan-head">
-      <div class="plan-meta">${p.shared ? "Shared practice" : p.custom ? "My practice" : "Season plan"}${p.edited ? " · edited" : ""} · ${practiceMinutes(p)} minutes · ${p.date ? fmtDate(p.date, { weekday:"long", month:"long", day:"numeric" }) : "Date TBD"}</div>
+      <div class="plan-meta">${p.shared ? "Shared practice" : p.custom ? "My practice" : "Season plan"}${p.edited ? " · edited" : ""} · ${practiceMinutes(p)} minutes · ${p.days && p.days.length > 1
+        ? p.days.map(d => fmtDate(d, { weekday:"short", month:"short", day:"numeric" })).join(" and ")
+        : p.date ? fmtDate(p.date, { weekday:"long", month:"long", day:"numeric" }) : "Date TBD"}</div>
       <div class="plan-title">${esc(p.title)}</div>
       <p class="plan-goal">${esc(p.goal)}</p>
       <div class="plan-tags">${practiceCats(p).map(catChip).join("")}</div>
@@ -4120,9 +4155,10 @@ function render() {
       state.box      ? { attr:"data-back",         label:sn ? `${snLabel} schedule` : "All games" }
     : state.leaders  ? { attr:"data-back-leaders", label:sn ? `${snLabel} Team Stats` : "Team Stats" }
     : state.season   ? { attr:"data-back-season",  label:"Past Seasons" }
+    : state.practice && state.fromSchedule ? { attr:"data-back-schedule", label:"Schedule" }
     : (state.practice || state.builder) ? { attr:"data-back-practice", label:"All practices" }
     : null;
-  ["data-back", "data-back-leaders", "data-back-season", "data-back-practice"].forEach(a => crumb.removeAttribute(a));
+  ["data-back", "data-back-leaders", "data-back-season", "data-back-practice", "data-back-schedule"].forEach(a => crumb.removeAttribute(a));
   crumb.hidden = !back;
   if (back) { crumb.setAttribute(back.attr, "1"); $("#crumb-txt").textContent = back.label; }
 
@@ -4284,6 +4320,7 @@ function goTab(id) {
   state.season = null;
   state.seasonTab = "schedule";
   state.practice = null;
+  state.fromSchedule = false;
   state.practiceTab = "plans";
   state.builder = null;
   state.shared = null;
@@ -4319,8 +4356,11 @@ document.addEventListener("click", (e) => {
   if (sea) { state.season = Number(sea.dataset.season); state.seasonTab = "schedule"; state.leaders = null; render(); window.scrollTo(0, 0); return; }
   if (e.target.closest("[data-back-season]")) { state.season = null; state.leaders = null; render(); window.scrollTo(0, 0); return; }
 
+  const dp = e.target.closest("[data-day-plan]");
+  if (dp) { const id = parseId(dp.dataset.dayPlan); goTab("practice"); state.practice = id; state.fromSchedule = true; render(); window.scrollTo(0, 0); return; }
+  if (e.target.closest("[data-back-schedule]")) { goTab("schedule"); return; }
   const pr = e.target.closest("[data-practice]");
-  if (pr) { state.practice = parseId(pr.dataset.practice); render(); window.scrollTo(0, 0); return; }
+  if (pr) { state.practice = parseId(pr.dataset.practice); state.fromSchedule = false; render(); window.scrollTo(0, 0); return; }
   if (e.target.closest("[data-back-practice]")) { state.practice = null; state.builder = null; render(); window.scrollTo(0, 0); return; }
 
   // Practice builder
