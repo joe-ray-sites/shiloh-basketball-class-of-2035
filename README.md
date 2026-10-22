@@ -48,6 +48,19 @@ composites transparent icons onto black). Until the logo exists the script
 draws the "SC" monogram instead. If the logo's shape differs from the football
 mark, update `--logo-ratio` in the `:root` block of `index.html`.
 
+## Schedule
+
+The Schedule tab merges two lists in `index.html` by date, grouped by month:
+
+- **`PRACTICE_DAYS`** holds practices, shown as white cards with black text.
+  Each one is `{ date, time, loc }`, where `loc` is a key in `GYMS`. Add
+  `optional:true` for an optional practice, or `{ date, off:true, note }` to
+  call out a day with no practice.
+- **`GAMES`** holds games, shown as dark cards with white text. It is empty
+  until the game schedule is out, and the tab says games are coming soon.
+
+The first event on or after today gets the "Next Up" badge, and past days dim.
+
 ## Entering a game
 
 Everything derives from the `GAMES` array in `index.html` — player season
