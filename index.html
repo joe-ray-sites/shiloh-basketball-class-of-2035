@@ -1427,7 +1427,9 @@ const CATS = {
   scrim: "Scrimmage",
 };
 const SOURCES = { btb: "Breakthrough Basketball", usab: "USA Basketball",
-                  jrnba: "Jr. NBA", bfc: "Basketball For Coaches", rr: "Read & React · Better Basketball" };
+                  jrnba: "Jr. NBA", bfc: "Basketball For Coaches", rr: "Read & React · Better Basketball",
+                  cc: "Coach's Clipboard", champ: "Championship Productions", clinic: "Coaching clinic video",
+                  rs: "Race & Space · Tyler Coston", saints: "Saints coaching pages" };
 const YT = (id, t) => `https://www.youtube.com/watch?v=${id}${t ? "&t=" + t + "s" : ""}`;
 
 const DRILLS = {
@@ -1767,119 +1769,208 @@ const DRILLS = {
                 desc:"Rick Torbett's drills for shuffling the deck: several layers in one possession, players making the decisions." },
   rrImplement:{ name:"R&R: Practice Implementation (12-day install)", cat:"off", src:"rr",
                 url:"https://www.youtube.com/playlist?list=PLD553F8BD3CDBCFA5", video:YT("LPEMQGn8I9Y"),
-                desc:"Part one of a twenty-video series that installs the offense over twelve practices. The rest of the series is in the playlist." },
+                desc:"Part one of a twenty-video series that installs the offense over twelve practices. The rest of the series is in the playlist." },  // ── Pack Line (see the Pack Line Defense page in the Menu) ──
+  plVegas:    { name:"Vegas Close Outs", cat:"def", src:"cc",
+                url:"https://www.coachesclipboard.net/PackLineDefenseDrills.html",
+                desc:"Toss the ball to a partner and close out: two high hands, low stance, short choppy steps, yell \"Shot!\". The offense catches in triple threat, jabs and rips through. Every practice." },
+  pl2on2:     { name:"2-on-2 Pack Line Positioning", cat:"def", src:"cc",
+                url:"https://www.coachesclipboard.net/PackLineDefenseDrills.html",
+                desc:"Two passers, two defenders. One pressures the ball; the other sits in the gap with both feet inside the pack line. On every pass they swap jobs while the ball is in the air. Run it top-to-wing, wing-to-corner and two-guard front." },
+  pl3on3:     { name:"3-on-3 Freeze Positioning", cat:"def", src:"cc",
+                url:"https://www.coachesclipboard.net/PackLineDefenseDrills.html",
+                desc:"Three offensive players pass around the arc, three defenders rotate. The coach yells \"Freeze!\" and every defender checks: feet inside the pack line, ball-you-man, can see both." },
+  plBlackhawk:{ name:"Blackhawk Drill", cat:"def", src:"cc",
+                url:"https://www.coachesclipboard.net/PackLineDefenseDrills.html",
+                desc:"One defender against a line of passers and cutters. Close out, jump to the ball on the pass, swipe the gap, bump the cutter, close out again. Three or four reps, then live 1 on 1 with two or three dribbles." },
+  plWallUp:   { name:"Post Wall Up", cat:"def", src:"cc",
+                url:"https://www.coachesclipboard.net/PackLineDefenseDrills.html",
+                desc:"Post defense without a double team. Three-quarter on the high side with an arm bar before the catch; never give up a feed from the top. On a catch, pop back, wall up and show the ref your hands. Don't leave your feet." },
+  plIdentity: { name:"3-on-3 Identity Game", cat:"def", src:"cc",
+                url:"https://www.coachesclipboard.net/PackLineDefenseDrills.html",
+                desc:"Coach passes in, offense has 20 seconds and three dribbles per touch. Scoring: 3 for a three, 2 for a two, 2 for an offensive rebound, 2 for getting the ball into the paint, minus 1 for a turnover, minus 1 to the defense for a foul." },
+  plShell:    { name:"4-on-4 Pack Line Shell", cat:"def", src:"saints", page:"packline",
+                desc:"Four on the perimeter, four on defense. Ball moves; all four defenders move on the air time of the pass. Add drives (help and recover), then cutters (bump and chase), then let it go live." },
+  plStops:    { name:"Get a Stop", cat:"def", src:"saints", page:"packline",
+                desc:"Virginia's Closeout Drill. The defense stays on until it forces a contested miss and secures the rebound. Allow a basket or an easy look and you stay on defense." },
+  plMack:     { name:"Chris Mack: Drills to Build the Pack Line", cat:"def", src:"champ",
+                url:YT("8ad4bX76pO4"), video:YT("8ad4bX76pO4"),
+                desc:"Individual and team drills that build the Pack Line from the ground up." },
+  plBennett:  { name:"Tony Bennett Pack Line Clinic", cat:"def", src:"clinic",
+                url:YT("m8U2XzOZHfk"), video:YT("m8U2XzOZHfk"),
+                desc:"How Virginia installs the Pack Line, with clinic notes and drills." },
+  plBoone:    { name:"Building the Pack Line (Jim Boone)", cat:"def", src:"clinic",
+                url:YT("ME1ExMVfges"), video:YT("ME1ExMVfges"),
+                desc:"Clinic and build-up drills for the Pack Line." },
+  plJones:    { name:"Hybrid Pack Line Build-up Drills (Robert Jones)", cat:"def", src:"champ",
+                url:YT("oF3t1L7WXyk"), video:YT("oF3t1L7WXyk"),
+                desc:"Pack Line principles and build-up and breakdown drills from Norfolk State." },
+  // ── From our Defensive Levels page ──
+  dlBowz:     { name:"Shooter & Offside Post: B.O.W.Z., C.A.P., R.O.A.R.", cat:"reb", src:"saints", page:"deflevels",
+                desc:"A three goes up. The shooter's defender C.A.P.s him (Check, Arc, Pursue). The low-post defender steps away from the goal and B.O.W.Z.es (Block Out in the War Zone). The drill ends when the defense R.O.A.R.s: Rebound, Outlet And Run." },
+  dlFall:     { name:"Four-Inch Fall (Taking the Charge)", cat:"def", src:"saints", page:"deflevels",
+                desc:"Low and athletic, firm forearm at 45 degrees, fall on both cheeks on the line of the drive, roll, hands up. Technique first, then as a group." },
+  dlAlley:    { name:"Alley 1-on-1 (Half & Full Court)", cat:"def", src:"saints", page:"deflevels",
+                desc:"Level 1. The offense attacks; the defender keeps the ball out of the highway and in the alley. Half court first, then full court. Beaten? Sprint ahead and recover the bubble." },
+  dlHelpAcross:{ name:"Help Across, Not Up", cat:"def", src:"saints", page:"deflevels",
+                desc:"Point and wing with defenders. The point drives, the wing defender drops to help, the point pitches to the wing, the defender recovers and closes out on the shot, then boxes out." },
+  dlHelp22:   { name:"2-on-2 & 3-on-3 Help and Recover", cat:"def", src:"saints", page:"deflevels",
+                desc:"Groups of four (then six), one ball. Drive, help, recover. In 3-on-3, teammates move one spot in the direction of the drive. Help and recover is one word." },
+  dlTrans120: { name:"Transition 120", cat:"def", src:"saints", page:"deflevels",
+                desc:"Levels 1, 2 and 0 in one drill. Keep the ball in the alley full court, then at the other end adjust to the pass to the point and the corner, stop the corner drive before the highway, close out on the skip and box out." },
+  // ── From our Transition Defense page ──
+  td111:      { name:"1 on 1 on 1 (Split the Court)", cat:"def", src:"saints", page:"deftrans",
+                desc:"One on one from half court, force the ball out of the highway. After the shot the defender becomes offense and attacks the other way against a new defender. Slow the ball down, split the court, five seconds to score." },
+  td222:      { name:"2 on 2 on 2", cat:"def", src:"saints", page:"deftrans",
+                desc:"Keep the ball on one side of the court and don't turn him. The off defender sprints back to narrow the floor, fakes and drops to buy time, and talks." },
+  td44:       { name:"4-on-4 Transition Defense", cat:"def", src:"saints", page:"deftrans",
+                desc:"Our eight-player version of 4 on 4 on 4 and 5 on 5. Someone shoots, the defense outlets to the coach who throws ahead, everyone sprints back. The shooter touches the baseline first. Guard the ball and the basket first, then find your man." },
+  // ── Race & Space transition offense ──
+  rsArcs:     { name:"Race & Space Layer 1: Race the Arcs", cat:"off", src:"rs",
+                url:YT("JjYiIG6G0jA"), video:YT("JjYiIG6G0jA"),
+                desc:"Our transition offense. Rebound and go: the rim runner sprints to the rim, the corner runners sprint to the corners, and the ball races ahead to attack before the defense is set." },
+  rsIntro:    { name:"Race & Space Offense Overview", cat:"off", src:"rs",
+                url:YT("pFF1ORExYZ0"), video:YT("pFF1ORExYZ0"),
+                desc:"Tyler Coston walks through the layers of Race & Space, the transition offense Mike Neighbors built at Arkansas." },
 };
 
 const PRACTICES = [
-  { id:1, title:"Ball in Hand", date:null,
-    goal:"First practice: get a ball in every hand, learn the words we'll use all season and finish with a game.",
+  { id:1, title:"Side by Side", date:null,
+    goal:"First night together. Start side by side, get a ball in every hand, and learn the first word of our defense (close out) and of our offense (pass and cut).",
     blocks:[
-      { min:5,  drill:"usEgg",     note:"Every player has a ball. Eyes up the whole time." },
-      { min:10, drill:"usSpeed",   note:"Down with the right, back with the left. Add Crossover on the Move for the last 4 minutes." },
-      { min:8,  drill:"usFour",    note:"Chest pass first, bounce pass second. Call the receiver's name." },
-      { min:10, drill:"layup3",    note:"Right side only today. Outside foot, inside knee, soft off the glass." },
-      { min:7,  drill:"jumpstop",  note:"Two-foot stop, then front pivot. No travels counts as a win." },
-      { min:10, drill:"dribbletag", note:"Everyone is it. Lose your dribble, five jumping jacks, back in." },
-      { min:10, drill:"us3PC",     note:"3v3 half court, pass and cut every time. No dribbling for the first 5 minutes." },
+      { min:5,  drill:"usEgg",     note:"Start side by side on the baseline: name and one thing you're excited about. Then a ball in every hand, eyes up." },
+      { min:8,  drill:"usSpeed",   note:"Down with the right, back with the left. Ball out in front and protected: no live turnovers." },
+      { min:10, drill:"form1",     note:"One-hand form close to the rim, then BEEF. Shooting is what we'll be known for, and it starts tonight." },
+      { min:6,  drill:"plVegas",   note:"Two high hands, short choppy steps, yell \"Shot!\". We do this every practice." },
+      { min:12, drill:"rrL1Warm",  note:"Read & React Layer 1 warm-up, then 4 on 0 in two groups: pass, cut hard to the rim, fill the open spot." },
+      { min:9,  drill:"dribbletag", note:"Everyone is it. Lose your dribble, five jumping jacks, back in." },
+      { min:10, drill:"passcut",   note:"4 on 4, Layer 1 only: pass and cut every time. No dribbling for the first 5 minutes." },
     ] },
-  { id:2, title:"Pass & Move", date:null,
-    goal:"Passing with a purpose, moving without the ball, and the first look at real defensive stance.",
+  { id:2, title:"Pass, Cut, Pack", date:null,
+    goal:"Layer 1 again, layups with both hands, and the first look at the Pack Line: one man on the ball, everyone else in the pack.",
     blocks:[
-      { min:5,  drill:"redlight",  note:"Green = dribble, red = jump stop, yellow = pivot." },
-      { min:8,  drill:"usHuman",   note:"Change hands at every human cone. Swap cones and dribblers every minute." },
-      { min:12, drill:"monkey",    note:"6 minutes Monkey in the Middle, 6 minutes 10 in a Row (see the Drill Library)." },
-      { min:10, drill:"dematha",   note:"Keep the lines moving. Miss a layup, get your own rebound." },
-      { min:8,  drill:"usStance",  note:"Hold the stance for 10 seconds, then 4 minutes of Defensive Slides on the coach's call." },
-      { min:7,  drill:"passtag",   note:"Two taggers, one ball, passes only." },
-      { min:10, drill:"passcut",   note:"5v0 for 4 minutes, then 5v5 running the same pass-and-cut." },
+      { min:5,  drill:"redlight",  note:"Side by side to start. Green = dribble, red = jump stop, yellow = pivot." },
+      { min:10, drill:"layup3",    note:"Right side, then left. Outside foot, inside knee, soft off the glass. Finishing at the rim is our second-best shot." },
+      { min:6,  drill:"plVegas",   note:"Add the jab and rip from the offense. Stay square, no reaching." },
+      { min:12, drill:"pl2on2",    note:"Cones mark the pack line, two big steps inside the 3-point line. Off-ball defender keeps both feet inside. Swap jobs while the pass is in the air." },
+      { min:10, drill:"rrL1Warm",  note:"Layer 1 warm-up, then 4 on 0: pass, cut, fill." },
+      { min:7,  drill:"passtag",   note:"Two taggers, one ball, passes only. A bad pass gives the runners a free point." },
+      { min:10, drill:"passcut",   note:"4 on 4. Offense runs Layer 1, defense plays pack line: one on the ball, three inside the cones." },
     ] },
-  { id:3, title:"Layup Day", date:null,
-    goal:"Finishing at the rim with both hands and with a defender coming, plus the closeout on defense.",
+  { id:3, title:"Pack the Paint", date:null,
+    goal:"First full practice. Recap Layer 1 for anyone who missed October, add the Laker cut (Layer 2), and build the Pack Line: pressure the ball, everyone else in the pack, move on the air time of the pass.",
     blocks:[
-      { min:5,  drill:"usEgg",     note:"Add a rhythm dribble between the legs for players who are ready." },
-      { min:8,  drill:"grass",     note:"Small box, every move you own, feet never stop." },
-      { min:15, drill:"chaser",    note:"8 minutes with a chaser, then 7 minutes of DeMatha Finishing on the left side." },
-      { min:8,  drill:"usSCS",     note:"No dribbles. If the pass is late, the runner slows down, not the other way round." },
-      { min:9,  drill:"usCloseout", note:"Sprint, chop, hand up. Finish with 3v3 Live from a Closeout." },
-      { min:8,  drill:"rps",       note:"Winner attacks, loser defends, live to the rim. Rotate partners every 2 minutes." },
-      { min:7,  drill:"twodrib",   note:"4v4, two dribbles max. Reward the extra pass out loud." },
+      { min:5,  drill:"jnWarm",    note:"Side by side on the baseline, then the dynamic warm-up." },
+      { min:8,  drill:"usHuman",   note:"Change hands at every human cone. Eyes up. The ball is ours." },
+      { min:12, drill:"usShoot",   note:"Form shots close, then catch-and-shoot from the spots our offense gives us. Count team makes." },
+      { min:6,  drill:"plVegas",   note:"Shooter: close out high and tight. Driver: stop a step short and keep him out of the highway." },
+      { min:12, drill:"pl3on3",    note:"Cones on the pack line. Coach yells \"Freeze!\": feet inside, ball-you-man, see both. Then move on the air time." },
+      { min:8,  drill:"rrL1Warm",  note:"Layer 1 recap. Pass, cut to the rim, fill." },
+      { min:10, drill:"rrL2",      note:"Layer 2: ball goes into the post, the passer makes the Laker cut. Walk it, jog it, run it." },
+      { min:8,  drill:"dlBowz",    note:"C.A.P. the shooter, B.O.W.Z. the post, then R.O.A.R.: rebound, outlet and run." },
+      { min:9,  drill:"jnSharks",  note:"Minnows keep their dribble. Sharks stay in a defensive stance the whole time." },
+      { min:12, drill:"passcut",   note:"4 on 4 live. Offense runs Layers 1 and 2, defense plays pack line. Defense gets a point for every stop." },
     ] },
-  { id:4, title:"Defense First", date:null,
-    goal:"Stance, slides, help and box-outs. Defense wins 4th-grade games, so it gets the biggest block tonight.",
+  { id:4, title:"Extra Touches", date:null,
+    goal:"Optional night, all about touches: shooting, finishing and ball handling, with close outs and the alley on the way. Lots of reps, lots of makes.",
     blocks:[
-      { min:5,  drill:"redlight",  note:"Faster calls this week." },
-      { min:7,  drill:"usHes",     note:"Slow, then go. Sell it with the shoulders." },
-      { min:18, drill:"shell",     note:"5 minutes Proper Defensive Stance, 6 minutes Full-Court Zigzag, then 7 minutes of Shell Drill: ball, help, deny on every pass." },
-      { min:8,  drill:"usBlockout", note:"Find, hit, then go get it. Every rebound counts for the defense." },
-      { min:7,  drill:"usBEEF",    note:"Say the four words back to the coach, then Two-Hand Shooting from a Self-Pass." },
-      { min:8,  drill:"pirate",    note:"Pirate dribbling, Mr. Fox, then Coin Drop. Loud and silly on purpose." },
-      { min:7,  drill:"closeout",  note:"3v3 live from the closeout. Defense gets a point for every stop." },
+      { min:5,  drill:"usEgg",     note:"Side by side, then a ball in every hand from the first minute." },
+      { min:8,  drill:"d210",      note:"Pick one move. Two dribbles in, one dribble in, then none." },
+      { min:15, drill:"form1",     note:"One-hand form, BEEF, then two-hand from a self-pass. Slow down and build the shot." },
+      { min:10, drill:"rrPitch1",  note:"Drive and kick: the shooter in the next spot catches ready. An open 3 is our third-best shot." },
+      { min:6,  drill:"plVegas",   note:"Close out on the kick-out. Shooter or driver? Close out accordingly." },
+      { min:10, drill:"chaser",    note:"Finish through the chaser. Attacking the rim through contact is our second-best shot." },
+      { min:10, drill:"usFT",      note:"Free throws in pairs. Best shot in basketball: a 70% shooter gets 1.4 points a trip. Track team makes." },
+      { min:8,  drill:"bfcKnockout", note:"From the free-throw line first, then the spots." },
+      { min:8,  drill:"dlAlley",   note:"Half-court alley 1 on 1. Keep it out of the highway." },
+      { min:10, drill:"closeout",  note:"3 on 3 live from a close out. Defense plays pack line and scores for every stop." },
     ] },
-  { id:5, title:"Fast Break", date:null,
-    goal:"Rebound, outlet, run. Turning defense into easy baskets.",
+  { id:5, title:"Dribble At", date:null,
+    goal:"Layer 3: a dribble coming at you means cut. On defense, help and recover inside the pack. Shots every night.",
     blocks:[
-      { min:5,  drill:"usEgg" },
-      { min:8,  drill:"usSpeed",   note:"Push the ball out in front. Race a partner." },
-      { min:10, drill:"us2on1",    note:"Make the defender pick, then pass. Layups only." },
-      { min:10, drill:"trailer",   note:"Add the trailer once the 2-on-1 looks clean." },
-      { min:7,  drill:"usOutlet",  note:"Chin it, pivot outside, outlet. Guard calls 'ball!'" },
-      { min:10, drill:"cone",      note:"30-second rounds, count your cones. Eyes up or the touch doesn't count." },
-      { min:10, drill:"us5on5",    note:"Full court. Every made basket, the other team pushes it fast." },
+      { min:5,  drill:"redlight",  note:"Side by side. Faster calls this week." },
+      { min:10, drill:"usShoot",   note:"Catch-and-shoot from our spots, then two minutes of free throws." },
+      { min:5,  drill:"plVegas",   note:"Driver vs shooter, then the offense gets one live dribble." },
+      { min:10, drill:"rrL3",      note:"Layer 3 Dribble At: the dribbler comes at you, you cut backdoor. Walk, jog, run." },
+      { min:12, drill:"dlHelp22",  note:"2 on 2, then 3 on 3. Show on the drive, recover on the pass. Help and recover is one word." },
+      { min:8,  drill:"jnKnockout", note:"Dribble Knockout. Protect your ball, eyes up." },
+      { min:10, drill:"twodrib",   note:"4 on 4, Layers 1–3, two-dribble limit. Defense in the pack. Reward the extra pass out loud." },
     ] },
-  { id:6, title:"Shooting Form", date:null,
-    goal:"Slow down and build the shot: form shooting, free throws, then a game that rewards good shots.",
+  { id:6, title:"Race & Space", date:null,
+    goal:"We want half our points in transition. On offense: rebound, outlet and race the arcs. On defense: sprint back, guard the team and split the court.",
     blocks:[
-      { min:5,  drill:"usEgg" },
-      { min:18, drill:"form1",     note:"6 minutes one-hand form, 6 minutes USA Basketball Shooting Drills, 6 minutes Free Throws with a team count." },
-      { min:8,  drill:"d210",      note:"Pick one move (crossover). Two dribbles in, one dribble in, then none." },
-      { min:7,  drill:"usWeave",   note:"Start with the three-player weave. Layup at each end." },
-      { min:7,  drill:"usDeny",    note:"One pass away: hand in the lane, see both." },
-      { min:8,  drill:"pivot21",   note:"Elbow shot is 2, putback is 1, first to 21." },
-      { min:7,  drill:"twodrib",   note:"4v4 two-dribble limit. Only open shots count." },
+      { min:5,  drill:"jnWarm",    note:"Side by side, dynamic warm-up." },
+      { min:8,  drill:"usSpeed",   note:"Push it ahead. Race a partner, both hands." },
+      { min:10, drill:"rrPitch2",  note:"Drive and kick, shooter ready in the next spot. Count makes." },
+      { min:6,  drill:"plVegas",   note:"Every practice." },
+      { min:8,  drill:"dlBowz",    note:"Every rebound starts our break: box out, then R.O.A.R." },
+      { min:15, drill:"rsArcs",    note:"Rim runner sprints to the rim, corner runners to the corners, ball races ahead. Walk, jog, run, then 4 on 0 to a shot before the defense is set." },
+      { min:12, drill:"td111",     note:"Force it out of the highway, split the court, five seconds to score. The waiting defender talks." },
+      { min:8,  drill:"jnPacman",  note:"Lines only. Ghosts dribble." },
+      { min:18, drill:"us5on5",    note:"4 on 4 full court. Every defensive rebound: outlet and race. The shooter touches the baseline before getting back." },
     ] },
-  { id:7, title:"Team Offense", date:null,
-    goal:"Cuts, screens and spacing. Learning to play together without the ball.",
+  { id:7, title:"Help & Recover", date:null,
+    goal:"Level 2 defense inside the pack: jump to the ball, swipe the gap, bump the cutter. Test Layers 1–3.",
     blocks:[
-      { min:5,  drill:"redlight" },
-      { min:7,  drill:"usCross",   note:"Low and quick at every cone, change of pace out of it." },
-      { min:15, drill:"usCuts",    note:"5 minutes Types of Cuts, 5 minutes 3-Player Pass & Cut, 5 minutes Setting & Using the Screen." },
-      { min:8,  drill:"layup3",    note:"Left side tonight. Left hand, off the right foot." },
-      { min:8,  drill:"nopaint",   note:"3v3, offense scores if the ball gets into the paint. Defense keeps it out." },
-      { min:7,  drill:"dribbletag", note:"Everyone it, half court only." },
-      { min:10, drill:"us5on5",    note:"Run the pass-and-cut. A screen or a cut before every shot." },
+      { min:5,  drill:"usEgg",     note:"Side by side, then ball handling." },
+      { min:8,  drill:"usShoot",   note:"Free throws first, then catch-and-shoot from our spots." },
+      { min:5,  drill:"plVegas" },
+      { min:10, drill:"plBlackhawk", note:"Jump to the ball, swipe the gap, bump the cutter. The last rep is live 1 on 1." },
+      { min:7,  drill:"dlHelpAcross", note:"Drive, help, pitch, close out, box out." },
+      { min:10, drill:"rrDrills13", note:"Layers 1–3 drills, then the diagnostic: can every player make the read?" },
+      { min:7,  drill:"rps",       note:"Winner attacks, loser defends, live to the rim." },
+      { min:8,  drill:"closeout",  note:"3 on 3 live from a close out. Offense must use a Layer 1–3 read; defense scores for every stop." },
     ] },
-  { id:8, title:"Rebound & Run", date:null,
-    goal:"Owning the glass on both ends, then getting out and running with it.",
+  { id:8, title:"Circle Movement", date:null,
+    goal:"Layer 4: when the ball drives, everyone circles. On defense, keep the ball in the alley, take a charge, and play the 4-on-4 Pack Line shell.",
     blocks:[
-      { min:5,  drill:"usEgg" },
-      { min:12, drill:"creighton", note:"6 minutes Foundational Rebounding Drill off the glass, then 6 minutes of Creighton 3v3." },
-      { min:8,  drill:"usSCS",     note:"Full court, no dribble, finish with a layup." },
-      { min:8,  drill:"dematha",   note:"Both sides. Count team makes in 8 minutes and beat it next week." },
-      { min:7,  drill:"usJab",     note:"Stay down on the jab. React to the ball, not the fake." },
-      { min:10, drill:"rps",       note:"Add a second defender chasing from the baseline for players who want it." },
-      { min:10, drill:"us5on5",    note:"Full court. Defensive rebound, outlet, run. Every time." },
+      { min:5,  drill:"redlight",  note:"Side by side to start." },
+      { min:8,  drill:"usCross",   note:"Low and quick at every cone, change of pace out of it." },
+      { min:12, drill:"usShoot",   note:"Catch-and-shoot from the corners and wings, then free throws." },
+      { min:6,  drill:"plVegas" },
+      { min:8,  drill:"dlFall",    note:"Technique first, then as a group. Fall on both cheeks, hands up." },
+      { min:8,  drill:"dlAlley",   note:"Full-court alley. Beaten? Sprint ahead and recover the bubble." },
+      { min:12, drill:"rrL4Cone",  note:"Teach Layer 4 circle movement with the cone and tennis-ball drill." },
+      { min:12, drill:"plShell",   note:"Freeze checks first, then drives, then cutters. Last 4 minutes live." },
+      { min:8,  drill:"cone",      note:"30-second rounds. Eyes up or the touch doesn't count." },
+      { min:11, drill:"us5on5",    note:"4 on 4 live. Layers 1–4 on offense, Pack Line on defense." },
     ] },
-  { id:9, title:"Competition Day", date:null,
-    goal:"Everything is a contest tonight: races, 1v1s and a long scrimmage. Keep score, celebrate effort.",
+  { id:9, title:"Post Day", date:null,
+    goal:"Layer 5 post slides on offense. On defense our post defender plays alone, because we don't double, so he walls up and everyone boxes out.",
     blocks:[
-      { min:5,  drill:"grass",     note:"Warm-up in the box, then 30 seconds of the fastest dribbling you've got." },
-      { min:8,  drill:"speed1v1",  note:"Weak hand only. Loser of each race does the next one too." },
-      { min:8,  drill:"chaser",    note:"Score a point for every finish through the chaser." },
-      { min:8,  drill:"tenrow",    note:"First team to three rounds of ten in a row." },
-      { min:8,  drill:"scorestops", note:"Only the defense keeps score." },
-      { min:8,  drill:"passtag",   note:"Last runner standing picks the next game." },
-      { min:15, drill:"us5on5",    note:"Two 7-minute halves with a running clock. Free throws on every foul." },
+      { min:5,  drill:"usEgg",     note:"Side by side, then ball handling." },
+      { min:8,  drill:"bfcMikan",  note:"Mikan with both hands, then free throws in pairs." },
+      { min:5,  drill:"plVegas" },
+      { min:10, drill:"plWallUp",  note:"Three-quarter on the high side, never a feed from the top. On the catch: pop back, wall up, show your hands." },
+      { min:10, drill:"rrL5Drill", note:"Layer 5: on a drive, the post slides to stay in the passing lane." },
+      { min:7,  drill:"creighton", note:"Find, hit, go get it." },
+      { min:7,  drill:"pivot21",   note:"Elbow shot is 2, putback is 1, first to 21." },
+      { min:8,  drill:"plIdentity", note:"Keep the score out loud. A foul costs the defense a point." },
     ] },
-  { id:10, title:"Game Ready", date:null,
-    goal:"Put it all together the way it looks on game day: free throws, the offense, the defense, then play.",
+  { id:10, title:"Pin & Skip", date:null,
+    goal:"Layer 7 Pin & Skip to beat a packed-in defense, Transition 120 to put our defensive levels together, and 2 on 2 on 2 transition defense.",
     blocks:[
-      { min:5,  drill:"usEgg" },
-      { min:7,  drill:"usHes",     note:"Hesitation into a layup, both sides." },
-      { min:10, drill:"usFT",      note:"4 minutes of free throws in pairs, then 6 minutes of Lay-Up Progressions at game speed." },
-      { min:8,  drill:"us5on0",    note:"Walk it, jog it, run it. Layup on every possession." },
-      { min:8,  drill:"shell",     note:"4v4 shell, then let it go live for the last 3 minutes." },
-      { min:7,  drill:"pirate",    note:"Coach picks the crowd favorite." },
-      { min:15, drill:"us5on5",    note:"Game-day rules and substitutions. Coaches only stop play for a teaching moment everyone needs." },
+      { min:5,  drill:"jnWarm",    note:"Side by side, dynamic warm-up." },
+      { min:8,  drill:"jnGatesD",  note:"Both hands through every gate." },
+      { min:12, drill:"usShoot",   note:"Skip-pass catch-and-shoot from the corners and wings, then free throws." },
+      { min:6,  drill:"plVegas",   note:"Close out on the skip pass." },
+      { min:12, drill:"rrL7",      note:"Pin the help defender, skip it over the top, shoot or drive the closeout." },
+      { min:12, drill:"dlTrans120", note:"Alley full court, then guard the pass, the corner drive, the skip and the shot. Box out." },
+      { min:12, drill:"td222",     note:"Keep it on one side, off defender sprints back to narrow the floor. Talk." },
+      { min:8,  drill:"pirate",    note:"Coach picks the crowd favorite." },
+      { min:15, drill:"us5on5",    note:"4 on 4 full court. Race the arcs on every defensive rebound." },
+    ] },
+  { id:11, title:"Game Ready", date:null,
+    goal:"Last practice before games. Put it all together the way it looks on game day: free throws, Read & React, Race & Space, the Pack Line and a full scrimmage.",
+    blocks:[
+      { min:5,  drill:"usEgg",     note:"Side by side, then ball handling." },
+      { min:8,  drill:"usHes",     note:"Hesitation into a layup, both sides." },
+      { min:10, drill:"usFT",      note:"Each player shoots two at a time. Team goal: beat our best number from the season." },
+      { min:6,  drill:"plVegas" },
+      { min:12, drill:"rrCombine", note:"Coach calls the action, players make the read: Layers 1–5 and Pin & Skip." },
+      { min:12, drill:"plStops",   note:"The defense stays on until it forces a contested miss and gets the rebound." },
+      { min:10, drill:"rsArcs",    note:"Race the arcs off every make and miss: 4 on 0, then 4 on 2." },
+      { min:7,  drill:"bfcKnockout", note:"Winner picks the music for the scrimmage." },
+      { min:20, drill:"us5on5",    note:"Game-day rules, 4 on 4: two 10-minute halves, free throws on every foul, subs on the clock. Coaches only stop play for a teaching moment everyone needs." },
     ] },
 ];
 
@@ -1891,6 +1982,8 @@ const PRACTICES = [
                optional?:true, note?:"..." }
    `plan` is the id of the season plan in PRACTICES run that day. Tapping the
    card on the Schedule tab opens it, and the plan shows the day(s) it's on.
+   Plan length matches the slot: Thursdays 60 minutes, Mondays and the
+   Tuesday session 90.
    No-practice day worth calling out: { date, off:true, note:"Thanksgiving" }
    `loc` is a key in GYMS. */
 const GYMS = {
@@ -1903,15 +1996,15 @@ const PRACTICE_DAYS = [
   { date:"2026-10-29", time:"7:30–8:30 PM", loc:"fellowship", plan:2,  optional:true },
   // November: Mondays at the Rec Center, Thursdays at the Fellowship Gym
   { date:"2026-11-02", time:"5:30–7:00 PM", loc:"rec",        plan:3 },
-  { date:"2026-11-03", time:"6:00–7:30 PM", loc:"rec",        plan:6,  optional:true, note:"Extra touches before the season starts" },
-  { date:"2026-11-05", time:"7:30–8:30 PM", loc:"fellowship", plan:4 },
-  { date:"2026-11-09", time:"5:30–7:00 PM", loc:"rec",        plan:5 },
+  { date:"2026-11-03", time:"6:00–7:30 PM", loc:"rec",        plan:4,  optional:true, note:"Extra touches before the season starts" },
+  { date:"2026-11-05", time:"7:30–8:30 PM", loc:"fellowship", plan:5 },
+  { date:"2026-11-09", time:"5:30–7:00 PM", loc:"rec",        plan:6 },
   { date:"2026-11-12", time:"7:30–8:30 PM", loc:"fellowship", plan:7 },
   { date:"2026-11-16", time:"5:30–7:00 PM", loc:"rec",        plan:8 },
   { date:"2026-11-19", time:"7:30–8:30 PM", loc:"fellowship", plan:9 },
-  { date:"2026-11-23", time:"5:30–7:00 PM", loc:"rec",        plan:4,  note:"Defense again before games start" },
+  { date:"2026-11-23", time:"5:30–7:00 PM", loc:"rec",        plan:10 },
   { date:"2026-11-26", off:true, note:"Thanksgiving" },
-  { date:"2026-11-30", time:"5:30–7:00 PM", loc:"rec",        plan:10 },
+  { date:"2026-11-30", time:"5:30–7:00 PM", loc:"rec",        plan:11 },
 ];
 
 /* ── SCHEDULE + GAME STATS ─────────────────────────────────────
@@ -2197,6 +2290,8 @@ const MENU_PAGES = [
     icon:"M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" },
   { id:"deflevels", label:"Defensive Levels", desc:"The four levels of a defender, and the drills for each",
     icon:"M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3zM9 12l2 2 4-4" },
+  { id:"packline", label:"Pack Line Defense", desc:"Pressure the ball, pack the paint, box out",
+    icon:"M3 20a9 9 0 0 1 18 0M7.5 20a4.5 4.5 0 0 1 9 0M12 20h.01" },
   { id:"deftrans", label:"Transition Defense", desc:"Get back, guard the team, split the court",
     icon:"M3 12h13M11 6l6 6-6 6M19 5v14" },
   { id:"readreact", label:"Read & React Offense", desc:"The layers we run and the teaching videos",
@@ -2991,6 +3086,20 @@ let HIDDEN = (lsGet(HIDDEN_KEY, []) || []).filter(id => PRACTICES.some(p => p.id
 let ORDER  = lsGet(ORDER_KEY, []) || [];
 const savePlanState = () => { lsSet(EDITS_KEY, EDITS); lsSet(HIDDEN_KEY, HIDDEN); lsSet(ORDER_KEY, ORDER); };
 
+/* Bump PLAN_REV whenever the season plans are rewritten. A coach's edits to
+   the old versions become "Mine" plans instead of overriding the new ones,
+   and hidden/ordered season plans reset, so nothing is lost or mismatched. */
+const PLAN_REV = 2, PLAN_REV_KEY = "shiloh-bb.planRev";
+if (lsGet(PLAN_REV_KEY, 1) !== PLAN_REV) {
+  Object.entries(EDITS).forEach(([id, e], n) => {
+    if (!validPlan(e)) return;
+    CUSTOM.unshift({ id: newId() + n, custom:true, title: `${e.title} (my edit)`, date: e.date || null,
+                     goal: e.goal || "", blocks: e.blocks, updated: e.updated || todayISO() });
+  });
+  EDITS = {}; HIDDEN = []; ORDER = [];
+  saveCustom(); savePlanState(); lsSet(PLAN_REV_KEY, PLAN_REV);
+}
+
 // A stock plan with any local edit laid over it.
 // Days on the practice schedule that run this season plan.
 const planDays = (id) => PRACTICE_DAYS.filter(d => d.plan === id && !d.off).map(d => d.date);
@@ -3339,6 +3448,10 @@ const outIcon  = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" st
 // Link to the drill's video: YouTube when the source page embeds one, else
 // the source's own video page. Write-ups with no video get a "Read" button.
 function drillLink(d) {
+  if (d.page && !d.video) {
+    const pg = MENU_PAGES.find(m => m.id === d.page);
+    return `<a class="vid read" href="#${d.page}" data-tab="${d.page}">Read it on our ${esc(pg ? pg.label : "coaching")} page</a>`;
+  }
   const href = d.video || d.url;
   const isVideo = !!d.video || d.src === "usab" || d.src === "jrnba";
   return `<a class="vid${isVideo ? "" : " read"}" href="${esc(href)}" target="_blank" rel="noopener noreferrer">
@@ -3485,7 +3598,7 @@ This is what we will be known for. Shooting is the #1 skill in today's game, and
 
 ## 2. Be the Best Defensive Team in the Gym
 
-We play **Pack Line defense**. In simple terms, we take away the paint, which is exactly where the better athlete wants to go. That creates frustration and impatience for their offense. We force contested outside shots, their percentages drop, and our defensive rebounds go up.
+We play **[Pack Line defense](#packline)**. In simple terms, we take away the paint, which is exactly where the better athlete wants to go. That creates frustration and impatience for their offense. We force contested outside shots, their percentages drop, and our defensive rebounds go up.
 
 A few things this means for how we play:
 
@@ -3560,6 +3673,7 @@ If your son genuinely wants to play at the next level, he needs to be excellent 
 function mdToHtml(md) {
   const inline = (s) => esc(s)
     .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+    .replace(/\[([^\]]+)\]\(#([a-z]+)\)/g, '<a href="#$2" data-tab="$2">$1</a>')
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/(^|[^*])\*([^*]+?)\*(?!\*)/g, "$1<em>$2</em>");
   const out = [];
@@ -3903,6 +4017,85 @@ Help everyone rotate back to their original responsibilities without giving up a
 3. A great Level 4 knows how everyone should be rotating and talks them through it until everyone is back where we want them.
 `;
 
+const PACK_LINE_MD = String.raw`
+## Pack Line Defense
+
+Pack Line is our base defense. It's a man-to-man defense built by Dick Bennett at Green Bay and Wisconsin and made famous by his son Tony Bennett at Virginia. One defender pressures the ball. The other four pack the paint. We take away the paint, which is exactly where the better athlete wants to go, and make the offense shoot contested shots over us. Then we finish the possession with a defensive rebound.
+
+## The Pack Line
+
+The pack line is an imaginary arc about 16 feet from the rim, roughly two feet inside the 3-point line. On our court, call it **two big steps inside the 3-point line**. In practice we mark it with cones until the boys can feel it.
+
+- The defender **on the ball** plays outside it, in his man's face.
+- The other four defenders have **both feet inside it**, every second the ball is alive.
+
+## The Rules
+
+1. **Pressure the ball.** Be a close talker (Level 1). Keep the ball out of the highway and push it to the sideline or baseline. Hands up, no reaching. Your teammates have your back, so you can pressure without fear.
+2. **Everyone else is in the pack.** Ball-you-man: see your man and the ball at the same time. One pass away, sit in the gap a good step off your man, hand in the passing lane. Two passes away, sink to the middle of the floor. We don't deny the wings; we dare them to throw it out there and close out.
+3. **Move on the air time of the pass.** All five move as one while the ball is in the air. Don't wait to see it caught.
+4. **Close out under control.** Two high hands, short choppy steps, yell "Shot!". Our priorities, from Level 2: stop the catch-and-shoot, then block the highway drive, then cut off the baseline drive.
+  - Closing out on a **shooter**: high and tight, hands to his eyes.
+  - Closing out on a **driver**: stop a step short and take away the drive. The pack is behind you.
+5. **Help and recover is one word.** Show yourself to the driver, make him stop or pass, then sprint back to your man on an angle.
+6. **Wall up, don't jump.** Contest with both hands straight up and your feet on the floor. That's how we block shots without fouling, and we don't foul.
+7. **Box out every shot.** B.O.W.Z. in the War Zone, C.A.P. outside it, then R.O.A.R.: Rebound, Outlet And Run. Pack Line puts us in great rebounding position, and every rebound starts our Race & Space.
+
+## Dead Ball
+
+When the dribbler picks up the ball, everyone yells **"Dead! Dead! Dead!"** The ball defender becomes a close talker and the other four step up and take away every pass. This is the only time we leave the pack.
+
+## Post Defense
+
+**We don't double the post.** We'd rather give up a one-on-one post move than an open 3 or a drive to the rim, so our post defender has to be great.
+
+- Ball on the wing: play **three-quarter on the high side** with an arm bar. Never give up a post feed from the top.
+- Ball at the top: get up the line and on the line, same as everyone else.
+- If he catches it: pop back, **wall up**, and show the ref your hands. Don't leave your feet.
+- Perimeter defenders stay home on their shooters.
+
+## Screens
+
+- **Off the ball:** chase your man through the screen and stay attached. We don't switch off-ball screens.
+- **Ball screens:** Hedge is our standard (see the Basketball Philosophy page). We'll add the other coverages as the boys are ready.
+
+## How It Fits Our Defensive Levels
+
+- **Level 0 · Rebounding** is rule 7: every shot ends in a box-out.
+- **Level 1 · Guard the ball** is the man pressuring the ball.
+- **Level 2 · Guard away from the ball** is the pack: gaps, air time, help and recover.
+- **Levels 3 and 4** are the rotations we add when the ball beats the pack.
+
+## Teaching It to 4th Graders
+
+- **Patience is the hard part.** Kids want steals so they can go play offense. We reward stops, not steals: in our drills the defense scores when it forces a contested miss and gets the rebound.
+- **Freeze checks.** In shell, the coach yells "Freeze!" and every player checks his feet. Inside the line? Can you see your man and the ball?
+- **Close outs every practice.** A player makes around 300 of them in a game, so Vegas Close Outs is in every plan.
+- **Cones on the floor** mark the pack line until the boys don't need them.
+
+## Drills
+
+Every drill below is in the Drill Library on the Practice tab.
+
+- **Vegas Close Outs.** Toss the ball to a partner and close out with two high hands, short choppy steps and a "Shot!" call. The offense jabs and rips through. Every practice.
+- **2-on-2 Pack Line Positioning.** Two passers, two defenders. Pressure on the ball, the other defender in the gap inside the line. Swap jobs on every pass while the ball is in the air.
+- **3-on-3 Freeze.** The ball moves around the arc. On "Freeze!" everyone checks: feet inside the line, ball-you-man, see both.
+- **Blackhawk.** One defender closes out, jumps to the ball on the pass, swipes the gap, bumps the cutter and closes out again. Three or four reps, then live 1 on 1.
+- **Post Wall Up.** Three-quarter on the high side before the catch. On the catch, pop back, wall up, show your hands.
+- **4-on-4 Pack Line Shell.** Ball moves around the perimeter; all four defenders move on the air time. Add drives, then cutters, then let it go live.
+- **Get a Stop.** Virginia's version of the Closeout Drill. The defense stays on until it forces a contested miss and secures the rebound. Allow a basket or an easy look, and you stay on defense.
+- **3-on-3 Identity.** Twenty seconds to score, three dribbles max per touch. Offense: 3 points for a 3, 2 for a 2, 2 for an offensive rebound, 2 for getting the ball into the paint, minus 1 for a turnover. Defense: minus 1 for a foul.
+
+## Videos
+
+- [Chris Mack: Drills to Build the Pack Line Defense](https://www.youtube.com/watch?v=8ad4bX76pO4) (Championship Productions)
+- [Tony Bennett Pack Line Defense Clinic](https://www.youtube.com/watch?v=m8U2XzOZHfk)
+- [Building the Pack Line: Jim Boone clinic and breakdown drills](https://www.youtube.com/watch?v=ME1ExMVfges)
+- [Hybrid Pack Line Principles and Build-up Drills, Robert Jones](https://www.youtube.com/watch?v=oF3t1L7WXyk) (Championship Productions)
+
+Further reading: [Coach's Clipboard: Pack Line Defense](https://www.coachesclipboard.net/BasketballPackLineDefense.html) and [Pack Line breakdown drills](https://www.coachesclipboard.net/PackLineDefenseDrills.html).
+`;
+
 const DEF_TRANSITION_MD = String.raw`
 ## Transition Defense
 
@@ -4117,6 +4310,7 @@ function render() {
   : tab === "coaches"  ? "Coaching Staff"
   : tab === "philosophy" ? "Basketball Philosophy"
   : tab === "deflevels" ? "Defensive Levels"
+  : tab === "packline" ? "Pack Line Defense"
   : tab === "deftrans" ? "Transition Defense"
   : tab === "readreact" ? "Read & React Offense"
   : tab === "menu"     ? "Menu"
@@ -4135,6 +4329,7 @@ function render() {
   : tab === "coaches"  ? `${COACHES.length} coaches guiding the Saints`
   : tab === "philosophy" ? "Our team philosophy: how we play, and why"
   : tab === "deflevels" ? "Four levels of a defender · Pack Line principles and drills"
+  : tab === "packline" ? "One on the ball, four in the pack · our base defense"
   : tab === "deftrans" ? "Your man is not your man. Guard the team."
   : tab === "readreact" ? "Our offense, taught in layers · videos for every layer"
   : tab === "menu"     ? "More from the Saints hub"
@@ -4196,6 +4391,8 @@ function render() {
     view.innerHTML = philosophyView();
   } else if (tab === "deflevels") {
     view.innerHTML = docView(DEF_LEVELS_MD);
+  } else if (tab === "packline") {
+    view.innerHTML = docView(PACK_LINE_MD);
   } else if (tab === "deftrans") {
     view.innerHTML = docView(DEF_TRANSITION_MD);
   } else if (tab === "readreact") {
