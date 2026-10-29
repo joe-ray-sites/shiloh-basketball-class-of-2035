@@ -94,6 +94,37 @@ PLAYS = [
             (9.6, "5 hits 2 for the layup!"),
         ],
     },
+    {
+        # Pass and Cut start, but 1 stops his cut in the paint and flashes to
+        # the high key; 2 passes to him, makes the Laker cut and gets it back
+        # for the layup.
+        "slug": "laker-cut",
+        "title": "Laker Cut",
+        "start": FIVE_OUT,
+        "ball": 1,
+        "length": 8.6,
+        "events": [
+            PASS_AND_CUT[0],                                   # 1 passes to 2
+            {"move": 1, "t": (1.6, 3.0), "path": [(25, 29), (22, 18.5), (21, 12.5)]},
+            PASS_AND_CUT[2],                                   # 3 fills the top
+            PASS_AND_CUT[3],                                   # 5 fills the wing
+            {"move": 1, "t": (3.0, 3.9), "path": [(21, 12.5), (24.5, 14.5), (25.5, 20)]},
+            {"pass": (2, 1), "t": (4.0, 4.6)},
+            {"move": 2, "t": (4.7, 6.0), "path": [(6.5, 19.5), (12, 13.5), (19, 9.6), (23.8, 9.2)]},
+            {"pass": (1, 2), "t": (5.6, 6.05)},
+            {"move": 2, "t": (6.05, 6.4), "path": [(23.8, 9.2), (24.5, 7.8)]},
+            {"shot": 2, "t": (6.3, 6.8)},
+        ],
+        "captions": [
+            (0.0, "1 has the ball at the top"),
+            (0.8, "1 passes to 2"),
+            (1.6, "1 cuts into the paint. 3 fills the top, 5 fills the wing"),
+            (3.0, "1 flashes up to the high key"),
+            (4.0, "2 passes to 1 at the high key"),
+            (4.7, "2 makes the Laker cut to the basket"),
+            (5.6, "1 hits 2 for the layup!"),
+        ],
+    },
 ]
 
 # ── Look ────────────────────────────────────────────────────────────────────
@@ -280,6 +311,31 @@ def defense_at(pos, ball):
             L2 = math.hypot(*v) or 1
             tgt = (man[0] + v[0] / L2 * 3.2, man[1] + v[1] / L2 * 3.2)
         spots[n] = tgt
+    return keep_apart(spots, pos)
+
+
+def keep_apart(spots, pos, gap_off=3.1, gap_def=2.7):
+    """Nudge defenders so no square sits on a circle or on another square."""
+    spots = dict(spots)
+    for _ in range(4):
+        for n, d in spots.items():
+            x, y = d
+            for p in pos.values():
+                dd = dist((x, y), p)
+                if dd < gap_off:
+                    vx, vy = (x - p[0], y - p[1]) if dd > 0.05 else (BASKET[0] - p[0], BASKET[1] - p[1])
+                    L = math.hypot(vx, vy) or 1
+                    x, y = p[0] + vx / L * gap_off, p[1] + vy / L * gap_off
+            for m, o in spots.items():
+                if m == n:
+                    continue
+                dd = dist((x, y), o)
+                if dd < gap_def:
+                    vx, vy = (x - o[0], y - o[1]) if dd > 0.05 else (1, 0)
+                    L = math.hypot(vx, vy) or 1
+                    push = (gap_def - dd) / 2
+                    x, y = x + vx / L * push, y + vy / L * push
+            spots[n] = (min(48.6, max(1.4, x)), min(DEPTH - 1.4, max(1.4, y)))
     return spots
 
 
