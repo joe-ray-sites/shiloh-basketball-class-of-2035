@@ -150,6 +150,15 @@ to link to another page in the app). The Read & React
 layers table comes from `RR_GROUPS`; every R&R teaching video is also a
 drill in the library (keys starting with `rr`).
 
+## League pages
+
+Menu → League Directors Meeting and League Rules are the AAO NWA League's
+Fall 2026–27 directors meeting deck and league rules, transcribed word for
+word into `LEAGUE_MEETING_MD` and `LEAGUE_RULES_MD`. The meeting's weekend
+list and season schedule graphic are tables built from `LEAGUE_WEEKENDS` and
+`LEAGUE_GRAPHIC`. The source PDFs are not committed. Past Seasons is off the
+Menu until there is a past season; add it back to `MENU_PAGES` then.
+
 ## Access code
 
 The landing screen asks for a 4-digit code. It is a deterrent, not security —

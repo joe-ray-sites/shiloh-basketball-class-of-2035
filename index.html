@@ -1034,6 +1034,24 @@ button.game{width:100%;text-align:left;font:inherit;cursor:pointer;}
   letter-spacing:.3px;line-height:1.2;padding:0 4px;}
 .fig-sub{font-size:12px;color:var(--muted);padding:2px 4px 8px;}
 .fig-cap{font-size:12px;color:var(--muted);line-height:1.45;padding:8px 4px 0;}
+.article h4{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:14px;letter-spacing:.4px;
+  text-transform:uppercase;color:var(--accent);margin:14px 0 4px;}
+.lg-tbl{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:14px;
+  overflow:hidden;margin:12px 0 4px;font-size:14px;}
+.lg-tbl th,.lg-tbl td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;}
+.lg-tbl tr:last-child th,.lg-tbl tr:last-child td{border-bottom:0;}
+.lg-tbl thead th{font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);}
+.lg-tbl tbody td:first-child{font-family:"Roboto Condensed",sans-serif;font-weight:700;color:var(--navy);white-space:nowrap;}
+.lg-tbl tr.is-drop td{background:#fff7e6;}
+.lg-graphic{margin:16px 0 4px;background:var(--navy);border-radius:16px;padding:14px;}
+.lg-g-head{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:20px;letter-spacing:.6px;
+  text-transform:uppercase;color:#fff;margin:2px 4px 8px;}
+.lg-graphic .lg-g{margin:0;background:transparent;border-color:rgba(255,255,255,.18);}
+.lg-graphic .lg-g th{font-family:"Roboto Condensed",sans-serif;font-size:17px;color:#fff;width:64px;
+  border-bottom-color:rgba(255,255,255,.18);text-transform:uppercase;}
+.lg-graphic .lg-g td{color:#fff;font-family:"Roboto",sans-serif;font-weight:500;border-bottom-color:rgba(255,255,255,.18);line-height:1.6;}
+.lg-graphic .fig-cap{color:rgba(255,255,255,.75);}
+.lg-graphic .fig-cap a{color:#fff;}
 .chart{position:relative;}
 .chart svg{display:block;width:100%;height:auto;font-family:"Roboto",sans-serif;}
 .chart .grid{stroke:#dfe5ec;stroke-width:1;}
@@ -1780,7 +1798,7 @@ const DRILLS = {
                 url:"https://www.coachesclipboard.net/PackLineDefenseDrills.html",
                 desc:"Three offensive players pass around the arc, three defenders rotate. The coach yells \"Freeze!\" and every defender checks: feet inside the pack line, ball-you-man, can see both." },
   plBlackhawk:{ name:"Blackhawk Drill", cat:"def", src:"cc",
-                url:"https://www.coachesclipboard.net/PackLineDefenseDrills.html",
+                url:"https://www.coachesclipboard.net/PackLineDefenseDrills.html", video:YT("8ad4bX76pO4"),
                 desc:"One defender against a line of passers and cutters. Close out, jump to the ball on the pass, swipe the gap, bump the cutter, close out again. Three or four reps, then live 1 on 1 with two or three dribbles." },
   plWallUp:   { name:"Post Wall Up", cat:"def", src:"cc",
                 url:"https://www.coachesclipboard.net/PackLineDefenseDrills.html",
@@ -1851,7 +1869,7 @@ const PRACTICES = [
       { min:5,  drill:"redlight",  note:"Side by side to start. Green = dribble, red = jump stop, yellow = pivot." },
       { min:10, drill:"layup3",    note:"Right side, then left. Outside foot, inside knee, soft off the glass. Finishing at the rim is our second-best shot." },
       { min:6,  drill:"plVegas",   note:"Add the jab and rip from the offense. Stay square, no reaching." },
-      { min:12, drill:"pl2on2",    note:"Cones mark the pack line, two big steps inside the 3-point line. Off-ball defender keeps both feet inside. Swap jobs while the pass is in the air." },
+      { min:12, drill:"plBlackhawk", note:"Cones mark the pack line, two big steps inside the 3-point line. Close out, jump to the ball on the pass, swipe the gap, bump the cutter. Three or four reps each, then live 1 on 1." },
       { min:10, drill:"rrL1Warm",  note:"Layer 1 warm-up, then 4 on 0: pass, cut, fill." },
       { min:7,  drill:"passtag",   note:"Two taggers, one ball, passes only. A bad pass gives the runners a free point." },
       { min:10, drill:"passcut",   note:"4 on 4. Offense runs Layer 1, defense plays pack line: one on the ball, three inside the cones." },
@@ -2298,8 +2316,10 @@ const MENU_PAGES = [
     icon:"M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17l9 5 9-5" },
   { id:"coaches", label:"Coaches", desc:"The staff guiding the Saints",
     icon:"M12 2l2.4 5 5.6.6-4.2 3.9 1.2 5.5L12 19.3 6.9 22l1.2-5.5L4 12.6 9.6 12z" },
-  { id:"seasons", label:"Past Seasons", desc:"Schedules and team stats from previous years",
-    icon:"M3 3v18h18M7 15l4-4 3 3 5-6" },
+  { id:"leaguemtg", label:"League Directors Meeting", desc:"NWA League, Fall 2026–27: dates, format and key info",
+    icon:"M7 3h10v4H7zM5 7h14v14H5zM9 12h6M9 16h6" },
+  { id:"leaguerules", label:"League Rules", desc:"AAO NWA League rules: clock, free throws, man defense",
+    icon:"M4 4h11l5 5v11H4zM15 4v5h5M8 13h8M8 17h5" },
 ];
 // Menu stays lit while you're on one of its pages.
 const navTabFor = (tab) => MENU_PAGES.some(m => m.id === tab) ? "menu" : tab;
@@ -3673,6 +3693,7 @@ If your son genuinely wants to play at the next level, he needs to be excellent 
 function mdToHtml(md) {
   const inline = (s) => esc(s)
     .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+    .replace(/\[([^\]]+)\]\((mailto:[^)\s]+)\)/g, '<a href="$2">$1</a>')
     .replace(/\[([^\]]+)\]\(#([a-z]+)\)/g, '<a href="#$2" data-tab="$2">$1</a>')
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/(^|[^*])\*([^*]+?)\*(?!\*)/g, "$1<em>$2</em>");
@@ -3697,6 +3718,7 @@ function mdToHtml(md) {
     if (line.startsWith("# ")) return;                                   // page title lives in the header
     if (line.startsWith("## ")) { out.push(`<h2>${inline(line.slice(3))}</h2>`); return; }
     if (line.startsWith("### ")) { out.push(`<h3>${inline(line.slice(4))}</h3>`); return; }
+    if (line.startsWith("#### ")) { out.push(`<h4>${inline(line.slice(5))}</h4>`); return; }
     if (line === "*[Graphs go here]*") { out.push("<!--charts-->"); return; }
     if (/^<!--\w+-->$/.test(line)) { out.push(line); return; }
     if (/^\*\*[^*]+\*\*$/.test(line)) { out.push(`<p class="callout">${inline(line)}</p>`); return; }
@@ -4096,6 +4118,370 @@ Every drill below is in the Drill Library on the Practice tab.
 Further reading: [Coach's Clipboard: Pack Line Defense](https://www.coachesclipboard.net/BasketballPackLineDefense.html) and [Pack Line breakdown drills](https://www.coachesclipboard.net/PackLineDefenseDrills.html).
 `;
 
+const LEAGUE_MEETING_MD = String.raw`
+## League Communications
+
+- **Communications:** [nwaleague@aaoteam.org](mailto:nwaleague@aaoteam.org)
+- Email will be the primary form of communication.
+- **Coaches:** [nwaleague@aaoteam.org](mailto:nwaleague@aaoteam.org)
+- **Parents → Coaches → Directors → AAO**
+- **Weekend Communications:** Site directors
+- **Exposure App:** All game schedules and standings will be online: [aaoteam.org/nwa-league](https://aaoteam.org/nwa-league) & the Exposure Events mobile app
+
+## River Valley / NWA League
+
+### League Format & Season Details
+
+- **Combined RV / NWA Division**
+- **Multiple Weekend Locations:** Games will be held in Alma and NWA.
+- **NWA Teams:** NWA teams will only play in NWA.
+- **Two Games Per Weekend** (Odd divisions will play 3 some weekends one others)
+- **Regular Season:** Nine weekends total, with each team’s best eight weekends counting toward the standings.
+- **One Weekend Drop:** Teams may drop one weekend from their standings. The potential drop weekends are November 21 and December 19.
+- **3rd Grade Schedule:** All 3rd-grade games will be played on Saturdays.
+
+## AAO League Key Information
+
+- Teams can drop either November 21st or December 19th.
+- We take your best 8 weekends of play
+- No Dropping Weekends after October 25th
+  - Doing so will be 0-2 record and will count on your record.
+- **Scheduling starts:** October 26th
+- **Schedule Releases:** November 2nd
+- **Rosters Printed:** November 2nd
+  - Rosters will appear on the “scoresheet” at your game. No additions without AAO Permission
+- **Final Schedule:** November 2nd
+  - We will not change games. You are bound to your schedule and the location it is scheduled at. Even if your request was not met - you are expected to play all games.
+- **Filtering Requests**
+  - Request will only be accepted for the two drop dates - if you request to play another day - you will be scheduled. There are only two drop dates. No Multi team same coach request.
+
+## Locations & Schedule
+
+<!--weekends-->
+
+### Locations
+
+- AAO Rogers
+- AAO Fayetteville
+- Alma High School
+- The New School
+- Shiloh Christian
+- Alma Middle School
+- TBD
+
+## Dates / Inclement Weather Policy
+
+- 9 regular season available weekends
+- Must Play 8
+- Because we added a week of games, there will be NO MAKEUP DATES if any games are cancelled due to weather.
+- Drop your worst weekend record
+- If we cancel because of weather we will take best 7 weekends etc
+- All championship games are played in NWA
+
+<!--graphic-->
+
+## Site Directors
+
+- Site Directors will be wearing an AAO polos
+- All GAME DAY incidents should be reported to the site director
+- Two at each location
+- Incident Reports
+- 30 min before tip
+
+## NWA League Scorekeepers
+
+- 84 + Scorekeepers each Saturday
+- Extra Scorekeepers needed for no shows
+- Morning and afternoon/evening shifts needed (8am-2pm and 2pm-9pm)
+- Email [nwaleague@aaoteam.org](mailto:nwaleague@aaoteam.org) if interested
+- Do not make them quit (Be Kind)
+
+## NWA League Rule Reminders
+
+- **Running clock**
+  - 15 min halves: grades 3 & 4
+  - 16 min halves: grades 5 & 6
+  - clock stops last minute of game
+- **Free Throws**
+  - Bonus on 10th team foul
+  - 1 for 2/3 rule until last minute of game
+  - 12’ for 3rd graders and 4th grade girls by choice
+- **Mandatory Man Defense**
+  - first half for grades 3-4
+  - no backcourt pressure 1H
+  - open play for 5th - 6th grade
+- **Ball Size:** 28.5 inch ball for All divisions
+- **Timeouts:** 1 timeout per half
+- **Press:** No Pressing after a 15 point lead
+- **Overtime Games:**
+  - All overtimes will be “sudden death” games - first team to score
+  - Time limit will be set of 2:00
+  - If tied at end of overtime…Free Throw shootout
+
+## NWA League Divisions
+
+Three Divisions Based on Classification
+
+- **Gold:** 6A & 5A Feeder Schools
+  - Must have one gold team in each grade division
+- **Silver:** 4A & 3A Feeder Schools
+  - Must have one silver team in each grade division
+  - 2nd tier 6A & 5A schools
+- **Bronze:** 2A & 1A Feeder Schools
+  - Must have one bronze team in each grade division
+  - 2nd tier 4A & 3A schools
+  - 3rd tier 6A & 5A schools
+
+*Note: schools may choose to play up a division.* Inform your coaches so they may register for the correct division.
+
+## NWA League Rule Focus
+
+### Rule Reminders/Key Updates
+
+- **FORFEITED GAMES:** YOU ARE SUBJECT TO A $50 FINE TO TEAM
+- **Man to Man Defensive Rule:** 3rd and 4th grade only. 5th and 6th grade have no limitations
+- All game results are considered final once play has concluded. AAO does not use camera footage, video review, or post-game recordings to overturn, change, or adjust the outcome of a game. Referee decisions made during live play will stand as the official ruling.
+- **Changing Leagues After Play:** Can’t change divisions from this point forward.
+- **Community Based Rosters:**
+  - **Player Eligibility Rules:** The NWA League is a youth development program to serve as a feeder system to the local Middle school and Junior High programs. Eligible Players must attend participating schools or live in the participating town. It is designed to provide a regional competitive league for local community and school based teams. A reminder to all participants, this is not an “AAU” or All Star team league. Anything out of this rule must be approved by AAO. We are reviewing rosters November 2nd
+- **TWO TECHS ONE GAME SUSPENSION** (NO APPEALS)
+  - Fill out ref review form. Do not put yourself in situation to get tossed. Must leave AAO / Gym.
+
+## NWA League Emphasis 2026-27
+
+### De-escalate tensions between coaches & officials
+
+- Crowd Conduct
+- Coaches Role
+- Technical Fouls
+- Any fighting is automatic suspension. Any fighting among coaches is removal for rest of season.
+
+### Coaches Entrance/Bench Lanyards ($10 to replace)
+
+- Lanyards will be required for free entry into games and access to sit on bench.
+- Only coaches with a lanyard will be allowed on bench.
+- HS players coming to your bench is approved.
+
+### Referee Grading
+
+- Document sent to coaches. Please send to [officials@aaoteam.org](mailto:officials@aaoteam.org)
+- Help us help you
+- Warm Up, December 12th - January 23rd - Referee Evaluators
+
+## LiveBarn Streaming Service (AAO Locations Only)
+
+- Chance for family & friends to see games from out of town or who couldn't make it to a game
+- Opportunity for coaches to watch games and scout teams
+- Opportunity for players/coaches to make highlight or film session videos
+- **Go to:** [aaoteam.org/livebarn](https://aaoteam.org/livebarn)
+- **Use Promo Code:** aao1-team
+
+Watch Live & On Demand · Download, Save & Share · Tag Live Games · Improve Performance
+
+## Thanks Youth Club and School Directors
+
+If you have any questions, please email them to [nwaleague@aaoteam.org](mailto:nwaleague@aaoteam.org)
+`;
+
+/* Weekend list from the "Locations & Schedule" slide, and the season
+   graphic from the "Dates / Inclement Weather Policy" slide. */
+const LEAGUE_WEEKENDS = [
+  ["November 7", "NWA"], ["November 14", "NWA / Alma"], ["November 21", "NWA (Drop weekend #1)"],
+  ["December 5", "NWA / Alma"], ["December 12", "NWA / Alma"], ["December 19", "NWA (Drop weekend #2)"],
+  ["January 16", "NWA / Alma"], ["January 23", "NWA / Alma"], ["January 30", "NWA"], ["February 5-7", "NWA"],
+];
+const LEAGUE_GRAPHIC = [
+  ["Nov", "7, 14, 21", "4-5, 11-12, 18-19"],
+  ["Dec", "5, 12, 19", "2-3, 9-10, 16-17"],
+  ["Jan", "16, 23, 30", "12-14, 20-21, 27-29*"],
+  ["Feb", "", "5-7*"],
+];
+function leagueWeekendsTable() {
+  return `<table class="lg-tbl"><thead><tr><th>Weekend</th><th>Where</th></tr></thead><tbody>${
+    LEAGUE_WEEKENDS.map(([d, w]) => `<tr class="${/Drop/.test(w) ? "is-drop" : ""}"><td>${d}</td><td>${esc(w)}</td></tr>`).join("")
+  }</tbody></table>`;
+}
+function leagueGraphic() {
+  return `<div class="lg-graphic">
+    <div class="lg-g-head">2026-27 Schedule</div>
+    <table class="lg-tbl lg-g"><tbody>${LEAGUE_GRAPHIC.map(([m, a, b]) =>
+      `<tr><th>${m}</th><td>${[a, b].filter(Boolean).join("<br>")}</td></tr>`).join("")}</tbody></table>
+    <p class="fig-cap">*Championship Games · <a href="https://aaoteam.org/nwa-league" target="_blank" rel="noopener noreferrer">www.aaoteam.org/nwa-league</a></p>
+  </div>`;
+}
+
+const LEAGUE_RULES_MD = String.raw`
+## AAO NWA League Rules
+
+Powered by Academy Sports + Outdoors
+
+### 1. Player Eligibility Rules
+
+The NWA League is a youth development program to serve as a feeder system to the local Middle school and Junior High programs. Eligible Players must attend participating schools or live in the participating town. It is designed to provide a regional competitive league for local community and school based teams. A reminder to all participants, this is not an “AAU” or All Star team league.
+
+### 2. Exceptions to this Rule
+
+- If a player is playing up a grade they must play for a team that will be a feeder school for the junior/senior high school they will attend or attend the same feeder middle school as the team he/she is playing for.
+- If a player is home schooled or attends a private school not participating in the League, he/she may play for a participating school in the town in which they live.
+- If a player lives in a town but attends school in a different school district, than which they live, they play for the school they attend or for the participating team in their school district.
+- **Neighboring School Districts:** Players who live in a neighboring school district that doesn’t offer a basketball team in the NWAL, may request to participate on a NWAL team. Approval must be obtained by the AAO/League Director. Whenever their community school district provides a NWAL Basketball team option, the player must return to their home school district team. *Note: this rule is generally granted for smaller communities or for teams who struggle to fill a roster.*
+- All Exception players, to be eligible, (must be granted permission) by AAO, the local youth basketball governing club & League Director.
+
+### 3. One Player - One Roster - One League Rule + Penalty
+
+By the second playing date, teams are required to submit to AAO and the league director final rosters changes. If coaches suspect a violation due to a roster infraction, they should report this by filing a complaint to the League Director.
+
+- **Change:** When you Register teams are required to submit to AAO and the league director final rosters changes. If coaches suspect a violation due to a roster infraction, they should report this by filing out the incident report.
+- **Penalty:** If a violation has occurred on the 1 player - 1 roster - 1 league rule > violating teams will forfeit all games and victories, up to that point by both teams involved - and the player (s) will become ineligible for the remainder of the season and postseason.
+- It is a $100 refundable charge to protest the age of entrance. Must be in an email to AAO prior to or after gameday. We can take the protest on site - but may not be able to get a ruling that day. In which case the game will be played under protest.
+
+### 4. Team Rosters
+
+AAO recommends that teams have no more than 10 players on its rosters. If schools are limited on # of players - they may combine with another feeder school to establish a team roster - however - no other teams may be developed from these two schools. Rosters are final as of November 3rd.
+
+- **Change:** All changes must be approved before gameday by AAO Staff
+
+### 5. Rules
+
+The AAO League will be conducted under National Federation of High School Rules, unless otherwise noted.
+
+### 6. Uniforms
+
+It is recommended that uniform numbers be on both the front and back of the uniform. It is required that teams have both a dark and light colored jersey. The home team is the light colored jersey.
+
+### 7. Home/Visitor
+
+The home team wears white. The home bench will be to the left side of the clock keeper (seated at the score table) or right side, if you are facing the score table from center court. Each team's basket for the pre-game warm-up will be the basket furthest from its bench. In Tournament play, the Higher Seeded team will be the home team.
+
+### 8. Clock Operator / Score book
+
+#### 3RD Grade
+
+- The home team will be responsible for keeping the official score book.
+- The visiting team will be responsible for operating the clock.
+- Volunteer score bookkeepers and clock operators must refrain from cheering or making derogatory remarks about officiating or opposing coaches / players.
+- The score bookkeepers and clock operators must be an adult.
+- The official score book keeper and clock operator may be removed or replaced at any time by the game officials or League Director whenever they deem it necessary.
+- We must have the following information recorded & updated throughout the game: Final Score (circled), team & individual fouls, and timeouts.
+
+### 9. Official Game Regulations for ALL divisions
+
+- **3-4th Grade:** Two 15 Minute Running Clock Halves
+- **5-6th Grade:** Two 16 Minute Running Clock Halves
+- The clock will stop the last minute of the game - (second half only). The last minute of the game will be played under HS Federation rules - meaning the clock stops on all whistles and all free throw shots will be awarded. Prior to the last minute of the game the clock will be stopped only for time-outs, injuries or on officials’ discretion.
+- Halftime will be 2 minutes.
+
+### 10. Overtime Rules
+
+- Set time for 2 minutes
+- Overtime is sudden death, first team to score 1 point
+- If no team has scored at the end of 2 minutes, game is sent to a free throw shootout
+- Like a hockey shootout, coaches send a player to shoot a free throw from each team on the same goal. If one team makes and the other team misses in a round, the team that made wins. If both teams miss or make, a different shooter is chosen and repeat until you find a winner.
+
+### 11. Free Throws
+
+Prior to the last minute of the contest (second half), free throws on shooting fouls will be **ONE shot for Two points**, on regular field goal attempts, and **ONE shot for Three points**, on three point field goal attempts.
+
+- If fouled in the act of shooting and the field goal attempt is successful - field goal will be counted + **ONE shot for One point** will be awarded.
+- Non-Shooting fouls will be awarded free throws beginning with the 10th team foul (which automatically places that team in the **Double Bonus**, meaning **ONE shot for Two points**).
+- Beginning with the LAST MINUTE of play, the clock will be stopped on all whistles and ALL FREE THROW attempts will be awarded.
+- **NOTE:** B&G 3rd Grade Division - free throw line will be marked at 12' (optional for players) - players may still shoot from the normal 15’ distance.
+- **NOTE:** It is a violation for a shooter to step on or over the free throw line, until the ball makes contact with the rim. As well as, no defender should make contact with the shooter until the ball makes contact with the rim.
+
+### 12. Basketballs
+
+**Size:** All divisions 3rd, 4th, 5th & 6th Grade will use the 28.5 size ball.
+
+### 13. Basketball Goal
+
+Basketball Goal is 10’ high for all divisions.
+
+### 14. Pre Game Warm-up
+
+- Teams will be allotted a 3-5min warm-up prior to game.
+- It is MANDATORY that team coaches only bring 2 basketballs for their team to warm up. For each game, one team must provide a quality basketball to be used for play.
+- Basketballs are the sole responsibility of each team’s head coach and should be kept in their possession at all times when not being used for pre-game warm up. **NO PERSONAL BASKETBALLS ALLOWED!**
+- Teams will be allotted a 2 min warm-up prior to game.
+- It is MANDATORY that team coaches only bring 2 basketballs for their team to warm up. For each game, one team must provide a quality basketball to be used for play.
+- Basketballs are the sole responsibility of each team’s head coach and should be kept in their possession at all times when not being used for pre-game warm up. **NO PERSONAL BASKETBALLS ALLOWED!**
+
+### 15. Timeouts
+
+- **One time-out each half:** first half time-out not used can be carried over to the second half.
+- **One time-out in overtime:** no carry-over from regulation play. No time-outs during double overtime / sudden death.
+- **CHANGE 11/21: OVERTIME TIMEOUT RULE:** Rule change. Overtime will now be Sudden Death style. We will not be adding any timeouts, however if a team has timeouts leftover they will carry over into the overtime period.
+- All time-outs will be 60 seconds.
+- **Championship Tournament:** 1 additional .30 second timeout per half will be added
+
+### 16. Pressing/Mercy Rule
+
+Teams are NOT allowed to press over half court with a 15 point or more lead. First violation will be a warning from the official - (this will be recorded in the official scorebook); on subsequent violations a technical foul will be assessed against the bench. When a team leads by 15 points or more inside the last minute of the second half - the running clock will stay in effect.
+
+### 17. Forfeit Games
+
+Any team who is not present and ready to play - 5 minutes past the scheduled starting time will forfeit the game. Teams who forfeit a game will be assessed a 15 point loss. The score will be recorded as a 0-15 game.
+
+- **Update:** FORFEITED GAMES WITHOUT NOTICE (before schedule release) YOU WILL get a $50 fine to be on the schedule again. We can not have forfeits
+
+### 18. Tie Break Procedure / Postseason Seeding
+
+1. Head to Head
+2. Points
+  - Teams will receive a maximum of 15 (tie breaker) points for each victory
+  - 3 way tie > team with lowest tie breaker points is dropped
+  - 4 way tie > two lowest teams with tie breaker points are dropped
+3. Coin Toss > (If Needed)
+
+### 19. Man-Defense Rule
+
+5th and 6th Grade are free to play defense how they choose.
+
+**3rd and 4th Grade follows below:** We have a mandatory “Man Defense” rule. This rule requires 3-4th grade teams to play true man to man defense for the first half (only) of every game. The second half is optional for coaches to play any defense they wish to execute.
+
+- It is mandatory that all teams (Grades 3 & 4) run a true Man-Man defense in the first half
+- Half court ONLY. No back court/full court man defense in the first half.
+- No half court zone traps or run & jump rotations in the 1st half. Just solid man defense.
+- Denying passing lanes, being gap centered, pack-line, switching on screens are all forms of man defenses that can be used to better prepare your players for the higher levels of basketball.
+- As a development league, this rule is implemented for the sole purpose of teaching young players the sound fundamental principles of man defense. This rule will also require all coaches to teach offenses that require spacing, movement, cutting and ball reversal to be effective against a man defense.
+
+#### Violation of Man-Defense Rule
+
+- **1st Offense:** Warning - referee records the warning in the official scorebook.
+- **2nd Offense:** Technical Foul - assessed to team bench
+- **3rd Offense:** Technical Foul - assessed to team bench
+
+### 20. NWA League Conduct Code and Consequences for Violation
+
+AAO and The NWA League seeks to foster a safe, positive and enjoyable sports experience in which players, coaches, officials and fans respect and appreciate each other. Guests will be treated in a professional and courteous manner by all NWA League Staff. We expect that same courtesy to be reciprocated.
+
+### 21. Fans / Coaches
+
+Fans / Coaches who engage in fighting, throwing objects or making a personal threat to harm another person or use foul or abusive language, personal verbal attacks, and obscene gestures targeted toward officials, opposing fans, opposing coaches, opposing players, or AAO staff - this includes coming out onto the court during or following a game and confronting or threatening an official, coach or player in an aggressive - negative manner - may be subject to any or all of the following consequences:
+
+- Immediate ejection from the facility
+- Technical foul or multiple technical fouls being assessed to the violating team
+- Violators will be banned from both AAO complexes for the season & post season
+- **Player Flagrant Foul:** (unacceptable behavior / conduct)... violent in nature, fighting is a flagrant foul…
+- Immediate player ejection is mandatory for player flagrant foul. Can be either personal or technical in nature…
+- **Coaches / Teams / Players:** Technical foul (s) that are assessed immediately after a contest is finished will be carried out by the following procedures:
+  - Implementation of the technical foul (s) will take effect in that team's next league contest. For instance, in the next league contest - the opposing team would execute 1 for 2 free throws for each technical foul assessed and receive possession of the ball at mid-court.
+  - The technical foul(s) will count as one of the two technical fouls toward the head coach or player ejection rule.
+
+**THE HEAD COACH IS RESPONSIBLE FOR THE ACTIONS AND BEHAVIORS OF THEIR FANS AS WELL AS THEIR ASSISTANT COACHES AND PLAYERS. HEAD COACHES CAN AND WILL BE PENALIZED FOR THEIR FANS NEGATIVE ACTIONS. HEAD COACHES ARE EXPECTED TO ADDRESS THEIR FANS IN TIMELY FASHION IF AND WHEN THEIR FANS MAY BE IN VIOLATION OF NWA BASKETBALL RULES DURING A CONTEST.**
+
+The League Director may modify the League Rules when the League Director deems it in the best interest of the league/tournament to do so and all teams will be bound by any such change.
+
+### 22. Livebarn / Protest of Game
+
+**AAO Game Review Policy:** All game results are considered final once play has concluded and the score is reported. AAO does not use camera footage, video review, or post-game recordings to overturn, change, or adjust the outcome of a game. Referee decisions made during live play will stand as the official ruling.
+
+### 23. Changing Leagues After Play
+
+Can’t change a week of play
+
+Questions, contact: [nwaleague@aaoteam.org](mailto:nwaleague@aaoteam.org)
+`;
+
 const DEF_TRANSITION_MD = String.raw`
 ## Transition Defense
 
@@ -4311,6 +4697,8 @@ function render() {
   : tab === "philosophy" ? "Basketball Philosophy"
   : tab === "deflevels" ? "Defensive Levels"
   : tab === "packline" ? "Pack Line Defense"
+  : tab === "leaguemtg" ? "League Directors Meeting"
+  : tab === "leaguerules" ? "League Rules"
   : tab === "deftrans" ? "Transition Defense"
   : tab === "readreact" ? "Read & React Offense"
   : tab === "menu"     ? "Menu"
@@ -4330,6 +4718,8 @@ function render() {
   : tab === "philosophy" ? "Our team philosophy: how we play, and why"
   : tab === "deflevels" ? "Four levels of a defender · Pack Line principles and drills"
   : tab === "packline" ? "One on the ball, four in the pack · our base defense"
+  : tab === "leaguemtg" ? "AAO NWA League · Fall 2026–27 directors meeting"
+  : tab === "leaguerules" ? "AAO NWA League · Powered by Academy Sports + Outdoors"
   : tab === "deftrans" ? "Your man is not your man. Guard the team."
   : tab === "readreact" ? "Our offense, taught in layers · videos for every layer"
   : tab === "menu"     ? "More from the Saints hub"
@@ -4391,6 +4781,10 @@ function render() {
     view.innerHTML = philosophyView();
   } else if (tab === "deflevels") {
     view.innerHTML = docView(DEF_LEVELS_MD);
+  } else if (tab === "leaguemtg") {
+    view.innerHTML = docView(LEAGUE_MEETING_MD, { weekends: leagueWeekendsTable(), graphic: leagueGraphic() });
+  } else if (tab === "leaguerules") {
+    view.innerHTML = docView(LEAGUE_RULES_MD);
   } else if (tab === "packline") {
     view.innerHTML = docView(PACK_LINE_MD);
   } else if (tab === "deftrans") {
