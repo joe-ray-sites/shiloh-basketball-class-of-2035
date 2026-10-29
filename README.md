@@ -150,6 +150,27 @@ to link to another page in the app). The Read & React
 layers table comes from `RR_GROUPS`; every R&R teaching video is also a
 drill in the library (keys starting with `rr`).
 
+## Plays
+
+The Plays tab (bottom nav) lists offense and defense play calls from the
+`PLAYS` array in `index.html` (name, offense/defense, tag, summary, steps,
+coaching points, related drills). Each play has a looping animated GIF and a
+still clipboard diagram in `assets/plays/<id>.gif` / `<id>.png`, drawn by:
+
+```bash
+python3 make-plays.py            # every play
+python3 make-plays.py pass-and-cut
+```
+
+`make-plays.py` holds the choreography: start spots for 1-5 (feet on a half
+court, basket at the top), who has the ball, and timed passes, cuts and
+dribbles, plus the captions shown under the court. Offense is circled
+numbers; the defense (squares with an X) is placed automatically by Pack Line
+rules, or set `"defense": False`. To add a play, add its choreography there
+and its words to `PLAYS` with the same id, then run the script.
+
+Players now lives in the Menu, next to Coaches.
+
 ## League pages
 
 Menu → League Directors Meeting and League Rules are the AAO NWA League's
