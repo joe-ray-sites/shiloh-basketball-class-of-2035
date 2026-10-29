@@ -18,6 +18,11 @@ and the captions shown under the court:
     {"pass": (1, 2), "t": (0.8, 1.5)}                      ball from 1 to 2
     {"move": 1, "t": (1.6, 3.2), "path": [(x, y), ...]}    1 runs a path
     {"dribble": 2, "t": (...), "path": [...]}              2 dribbles a path
+    {"shot": 2, "t": (a, b)}                               2 shoots; the ball drops in
+
+"clear": [5.3] wipes the arrows drawn so far at 5.3 seconds, so a long play
+reads in phases. "diagram_from": 5.3 draws the still diagram from that
+moment (players where they stand then, only the arrows that follow).
 
 Defenders are placed automatically by Pack Line rules: tight on the ball,
 sagged inside the line off the ball, and they shift while the pass is in
@@ -30,26 +35,63 @@ import sys
 from PIL import Image, ImageDraw, ImageFont
 
 # ── Plays ────────────────────────────────────────────────────────────────────
+# Our five-out spots: 1 top, 2 left wing, 3 right wing, 4 left corner, 5 right corner.
+FIVE_OUT = {1: (25, 29), 2: (6.5, 19.5), 3: (43.5, 19.5), 4: (3, 8), 5: (47, 8)}
+
+PASS_AND_CUT = [
+    {"pass": (1, 2), "t": (0.8, 1.45)},
+    {"move": 1, "t": (1.6, 3.2), "path": [(25, 29), (24, 17), (24.5, 9)]},
+    {"move": 3, "t": (1.9, 3.3), "path": [(43.5, 19.5), (36, 26.5), (25, 29)]},
+    {"move": 5, "t": (2.2, 3.5), "path": [(47, 8), (46.5, 14), (43.5, 19.5)]},
+    {"move": 1, "t": (3.4, 4.9), "path": [(24.5, 9), (31, 8), (40, 7.4), (47, 8)]},
+]
+PASS_AND_CUT_CAPTIONS = [
+    (0.0, "1 has the ball at the top"),
+    (0.8, "1 passes to 2"),
+    (1.6, "1 cuts hard to the basket. 3 fills the top, 5 fills the wing"),
+    (3.4, "1 flows out and fills the open corner"),
+]
+
 PLAYS = [
     {
         "slug": "pass-and-cut",
         "title": "Pass and Cut",
-        "start": {1: (25, 29), 2: (6.5, 19.5), 3: (43.5, 19.5), 4: (3, 8), 5: (47, 8)},
+        "start": FIVE_OUT,
         "ball": 1,
         "length": 6.8,
-        "events": [
-            {"pass": (1, 2), "t": (0.8, 1.45)},
-            {"move": 1, "t": (1.6, 3.2), "path": [(25, 29), (24, 17), (24.5, 9)]},
-            {"move": 3, "t": (1.9, 3.3), "path": [(43.5, 19.5), (36, 26.5), (25, 29)]},
-            {"move": 5, "t": (2.2, 3.5), "path": [(47, 8), (46.5, 14), (43.5, 19.5)]},
-            {"move": 1, "t": (3.4, 4.9), "path": [(24.5, 9), (31, 8), (40, 7.4), (47, 8)]},
-        ],
-        "captions": [
-            (0.0, "1 has the ball at the top"),
-            (0.8, "1 passes to 2"),
-            (1.6, "1 cuts hard to the basket. 3 fills the top, 5 fills the wing"),
-            (3.4, "1 flows out and fills the open corner"),
+        "events": PASS_AND_CUT,
+        "captions": PASS_AND_CUT_CAPTIONS + [
             (5.0, "Every spot is filled. Pass and cut again!"),
+        ],
+    },
+    {
+        # Pass and Cut, then: 2 dribbles at 3 (3 cuts, 4 fills the wing, 3 fills
+        # the open corner), 2 passes to 5 and cuts, 5 dribbles up and hits 2
+        # for the layup.
+        "slug": "pass-and-cut-extended",
+        "title": "Pass and Cut - Extended",
+        "start": FIVE_OUT,
+        "ball": 1,
+        "length": 12.6,
+        "clear": [5.3],
+        "diagram_from": 5.3,
+        "events": PASS_AND_CUT + [
+            {"dribble": 2, "t": (5.3, 6.9), "path": [(6.5, 19.5), (13, 25.5), (22.5, 28.6)]},
+            {"move": 3, "t": (5.8, 7.3), "path": [(25, 29), (26.5, 18), (25.8, 9.5)]},
+            {"move": 4, "t": (5.9, 7.3), "path": [(3, 8), (4, 14), (6.5, 19.5)]},
+            {"pass": (2, 5), "t": (7.5, 8.1)},
+            {"move": 3, "t": (7.6, 9.0), "path": [(25.8, 9.5), (17, 7.6), (9, 7.2), (3, 8)]},
+            {"move": 2, "t": (8.2, 10.0), "path": [(22.5, 28.6), (21.5, 19), (22.5, 13), (24, 10)]},
+            {"dribble": 5, "t": (8.4, 9.6), "path": [(43.5, 19.5), (37, 25), (31, 27.5)]},
+            {"pass": (5, 2), "t": (9.6, 10.1)},
+            {"move": 2, "t": (10.1, 10.5), "path": [(24, 10), (24.6, 7.8)]},
+            {"shot": 2, "t": (10.4, 10.9)},
+        ],
+        "captions": PASS_AND_CUT_CAPTIONS + [
+            (5.3, "2 dribbles at 3, so 3 cuts to the basket. 4 fills the wing"),
+            (7.5, "2 passes to 5 and cuts. 3 fills the open corner"),
+            (8.4, "5 dribbles up. 2 keeps cutting to the rim"),
+            (9.6, "5 hits 2 for the layup!"),
         ],
     },
 ]
@@ -163,12 +205,31 @@ def state_at(play, t):
     pos = dict(play["start"])
     holder, ball, air = play["ball"], None, 0.0
     trails = []                                   # (kind, points, done)
+    cleared = max([c for c in play.get("clear", []) if c <= t], default=-1)
+    shot = None
+    bounce = 0.0
     for e in sorted(play["events"], key=lambda e: e["t"][0]):
         a, b = e["t"]
         if t < a:
             continue
         f = ease((t - a) / (b - a))
         done = t >= b
+        if b <= cleared:                          # an earlier phase: apply it, don't draw it
+            if "pass" in e:
+                holder = e["pass"][1]
+            elif "shot" in e:
+                holder = None
+            else:
+                pos[e.get("move") or e.get("dribble")] = e["_path"][-1]
+            continue
+        if "shot" in e:
+            src = hold_spot(pos[e["shot"]], BASKET)
+            holder = None
+            shot = BASKET if done else lerp(src, BASKET, f)
+            air = 0.0 if done else 1.25 * math.sin(math.pi * f)
+            continue
+        if "dribble" in e and not done:
+            bounce = 0.22 * abs(math.sin((t - a) * math.pi * 5))
         if "pass" in e:
             src, dst = e["pass"]
             s, d = hold_spot(pos[src], pos[dst]), hold_spot(pos[dst], pos[src])
@@ -184,6 +245,9 @@ def state_at(play, t):
             trails.append(("dribble" if "dribble" in e else "move", upto(e["_path"], f), done))
     if holder is not None:
         ball = hold_spot(pos[holder], BASKET)
+        air = max(air, bounce)
+    elif shot is not None:
+        ball = shot
     return pos, ball, holder, air, trails
 
 
@@ -206,6 +270,9 @@ def defense_at(pos, ball):
         if dist(tgt, BASKET) > PACK and w < 0.5:           # stay inside the pack line
             d = dist(tgt, BASKET)
             tgt = lerp(BASKET, tgt, (PACK + (d - PACK) * 0.35) / d)
+        if dist(tgt, BASKET) < 2.6:                        # don't park on the rim: trail beside him
+            side = 1 if man[0] <= BASKET[0] else -1
+            tgt = (man[0] + 3.2 * side, man[1] + 1.2)
         v = (tgt[0] - man[0], tgt[1] - man[1])
         L = math.hypot(*v)
         if L < 3.2:                                        # never sit on top of him
@@ -339,12 +406,14 @@ def trail(d, kind, pts, done):
     if len(pts) < 2:
         return
     if kind == "dribble":                              # zig-zag, the usual dribble mark
-        zig = []
-        for i in range(len(pts) - 1):
-            a, b = pts[i], pts[i + 1]
+        total = sum(dist(pts[i], pts[i + 1]) for i in range(len(pts) - 1))
+        n = max(2, int(total / 0.85))
+        zig = [pts[0]]
+        for i in range(1, n):
+            a, b = along(pts, (i - 0.01) / n), along(pts, i / n)
             ang = math.atan2(b[1] - a[1], b[0] - a[0]) + math.pi / 2
-            o = 0.45 * (1 if i % 2 else -1)
-            zig.append((a[0] + math.cos(ang) * o, a[1] + math.sin(ang) * o))
+            o = 0.5 * (1 if i % 2 else -1)
+            zig.append((b[0] + math.cos(ang) * o, b[1] + math.sin(ang) * o))
         zig.append(pts[-1])
         pts = zig
     d.line([P(*q) for q in pts], fill=TRAIL, width=w, joint="curve")
@@ -363,8 +432,6 @@ def caption(d, play, t, total):
     d.rounded_rectangle([sx, top + 17 * SS, sx + bw, top + 41 * SS], radius=8 * SS, fill=ACCENT)
     d.text((sx + bw / 2, top + 29.5 * SS), step, font=F_TAG, fill=(255, 255, 255), anchor="mm")
     d.text((sx + bw + 12 * SS, top + 29 * SS), caps[i][1], font=F_CAP, fill=(255, 255, 255), anchor="lm")
-    # progress bar along the bottom edge of the court
-    d.rectangle([0, top - 4 * SS, W * (t / total), top], fill=ACCENT)
 
 
 def frame(play, t, diagram=False):
@@ -372,8 +439,11 @@ def frame(play, t, diagram=False):
     d = ImageDraw.Draw(img)
     court(d)
     if diagram:                                        # everything at once, players at the start
-        pos, holder = dict(play["start"]), play["ball"]
-        _, _, _, _, trails = state_at(play, play["length"])
+        t0 = play.get("diagram_from", 0)
+        pos, _, holder, _, _ = state_at(play, t0)
+        holder = holder or play["ball"]
+        late = dict(play, clear=list(play.get("clear", [])) + ([t0] if t0 else []))
+        _, _, _, _, trails = state_at(late, play["length"])
         for tr in trails:
             trail(d, tr[0], tr[1], True)
         if play.get("defense", True):
@@ -398,8 +468,9 @@ def frame(play, t, diagram=False):
 
 def build(play, out_dir):
     prepare(play)
-    n = int(play["length"] * FPS)
-    frames = [frame(play, i / FPS) for i in range(n)]
+    fps = play.get("fps", FPS)
+    n = int(play["length"] * fps)
+    frames = [frame(play, i / fps) for i in range(n)]
     # one shared palette so colors don't flicker from frame to frame
     sample = Image.new("RGB", (frames[0].width, frames[0].height * 4))
     for k, f in enumerate([frames[0], frames[n // 3], frames[2 * n // 3], frames[-1]]):
@@ -407,7 +478,7 @@ def build(play, out_dir):
     pal = sample.quantize(colors=255, method=Image.Quantize.MEDIANCUT)
     gif = [f.quantize(palette=pal, dither=Image.Dither.NONE) for f in frames]
     path = os.path.join(out_dir, play["slug"] + ".gif")
-    gif[0].save(path, save_all=True, append_images=gif[1:], duration=1000 // FPS, loop=0, optimize=False)
+    gif[0].save(path, save_all=True, append_images=gif[1:], duration=1000 // fps, loop=0, optimize=False)
     png = os.path.join(out_dir, play["slug"] + ".png")
     frame(play, 0, diagram=True).save(png, optimize=True)
     print(f"{play['slug']}: {n} frames, {os.path.getsize(path) // 1024} KB gif, {os.path.getsize(png) // 1024} KB png")

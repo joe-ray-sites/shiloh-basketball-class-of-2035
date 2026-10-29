@@ -163,8 +163,11 @@ python3 make-plays.py pass-and-cut
 ```
 
 `make-plays.py` holds the choreography: start spots for 1-5 (feet on a half
-court, basket at the top), who has the ball, and timed passes, cuts and
-dribbles, plus the captions shown under the court. Offense is circled
+court, basket at the top), who has the ball, and timed passes, cuts,
+dribbles and shots, plus the captions shown under the court. A long play can
+clear its arrows between phases (`clear`) and draw its still diagram from a
+later phase (`diagram_from`). Plays can share a start: Pass and Cut -
+Extended reuses the Pass and Cut events. Offense is circled
 numbers; the defense (squares with an X) is placed automatically by Pack Line
 rules, or set `"defense": False`. To add a play, add its choreography there
 and its words to `PLAYS` with the same id, then run the script.
