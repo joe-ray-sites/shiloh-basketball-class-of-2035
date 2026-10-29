@@ -96,7 +96,8 @@ PLAYS = [
     },
     {
         # Pass and Cut start, but 1 stops his cut in the paint and flashes to
-        # the high key; 2 passes to him, makes the Laker cut and gets it back
+        # the ball-side elbow (left end of the free-throw line); 2 passes to
+        # him, makes the Laker cut (4 fills his wing spot) and gets it back
         # for the layup.
         "slug": "laker-cut",
         "title": "Laker Cut",
@@ -105,12 +106,13 @@ PLAYS = [
         "length": 8.6,
         "events": [
             PASS_AND_CUT[0],                                   # 1 passes to 2
-            {"move": 1, "t": (1.6, 3.0), "path": [(25, 29), (22, 18.5), (21, 12.5)]},
+            {"move": 1, "t": (1.6, 3.0), "path": [(25, 29), (23.8, 18.5), (23.5, 12.5)]},
             PASS_AND_CUT[2],                                   # 3 fills the top
             PASS_AND_CUT[3],                                   # 5 fills the wing
-            {"move": 1, "t": (3.0, 3.9), "path": [(21, 12.5), (24.5, 14.5), (25.5, 20)]},
+            {"move": 1, "t": (3.0, 3.9), "path": [(23.5, 12.5), (19.8, 14.8), (19.3, 19.8)]},
             {"pass": (2, 1), "t": (4.0, 4.6)},
             {"move": 2, "t": (4.7, 6.0), "path": [(6.5, 19.5), (12, 13.5), (19, 9.6), (23.8, 9.2)]},
+            {"move": 4, "t": (4.9, 6.2), "path": [(3, 8), (4, 14), (6.5, 19.5)]},
             {"pass": (1, 2), "t": (5.6, 6.05)},
             {"move": 2, "t": (6.05, 6.4), "path": [(23.8, 9.2), (24.5, 7.8)]},
             {"shot": 2, "t": (6.3, 6.8)},
@@ -119,9 +121,9 @@ PLAYS = [
             (0.0, "1 has the ball at the top"),
             (0.8, "1 passes to 2"),
             (1.6, "1 cuts into the paint. 3 fills the top, 5 fills the wing"),
-            (3.0, "1 flashes up to the high key"),
-            (4.0, "2 passes to 1 at the high key"),
-            (4.7, "2 makes the Laker cut to the basket"),
+            (3.0, "1 flashes up to the elbow"),
+            (4.0, "2 passes to 1 at the elbow"),
+            (4.7, "2 makes the Laker cut. 4 fills 2's spot on the wing"),
             (5.6, "1 hits 2 for the layup!"),
         ],
     },
