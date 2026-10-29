@@ -19,6 +19,15 @@ and the captions shown under the court:
     {"move": 1, "t": (1.6, 3.2), "path": [(x, y), ...]}    1 runs a path
     {"dribble": 2, "t": (...), "path": [...]}              2 dribbles a path
     {"shot": 2, "t": (a, b)}                               2 shoots; the ball drops in
+    {"move": 5, "screen": True, ...}                       a screen: the line ends in a T
+    {"beat": 5, "t": (a, b)}                               5's defender is screened or
+                                                           sealed: he's stuck, then catches up
+
+"sag": 0.45 makes the defense play tighter on their men (under the basket on
+inbounds plays) instead of sagging to the Pack Line.
+
+Out-of-bounds plays set "oob": 4.5 to show that many feet behind the
+baseline (shaded), so the inbounder can stand off the court at y < 0.
 
 "clear": [5.3] wipes the arrows drawn so far at 5.3 seconds, so a long play
 reads in phases. "diagram_from": 5.3 draws the still diagram from that
@@ -127,6 +136,67 @@ PLAYS = [
             (6.1, "2 makes the layup!"),
         ],
     },
+    # ── Baseline out of bounds (BLOB) ───────────────────────────────────────
+    {
+        # Don Kelbick's "Line Under" (Breakthrough Basketball): 4 cuts up the
+        # lane and catches over the top, 5 seals and ducks in, 4 hits 5.
+        "slug": "line-under",
+        "title": "Line Under",
+        "oob": 4.5,
+        "sag": 0.45,
+        "start": {2: (33, -2.2), 4: (32, 7.5), 5: (18, 7.5), 1: (3, 3.5), 3: (47, 3.5)},
+        "ball": 2,
+        "length": 6.8,
+        "events": [
+            {"move": 4, "t": (1.0, 2.3), "path": [(32, 7.5), (29.5, 13), (26.5, 18.5)]},
+            {"pass": (2, 4), "t": (2.1, 2.7)},
+            {"move": 5, "t": (2.9, 3.6), "path": [(18, 7.5), (20.5, 7.2), (22.8, 8.2)]},
+            {"beat": 5, "t": (2.9, 5.0)},
+            {"move": 2, "t": (2.9, 3.7), "path": [(33, -2.2), (34.5, 2), (36, 4.2)]},
+            {"pass": (4, 5), "t": (3.7, 4.2)},
+            {"move": 5, "t": (4.2, 4.5), "path": [(22.8, 8.2), (23.8, 7.1)]},
+            {"shot": 5, "t": (4.4, 4.9)},
+        ],
+        "captions": [
+            (0.0, "2 takes it out. 4 and 5 on the blocks, 1 and 3 deep in the corners"),
+            (1.0, "4 cuts straight up the lane"),
+            (2.1, "2 passes over the top to 4"),
+            (2.9, "5 seals his man and ducks in. 2 steps in"),
+            (3.7, "4 hits 5 for the layup!"),
+        ],
+    },
+    {
+        # Breakthrough Basketball's Box Set 4 ("Up Screener"), the classic
+        # screen the screener: 5 up-screens for 3, 4 screens for 5, 5 dives.
+        "slug": "box-up-screener",
+        "title": "Box: Screen the Screener",
+        "oob": 4.5,
+        "sag": 0.45,
+        "start": {2: (33, -2.2), 5: (31.8, 8), 4: (18.2, 8), 3: (31.5, 19), 1: (18.5, 19)},
+        "ball": 2,
+        "length": 7.6,
+        "events": [
+            {"move": 5, "screen": True, "t": (1.0, 1.8), "path": [(31.8, 8), (31.3, 12), (30.8, 15.2)]},
+            {"move": 3, "t": (1.8, 2.9), "path": [(31.5, 19), (28.6, 12.5), (26, 8.8)]},
+            {"move": 3, "t": (2.9, 4.0), "path": [(26, 8.8), (30.5, 5.2), (40, 4.5), (46.5, 5.5)]},
+            {"move": 4, "screen": True, "t": (2.4, 3.2), "path": [(18.2, 8), (23, 10.8), (28, 13.4)]},
+            {"move": 5, "t": (3.1, 4.4), "path": [(30.8, 15.2), (27.2, 17.6), (23.2, 12.6), (24.2, 8.2)]},
+            {"beat": 5, "t": (3.1, 5.7)},
+            {"move": 1, "t": (3.4, 4.6), "path": [(18.5, 19), (27, 24.5), (36, 22.5)]},
+            {"move": 4, "t": (3.6, 4.7), "path": [(28, 13.4), (30.8, 10.4), (32, 8)]},
+            {"pass": (2, 5), "t": (4.4, 4.9)},
+            {"move": 5, "t": (4.9, 5.2), "path": [(24.2, 8.2), (24.6, 7.2)]},
+            {"shot": 5, "t": (5.1, 5.6)},
+        ],
+        "captions": [
+            (0.0, "2 takes it out. Box: 4 and 5 on the blocks, 1 and 3 on the elbows"),
+            (1.0, "5 sets an up screen for 3"),
+            (1.8, "3 cuts to the rim. If he's covered, he clears to the corner"),
+            (2.6, "4 screens the screener. 5 cuts to the basket"),
+            (3.6, "1 is the safety outlet. 4 dives to the block"),
+            (4.4, "2 hits 5 for the layup!"),
+        ],
+    },
 ]
 
 # ── Look ────────────────────────────────────────────────────────────────────
@@ -140,8 +210,16 @@ PAD = 16 * SS
 DEPTH = 33                  # feet of court shown below the baseline
 CAP_H = 58 * SS
 W = int(50 * PX + 2 * PAD)
+TOP_FT = 0                  # feet shown behind the baseline (set per play)
 COURT_H = int(DEPTH * PX + 2 * PAD)
 H = COURT_H + CAP_H
+
+
+def set_view(play):
+    global TOP_FT, COURT_H, H
+    TOP_FT = play.get("oob", 0)
+    COURT_H = int((DEPTH + TOP_FT) * PX + 2 * PAD)
+    H = COURT_H + CAP_H
 BASKET = (25, 5.25)
 PACK = 16                   # pack line, feet from the rim
 
@@ -162,7 +240,7 @@ F_TAG = font(int(12 * SS), narrow=True)
 
 
 def P(x, y):
-    return (PAD + x * PX, PAD + y * PX)
+    return (PAD + x * PX, PAD + (y + TOP_FT) * PX)
 
 
 # ── Geometry helpers ─────────────────────────────────────────────────────────
@@ -247,6 +325,8 @@ def state_at(play, t):
             continue
         f = ease((t - a) / (b - a))
         done = t >= b
+        if "beat" in e:
+            continue
         if b <= cleared:                          # an earlier phase: apply it, don't draw it
             if "pass" in e:
                 holder = e["pass"][1]
@@ -254,6 +334,8 @@ def state_at(play, t):
                 holder = None
             else:
                 pos[e.get("move") or e.get("dribble")] = e["_path"][-1]
+            continue
+        if "beat" in e:
             continue
         if "shot" in e:
             src = hold_spot(pos[e["shot"]], BASKET)
@@ -275,7 +357,8 @@ def state_at(play, t):
         else:
             who = e.get("move") or e.get("dribble")
             pos[who] = along(e["_path"], f)
-            trails.append(("dribble" if "dribble" in e else "move", upto(e["_path"], f), done))
+            kind = "dribble" if "dribble" in e else "screen" if e.get("screen") else "move"
+            trails.append((kind, upto(e["_path"], f), done))
     if holder is not None:
         ball = hold_spot(pos[holder], BASKET)
         air = max(air, bounce)
@@ -291,16 +374,32 @@ def hold_spot(me, toward):
     return (me[0] + dx / d * 1.25 + 0.9, me[1] + dy / d * 1.25 + 0.4)
 
 
-def defense_at(pos, ball):
+def defense_for(play, t, pos, ball):
+    """Pack Line spots, then hold back any defender who's been screened."""
+    sag = play.get("sag", 1.0)
+    spots = defense_at(pos, ball, sag)
+    for e in play["events"]:
+        if "beat" not in e:
+            continue
+        a, b = e["t"]
+        if a <= t < b:
+            p0, b0, _, _, _ = state_at(play, a)
+            stuck = defense_at(p0, b0, sag)[e["beat"]]
+            g = ((t - a) / (b - a)) ** 3
+            spots[e["beat"]] = lerp(stuck, spots[e["beat"]], g)
+    return keep_apart(spots, pos)
+
+
+def defense_at(pos, ball, sag=1.0):
     """Pack Line: pressure the ball, everyone else sags inside the line toward
     the ball. Weighted by distance to the ball so nothing jumps."""
     spots = {}
     for n, man in pos.items():
         w = max(0.0, 1 - dist(man, ball) / 7)            # 1 = he has it
-        k = 0.36 - 0.22 * w                                # how far to sag
+        k = (0.36 - 0.22 * w) * sag                        # how far to sag
         tgt = lerp(man, BASKET, k)
         tgt = lerp(tgt, ball, 0.14 * (1 - w))              # shade to the ball
-        if dist(tgt, BASKET) > PACK and w < 0.5:           # stay inside the pack line
+        if sag >= 1 and dist(tgt, BASKET) > PACK and w < 0.5:   # stay inside the pack line
             d = dist(tgt, BASKET)
             tgt = lerp(BASKET, tgt, (PACK + (d - PACK) * 0.35) / d)
         if dist(tgt, BASKET) < 2.6:                        # don't park on the rim: trail beside him
@@ -337,7 +436,7 @@ def keep_apart(spots, pos, gap_off=3.1, gap_def=2.7):
                     L = math.hypot(vx, vy) or 1
                     push = (gap_def - dd) / 2
                     x, y = x + vx / L * push, y + vy / L * push
-            spots[n] = (min(48.6, max(1.4, x)), min(DEPTH - 1.4, max(1.4, y)))
+            spots[n] = (min(48.6, max(1.4, x)), min(DEPTH - 1.4, max(1.0, y)))
     return spots
 
 
@@ -391,6 +490,10 @@ def trim(pts, start=0.0, end=0.0):
 
 def court(d):
     lw = int(2.2 * SS)
+    if TOP_FT:                                         # out of bounds behind the baseline
+        d.rectangle([P(0, -TOP_FT), P(50, 0)], fill=(236, 240, 244))
+        d.text((P(1.2, -TOP_FT / 2)[0], P(0, -TOP_FT / 2)[1]), "OUT OF BOUNDS", font=F_TAG,
+               fill=(140, 152, 166), anchor="lm")
     d.rectangle([P(0, 0), P(50, DEPTH)], outline=NAVY, width=lw)
     d.rectangle([P(19, 0), P(31, 19)], outline=NAVY, width=lw)            # lane
     # free-throw circle: solid outside the lane, dashed inside
@@ -475,7 +578,13 @@ def trail(d, kind, pts, done):
         zig.append(pts[-1])
         pts = zig
     d.line([P(*q) for q in pts], fill=TRAIL, width=w, joint="curve")
-    if done:
+    if done and kind == "screen":                      # the screen mark: a T across the end
+        a, b = pts[-2], pts[-1]
+        ang = math.atan2(b[1] - a[1], b[0] - a[0]) + math.pi / 2
+        k = 1.0
+        d.line([P(b[0] + math.cos(ang) * k, b[1] + math.sin(ang) * k),
+                P(b[0] - math.cos(ang) * k, b[1] - math.sin(ang) * k)], fill=TRAIL, width=int(3.4 * SS))
+    elif done:
         arrowhead(d, pts[-2], pts[-1], TRAIL)
 
 
@@ -505,7 +614,7 @@ def frame(play, t, diagram=False):
         for tr in trails:
             trail(d, tr[0], tr[1], True)
         if play.get("defense", True):
-            for p in defense_at(pos, hold_spot(pos[holder], BASKET)).values():
+            for p in defense_at(pos, hold_spot(pos[holder], BASKET), play.get("sag", 1.0)).values():
                 defender(d, p)
         for n, p in pos.items():
             offense(d, n, p, n == holder)
@@ -515,7 +624,7 @@ def frame(play, t, diagram=False):
         for tr in trails:
             trail(d, *tr)
         if play.get("defense", True):
-            for p in defense_at(pos, bp).values():
+            for p in defense_for(play, t, pos, bp).values():
                 defender(d, p)
         for n, p in pos.items():
             offense(d, n, p, n == holder)
@@ -525,6 +634,7 @@ def frame(play, t, diagram=False):
 
 
 def build(play, out_dir):
+    set_view(play)
     prepare(play)
     fps = play.get("fps", FPS)
     n = int(play["length"] * fps)

@@ -884,6 +884,7 @@ button.game{width:100%;text-align:left;font:inherit;cursor:pointer;}
 .play-info .play-side{align-self:flex-start;font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:11px;
   letter-spacing:.8px;text-transform:uppercase;padding:3px 9px;border-radius:7px;color:#fff;background:var(--navy);}
 .play-info .play-side.defense{background:var(--loss);}
+.play-info .play-side.blob{background:var(--accent);}
 .play-anim{margin:16px 0 0;max-width:680px;}
 .play-anim img{display:block;width:100%;height:auto;border-radius:16px;border:1px solid var(--line);background:#fff;}
 .play-anim figcaption{font-size:12.5px;color:var(--muted);line-height:1.5;padding:8px 4px 0;}
@@ -3670,11 +3671,48 @@ const PLAYS = [
       "1: hit the cutter in stride, out in front of him, so he can lay it in without stopping.",
     ],
     drills:["rrL2", "rrL1", "rrDrills13"] },
+
+  // ── Baseline out of bounds (BLOB) ──
+  { id:"line-under", name:"Line Under", side:"blob", tag:"Baseline out of bounds · post layup",
+    source:{ label:"Don Kelbick, Breakthrough Basketball", url:"https://www.breakthroughbasketball.com/plays/2-simple-out-of-bounds-plays" },
+    summary:"A simple inbounds play that gets the ball to a post player under the basket. 4 cuts up the lane for the catch, and 5 seals his man and ducks in for the layup.",
+    steps:[
+      "2 takes the ball out. 4 is on the block right in front of the ball, 5 is on the opposite block, and 1 and 3 are wide and deep in the corners.",
+      "4 cuts straight up the lane.",
+      "2 inbounds the ball over the top to 4.",
+      "On the catch, 5 seals his man and ducks in to the basket. 2 steps in bounds.",
+      "4 passes to 5 for the layup.",
+    ],
+    points:[
+      "The set makes the defense front our post players. If anybody isn't fronted, throw it to him and score.",
+      "5: wait for the catch, then seal. Put your man on your back and show a target hand.",
+      "2: pass over the top to 4, away from his defender.",
+      "1 and 3: stay wide and deep in the corners so their defenders can't help on 5.",
+    ],
+    drills:["jumpstop", "bfcMikan"] },
+  { id:"box-up-screener", name:"Box: Screen the Screener", side:"blob", tag:"Baseline out of bounds · box set",
+    source:{ label:"Box Set 4 (Up Screener), Breakthrough Basketball", url:"https://www.breakthroughbasketball.com/plays/baseline-box-plays" },
+    summary:"The classic box inbounds play. 5 sets an up screen for 3, then 4 screens the screener and 5 cuts to the basket for the layup.",
+    steps:[
+      "2 takes the ball out. Box set: 5 on the ball-side block, 4 on the other block, 3 on the ball-side elbow, 1 on the other elbow.",
+      "5 sets an up screen for 3.",
+      "3 cuts to the rim. If he's covered, he clears to the corner.",
+      "4 screens the screener: he screens 5's defender, and 5 cuts to the basket.",
+      "1 comes to the ball side as the safety outlet. After his screen, 4 dives to the ball-side block.",
+      "2 hits 5 for the layup.",
+    ],
+    points:[
+      "4: before the play starts, look at who is guarding 5. That's the man you screen. Screen a body, not air.",
+      "5: set the up screen, then wait for 4's screen before you cut.",
+      "Screeners are often the ones who come open. Everybody be ready for the ball.",
+      "1: if nothing is open, step to the ball so 2 can get it in safely.",
+    ],
+    drills:["usScreen", "bfcMikan"] },
 ];
 const playById = (id) => PLAYS.find(p => p.id === id);
 const playGif = (p) => `assets/plays/${p.id}.gif`;
 const playDiagram = (p) => `assets/plays/${p.id}.png`;
-const sideLabel = (s) => s === "defense" ? "Defense" : "Offense";
+const sideLabel = (s) => s === "defense" ? "Defense" : s === "blob" ? "BLOB" : "Offense";
 
 function playsView() {
   if (state.play && playById(state.play)) return playDetailView(playById(state.play));
@@ -3683,7 +3721,7 @@ function playsView() {
   const list = PLAYS.filter(p => f === "all" || p.side === f);
   const card = (p) => `
     <button class="play-card" data-play="${p.id}">
-      <img class="play-thumb" src="${playDiagram(p)}" alt="${esc(p.name)} diagram" loading="lazy" width="672" height="452" />
+      <img class="play-thumb" src="${playDiagram(p)}" alt="${esc(p.name)} diagram" loading="lazy" width="672" />
       <span class="play-info">
         <span class="play-side ${p.side}">${sideLabel(p.side)}</span>
         <b>${esc(p.name)}</b>
@@ -3691,9 +3729,9 @@ function playsView() {
       </span>
     </button>`;
   return `
-    <div class="chips">${chip("all", "All")}${chip("offense", "Offense")}${chip("defense", "Defense")}</div>
+    <div class="chips">${chip("all", "All")}${chip("offense", "Offense")}${chip("defense", "Defense")}${chip("blob", "BLOB")}</div>
     ${list.length ? `<div class="plays-grid">${list.map(card).join("")}</div>`
-      : `<p class="empty">No ${f === "all" ? "" : f === "defense" ? "defensive " : "offensive "}plays yet.</p>`}`;
+      : `<p class="empty">No ${f === "all" ? "" : f === "defense" ? "defensive " : f === "blob" ? "baseline out-of-bounds " : "offensive "}plays yet.</p>`}`;
 }
 
 function playDetailView(p) {
@@ -3705,9 +3743,10 @@ function playDetailView(p) {
       <p class="plan-goal">${esc(p.summary)}</p>
     </div>
     <figure class="play-anim">
-      <img src="${playGif(p)}" alt="${esc(p.name)}: animated play diagram" width="672" height="512" />
-      <figcaption>Loops on its own. Circles are us, squares with an X are the defense.
-        <a href="${playGif(p)}" download="${p.id}.gif">Download the GIF</a></figcaption>
+      <img src="${playGif(p)}" alt="${esc(p.name)}: animated play diagram" width="672" />
+      <figcaption>Loops on its own. Circles are us, squares with an X are the defense${p.side === "blob" ? ", and a line ending in a T is a screen" : ""}.
+        <a href="${playGif(p)}" download="${p.id}.gif">Download the GIF</a>
+        ${p.source ? `<br>Source: <a href="${esc(p.source.url)}" target="_blank" rel="noopener noreferrer">${esc(p.source.label)}</a>` : ""}</figcaption>
     </figure>
     <section class="play-sec">
       <h3>How it runs</h3>

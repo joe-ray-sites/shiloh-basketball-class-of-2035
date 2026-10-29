@@ -172,6 +172,13 @@ numbers; the defense (squares with an X) is placed automatically by Pack Line
 rules, or set `"defense": False`. To add a play, add its choreography there
 and its words to `PLAYS` with the same id, then run the script.
 
+Filters: All, Offense, Defense and BLOB (baseline out of bounds; a play with
+`side:"blob"`). BLOB plays show the out-of-bounds strip behind the baseline
+(`"oob"` in make-plays.py), draw screens as a line ending in a T, let a
+screened or sealed defender trail behind (`"beat"`), and play the defense
+tighter under the basket (`"sag"`). A play can credit where it came from with
+`source:{ label, url }`.
+
 Players now lives in the Menu, next to Coaches.
 
 ## League pages
