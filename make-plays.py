@@ -123,6 +123,28 @@ DRIBBLE_AT_CAPTIONS = [
     (7.5, "2 passes to 5 and cuts. 3 fills the open corner"),
 ]
 
+# Race & Space off a miss: the opening both rebound plays share. 4 rebounds
+# and outlets to 1, everyone races, and 1 throws it ahead to 3.
+RS_REBOUND_START = {4: (22, 6.5), 5: (29.5, 8.5), 1: (31, 24), 2: (10, 17), 3: (40, 17)}
+RS_REBOUND_CHASE = {"from": {4: (20.5, 10.5), 5: (27, 44), 1: (26, 27), 2: (8, 21), 3: (43, 21.5)},
+                    "speed": 11, "delay": {4: 0.8, 1: 0.7, 2: 0.7, 3: 0.7, 5: 0.3}}
+RS_REBOUND = [
+    {"move": 1, "t": (0.3, 1.0), "path": [(31, 24), (37, 23), (42, 24)]},
+    {"pass": (4, 1), "t": (0.9, 1.4)},
+    {"move": 5, "t": (0.5, 4.4), "path": [(29.5, 8.5), (27, 30), (24, 60), (21, 82), (19.5, 86.5)]},
+    {"move": 3, "t": (0.6, 3.3), "path": [(40, 17), (45, 38), (46, 58), (44.5, 71)]},
+    {"move": 2, "t": (0.6, 4.4), "path": [(10, 17), (5, 45), (4, 74), (3, 86)]},
+    {"dribble": 1, "t": (1.5, 3.0), "path": [(42, 24), (37, 38), (32.5, 51)]},
+    {"pass": (1, 3), "t": (3.0, 3.6)},
+    {"move": 1, "t": (3.6, 5.2), "path": [(32.5, 51), (35, 56), (38.5, 60)]},
+]
+RS_REBOUND_CAPTIONS = [
+    (0.0, "Off a miss: 4 grabs the rebound. Everybody races"),
+    (0.9, "4 outlets to 1, quick. 5 sprints rim to rim"),
+    (1.6, "2 and 3 sprint the lanes to the corners. 4 trails"),
+    (3.0, "1 throws it ahead to 3, up the street"),
+]
+
 PLAYS = [
     {
         # Pass and Cut around the horn: 2 passes to 3, 3 to 5, and 5 to 4,
@@ -619,44 +641,62 @@ PLAYS = [
     # 2 and 3 the Locks (corner runners), 4 the Dragon (trailer). We defend the
     # top basket and race to the far one.
     {
-        # Off a miss: 4 rebounds and outlets to 1, 1 throws it ahead to 3
-        # running the right lane, 5 holds the deep defender, 3 lays it in.
+        # Off a miss: 4 rebounds and outlets to 1, 1 throws it ahead to 3, 3
+        # attacks, the deep defender has to step up, and 3 hits 5.
         "slug": "race-space-rebound",
         "title": "Race & Space: Off a Rebound",
         "depth": 94,
         "hoop": (25, 88.75),
         "fps": 15,
-        "start": {4: (22, 6.5), 5: (29.5, 8.5), 1: (31, 24), 2: (10, 17), 3: (40, 17)},
+        "start": RS_REBOUND_START,
         "ball": 4,
-        "chase": {"from": {4: (20.5, 10.5), 5: (27, 44), 1: (26, 27), 2: (8, 21), 3: (43, 21.5)},
-                  "speed": 11, "delay": {4: 0.8, 1: 0.7, 2: 0.7, 3: 0.7, 5: 0.3}},
-        "length": 7.2,
-        "events": [
-            {"move": 1, "t": (0.3, 1.0), "path": [(31, 24), (37, 23), (42, 24)]},
-            {"pass": (4, 1), "t": (0.9, 1.4)},
-            {"move": 5, "t": (0.5, 4.4), "path": [(29.5, 8.5), (27, 30), (24, 60), (21, 82), (19.5, 86.5)]},
-            {"move": 3, "t": (0.6, 3.3), "path": [(40, 17), (45, 38), (46, 58), (44.5, 71)]},
-            {"move": 2, "t": (0.6, 4.4), "path": [(10, 17), (5, 45), (4, 74), (3, 86)]},
-            {"dribble": 1, "t": (1.5, 3.0), "path": [(42, 24), (37, 38), (32.5, 51)]},
-            {"pass": (1, 3), "t": (3.0, 3.6)},
-            {"dribble": 3, "t": (3.7, 4.7), "path": [(44.5, 71), (39, 80), (30.8, 85.6)]},
-            {"shot": 3, "t": (4.7, 5.2)},
-            {"move": 1, "t": (3.6, 5.2), "path": [(32.5, 51), (36, 62), (40, 70)]},
+        "chase": RS_REBOUND_CHASE,
+        "length": 7.6,
+        "events": RS_REBOUND + [
             {"move": 4, "t": (1.3, 5.8), "path": [(22, 6.5), (24, 30), (25, 55), (25, 66)]},
+            {"dribble": 3, "t": (3.7, 4.6), "path": [(44.5, 71), (41.5, 76), (38, 79.5)]},
+            {"guard": 5, "t": (4.0, 5.4), "at": (33.8, 82.2), "recover": 1.0},
+            {"pass": (3, 5), "t": (4.6, 5.1)},
+            {"move": 5, "t": (5.1, 5.4), "path": [(19.5, 86.5), (22.6, 87.6)]},
+            {"shot": 5, "t": (5.3, 5.8)},
         ],
-        "captions": [
-            (0.0, "Off a miss: 4 grabs the rebound. Everybody races"),
-            (0.9, "4 outlets to 1, quick. 5 sprints rim to rim"),
-            (1.6, "2 and 3 sprint the lanes to the corners. 4 trails"),
-            (3.0, "1 throws it ahead to 3, up the street"),
+        "captions": RS_REBOUND_CAPTIONS + [
             (3.7, "5 holds the deep defender. 3 attacks the rim"),
-            (4.7, "3 beats them all down the floor for the layup!"),
+            (4.6, "The deep defender has to step up on 3. 3 hits 5"),
+            (5.3, "Rabbit layup! We beat them down the floor"),
+        ],
+    },
+    {
+        # The same race off a miss, but 5's man stays home: 3 waits for 4,
+        # the Dragon, to trail down and hits him on a basket cut.
+        "slug": "race-space-dragon",
+        "title": "Race & Space: Dragon Cut",
+        "depth": 94,
+        "hoop": (25, 88.75),
+        "fps": 15,
+        "start": RS_REBOUND_START,
+        "ball": 4,
+        "chase": dict(RS_REBOUND_CHASE, delay={4: 1.6, 1: 0.7, 2: 0.7, 3: 0.7, 5: 0.3}),
+        "reach": 4,
+        "length": 9.0,
+        "events": RS_REBOUND + [
+            {"move": 4, "t": (1.3, 5.0), "path": [(22, 6.5), (24, 30), (25, 52), (25, 64)]},
+            {"move": 4, "t": (5.0, 6.0), "path": [(25, 64), (26.5, 73), (27.5, 81.5)]},
+            {"pass": (3, 4), "t": (5.4, 5.8)},               # hit him in stride, mid-cut
+            {"move": 4, "t": (6.0, 6.3), "path": [(27.5, 81.5), (26.4, 85.6)]},
+            {"shot": 4, "t": (6.2, 6.7)},
+        ],
+        "captions": RS_REBOUND_CAPTIONS + [
+            (3.7, "5 holds the deep defender. 3 waits on the Dragon"),
+            (4.6, "Here comes 4, the Dragon, trailing down the middle"),
+            (5.4, "4 cuts hard to the rim. 3 hits him in stride"),
+            (6.2, "Dragon layup!"),
         ],
     },
     {
         # Off a make: 4 grabs it, steps out and inbounds to 1 right away, 1
-        # crosses the street and attacks the middle; the deep defender
-        # leaves 5 to stop him, and 1 dumps it to 5 at the rim.
+        # pushes and throws it ahead to 2; 2 attacks, the deep defender has
+        # to step up, and 2 hits 5 on the far block.
         "slug": "race-space-make",
         "title": "Race & Space: Off a Made Shot",
         "depth": 94,
@@ -667,28 +707,32 @@ PLAYS = [
         "ball": 4,
         "chase": {"from": {4: (25.5, 9.5), 5: (30, 45), 1: (28, 27), 2: (14, 22), 3: (40, 15)},
                   "speed": 11, "delay": {4: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 5: 0.3}},
-        "length": 7.4,
+        "length": 7.8,
         "events": [
             {"move": 4, "t": (0.2, 0.9), "path": [(24, 5.5), (26, 1.5), (27, -2.2)]},
             {"move": 1, "t": (0.3, 1.0), "path": [(32, 24), (37, 21), (40, 19)]},
             {"pass": (4, 1), "t": (1.0, 1.5)},
-            {"move": 5, "t": (0.4, 4.4), "path": [(30, 10), (27, 30), (24, 60), (20.5, 82), (18.5, 86.5)]},
-            {"move": 2, "t": (0.5, 4.3), "path": [(12, 18), (5, 45), (4, 75), (3, 86)]},
+            {"move": 5, "t": (0.4, 4.4), "path": [(30, 10), (27, 30), (26, 60), (29.5, 82), (31.5, 86.5)]},
+            {"move": 2, "t": (0.5, 3.7), "path": [(12, 18), (5, 45), (5, 66), (6, 72)]},
             {"move": 3, "t": (0.5, 4.2), "path": [(44, 12), (46, 40), (46.5, 70), (47, 86)]},
-            {"dribble": 1, "t": (1.6, 4.4), "path": [(40, 19), (36, 35), (28.5, 52), (26.5, 68), (25.5, 77)]},
-            {"guard": 5, "t": (4.0, 5.4), "at": (24, 81), "recover": 1.0},
-            {"pass": (1, 5), "t": (4.5, 4.9)},
-            {"move": 5, "t": (4.9, 5.2), "path": [(18.5, 86.5), (22, 87.6)]},
-            {"shot": 5, "t": (5.1, 5.6)},
-            {"move": 4, "t": (1.6, 5.8), "path": [(27, -2.2), (24, 20), (20, 48), (19, 63)]},
+            {"dribble": 1, "t": (1.6, 3.3), "path": [(40, 19), (36, 33), (28.5, 52)]},
+            {"pass": (1, 2), "t": (3.3, 3.9)},
+            {"move": 1, "t": (4.0, 5.5), "path": [(28.5, 52), (31, 61), (34, 66)]},
+            {"dribble": 2, "t": (4.0, 4.9), "path": [(6, 72), (11, 79), (16.5, 81.5)]},
+            {"guard": 5, "t": (4.2, 5.6), "at": (19.6, 82.6), "recover": 1.0},
+            {"pass": (2, 5), "t": (4.9, 5.3)},
+            {"move": 5, "t": (5.3, 5.6), "path": [(31.5, 86.5), (27.6, 87.6)]},
+            {"shot": 5, "t": (5.5, 6.0)},
+            {"move": 4, "t": (1.6, 5.8), "path": [(27, -2.2), (24, 20), (22, 48), (22, 63)]},
         ],
         "captions": [
             (0.0, "Off a make: 4 grabs it and steps out of bounds, fast"),
             (1.0, "4 inbounds to 1 right away. Don't wait"),
-            (1.6, "1 crosses the street with the dribble. 5 runs rim to rim"),
-            (2.7, "2 and 3 sprint to the corners. 4 trails as the Dragon"),
-            (4.0, "The deep defender steps up to stop 1. 1 dumps it to 5"),
-            (5.1, "Layup! We beat them down the floor"),
+            (1.6, "1 pushes it up the middle. 5 runs rim to rim"),
+            (2.4, "2 and 3 sprint the lanes. 4 trails as the Dragon"),
+            (3.3, "1 throws it ahead to 2, up the street"),
+            (4.0, "2 attacks. The deep defender has to step up"),
+            (4.9, "2 hits 5, the Rabbit, for the layup!"),
         ],
     },
     # ── Defense ─────────────────────────────────────────────────────────────
