@@ -576,6 +576,69 @@ button.prac{width:100%;text-align:left;font:inherit;cursor:pointer;}
 .prac.is-next{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,150,190,.15);}
 .prac.is-past,.game.is-past{opacity:.5;}
 
+/* Month calendar */
+.cal{max-width:880px;margin:0 0 18px;padding:12px;background:#fff;border:1px solid var(--line);
+  border-radius:18px;box-shadow:0 1px 2px rgba(7,26,46,.05),0 10px 26px -20px rgba(7,26,46,.35);
+  --cal-chrome:96px;               /* header, weekday row and padding: what's left of a third of the screen is for the weeks */
+  --cal-row:clamp(30px, calc((33vh - var(--cal-chrome)) / var(--cal-rows)), 54px);}
+.cal-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.cal-title{flex:0 1 auto;margin:0 4px;font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:18px;
+  letter-spacing:.8px;text-transform:uppercase;color:var(--navy);white-space:nowrap;}
+.cal-nav{flex:0 0 auto;width:30px;height:30px;display:grid;place-items:center;border-radius:9px;
+  border:1px solid var(--line);background:#fff;color:var(--navy);cursor:pointer;}
+.cal-nav:disabled{opacity:.3;cursor:default;}
+.cal-key{display:none;margin-left:auto;gap:14px;font-size:12px;color:var(--muted);}
+.cal-key span{display:flex;align-items:center;gap:6px;}
+.cal-key i{width:13px;height:13px;border-radius:4px;display:inline-block;}
+.ck-prac{background:#fff;border:1.5px solid var(--navy);}
+.ck-opt{background:#fff;border:1.5px dashed var(--navy);}
+.ck-game{background:var(--navy);}
+.cal-dow,.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;}
+.cal-dow{margin-bottom:4px;text-align:center;font-family:"Roboto Condensed",sans-serif;font-weight:700;
+  font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+.cal-grid{grid-auto-rows:var(--cal-row);}
+.cal .t-full{display:none;}
+.cal-cell{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;min-width:0;
+  overflow:hidden;padding:4px 5px;border-radius:8px;border:1.5px solid transparent;background:#f3f5f7;
+  color:#8a98a8;font:inherit;text-align:left;}
+.cal-cell b{font-family:"Roboto Condensed",sans-serif;font-size:13.5px;line-height:1;}
+.cal-cell.is-pad{background:transparent;}
+button.cal-cell{cursor:pointer;}
+.cal-cell.is-prac{background:#fff;border-color:var(--navy);color:var(--navy);box-shadow:0 1px 2px rgba(7,26,46,.12);}
+.cal-cell.is-opt{border-style:dashed;}
+.cal-cell.is-game{background:var(--navy);border-color:var(--navy);color:#fff;}
+.cal-cell.is-off{background:transparent;border:1.5px dashed var(--line);color:var(--muted);}
+.cal-cell.is-past{opacity:.45;}
+.cal-cell.is-next{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,150,190,.22);}
+.cal-cell.is-today b{color:#fff;background:var(--accent);border-radius:999px;padding:2px 5px;margin:-2px -3px;}
+.cal-loc{display:none;font-size:10.5px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.cal-time,.cal-note{font-size:10.5px;font-weight:700;line-height:1.1;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;max-width:100%;}
+.cal-note{font-weight:500;}
+@media(min-width:700px){
+  .cal{padding:14px 16px;--cal-chrome:104px;}
+  .cal-key{display:flex;}
+  .cal-title{font-size:20px;}
+  .cal .t-full{display:inline;}
+  .cal .t-short{display:none;}
+  .cal-cell{padding:5px 8px;}
+  .cal-cell b{font-size:15px;}
+}
+@media(min-width:700px) and (min-height:700px){       /* room for the gym, beside the date */
+  .cal-cell{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto 1fr;
+    column-gap:6px;align-items:start;padding:4px 7px;}
+  .cal-cell b{grid-column:1;grid-row:1;}
+  .cal-loc{display:block;grid-column:2;grid-row:1;justify-self:end;font-size:10px;line-height:15px;}
+  .cal-time,.cal-note{grid-column:1 / 3;grid-row:2;align-self:end;}
+}
+.sched-past-toggle{display:flex;align-items:center;gap:8px;max-width:880px;margin:16px 0 0;padding:10px 14px;
+  border-radius:12px;border:1px dashed #b8c2cd;background:transparent;color:var(--muted);font:inherit;
+  font-size:13.5px;font-weight:700;cursor:pointer;}
+.sched-past{margin-top:12px;}
+@keyframes sched-flash{0%,60%{box-shadow:0 0 0 4px rgba(37,150,190,.55);}100%{box-shadow:0 0 0 0 rgba(37,150,190,0);}}
+.is-flash{animation:sched-flash 1.8s ease-out;}
+
 .sched-month{
   font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:13px;letter-spacing:1.2px;
   text-transform:uppercase;color:var(--navy);margin:14px 2px 0;
@@ -2040,6 +2103,7 @@ const GYMS = {
   rec:        "Springdale Rec Center",
   fellowship: "Shiloh Christian Fellowship Gym",
 };
+const GYM_SHORT = { rec:"Rec Center", fellowship:"Fellowship" };   // for the calendar
 const PRACTICE_DAYS = [
   // Bonus October practices (optional)
   { date:"2026-10-22", time:"7:30–8:30 PM", loc:"fellowship", plan:1,  optional:true },
@@ -2380,6 +2444,8 @@ const hashTab = location.hash.replace("#", "");
 
 const state = {
   tab: TABS.includes(hashTab) ? hashTab : HOME_TAB,
+  calMonth: null,     // "2026-11": the month the Schedule calendar shows
+  showPast: false,    // Schedule list: past days are tucked away until asked for
   q: "",
   sort: "num",
   box: null,          // open box-score game id (schedule sub-view)
@@ -2719,16 +2785,34 @@ function scheduleView() {
   ].sort((a, b) => a.date.localeCompare(b.date) || (a.kind === "game") - (b.kind === "game"));
 
   const nextEv = events.find(e => e.date >= today && !e.item.off && !e.item.final);
-  let month = "";
-  const rows = events.map(e => {
-    const m = fmtDate(e.date, { month:"long", year:"numeric" });
-    const head = m !== month ? `<h2 class="sched-month">${m}</h2>` : "";
-    month = m;
-    const next = e === nextEv;
-    return head + (e.kind === "game"
-      ? gameRow(e.item, { next })
-      : practiceRow(e.item, next, e.date < today));
-  }).join("");
+  // Past days drop off the list so it always starts with what's next; they
+  // come back (with any box scores) under "Show past".
+  const seen = new Set();
+  const listRows = (list) => {
+    let month = "";
+    return list.map(e => {
+      const m = fmtDate(e.date, { month:"long", year:"numeric" });
+      const head = m !== month ? `<h2 class="sched-month">${m}</h2>` : "";
+      month = m;
+      const next = e === nextEv;
+      const row = e.kind === "game"
+        ? gameRow(e.item, { next })
+        : practiceRow(e.item, next, e.date < today);
+      if (seen.has(e.date)) return head + row;         // the calendar jumps to a day's first event
+      seen.add(e.date);
+      return head + row.replace(/<(button|article)/, `$& data-sched-date="${e.date}"`);
+    }).join("");
+  };
+  const past = events.filter(e => e.date < today);
+  const rows = listRows(events.filter(e => e.date >= today))
+    || (past.length ? `<p class="empty">That's the season. Everything is under past days below.</p>` : "");
+  const pastBlock = !past.length ? "" : `
+    <button class="sched-past-toggle" data-show-past aria-expanded="${state.showPast}">
+      ${state.showPast ? "Hide past days" : `Show past days (${past.length})`}
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${state.showPast ? "M6 15l6-6 6 6" : "M6 9l6 6 6-6"}"/></svg>
+    </button>
+    ${state.showPast ? `<div class="sched sched-past">${listRows(past)}</div>` : ""}`;
 
   const legend = `<div class="sched-key" aria-hidden="true">
       <span><i class="key-prac"></i>Practice</span>
@@ -2740,7 +2824,76 @@ function scheduleView() {
            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
       <span>The game schedule is coming soon. Practices are below.</span>
     </div>`;
-  return soon + legend + `<div class="sched">${rows || `<p class="empty">Nothing on the schedule yet.</p>`}</div>`;
+  return (events.length ? calendarView(events, today, nextEv) : "") + soon + legend
+    + `<div class="sched">${rows || `<p class="empty">Nothing on the schedule yet.</p>`}</div>` + pastBlock;
+}
+
+/* Month calendar at the top of the Schedule: an at-a-glance look at the
+   month. Tapping a day scrolls to it in the list. Rows size themselves so
+   the whole calendar stays within about a third of the screen. */
+function calendarView(events, today, nextEv) {
+  const months = [...new Set(events.map(e => e.date.slice(0, 7)))].sort();
+  const first = months[0], last = months[months.length - 1];
+  const start = (nextEv ? nextEv.date : today).slice(0, 7);
+  let ym = state.calMonth || (start < first ? first : start > last ? last : start);
+  if (ym < first) ym = first;
+  if (ym > last) ym = last;
+  state.calMonth = ym;
+  const [y, m] = ym.split("-").map(Number);
+  const lead = new Date(y, m - 1, 1).getDay();
+  const days = new Date(y, m, 0).getDate();
+  const rows = Math.ceil((lead + days) / 7);
+  const byDate = {};
+  events.forEach(e => { (byDate[e.date] = byDate[e.date] || []).push(e); });
+
+  const cell = (d) => {
+    const iso = `${ym}-${String(d).padStart(2, "0")}`;
+    const evs = byDate[iso] || [];
+    const today_ = iso === today ? " is-today" : "";
+    if (!evs.length) return `<div class="cal-cell${today_}"><b>${d}</b></div>`;
+    const game = evs.find(e => e.kind === "game");
+    const e = game || evs[0];
+    const it = e.item;
+    const past = iso < today ? " is-past" : "";
+    const next = evs.includes(nextEv) ? " is-next" : "";
+    const when = fmtDate(iso, { weekday:"short", month:"short", day:"numeric" });
+    if (game) {
+      const label = it.opp ? `${it.home === false ? "@" : "vs"} ${it.opp}` : "Game";
+      return `<button class="cal-cell is-game${past}${next}${today_}" data-cal-day="${iso}"
+          aria-label="${esc(when)}: ${esc(label)}${it.time ? ", " + esc(it.time) : ""}">
+        <b>${d}</b><span class="cal-loc">${esc(label)}</span><span class="cal-time">${esc(it.time || "Game")}</span></button>`;
+    }
+    if (it.off) {
+      return `<button class="cal-cell is-off${today_}" data-cal-day="${iso}" aria-label="${esc(when)}: no practice, ${esc(it.note || "")}">
+        <b>${d}</b><span class="cal-note"><span class="t-full">${esc(it.note || "Off")}</span><span class="t-short">Off</span></span></button>`;
+    }
+    const [t0, t1] = String(it.time || "").replace(/\s*[AP]M$/, "").split("–");
+    return `<button class="cal-cell is-prac${it.optional ? " is-opt" : ""}${past}${next}${today_}" data-cal-day="${iso}"
+        aria-label="${esc(when)}: ${it.optional ? "optional " : ""}practice ${esc(it.time || "")} at ${esc(GYMS[it.loc] || "")}">
+      <b>${d}</b><span class="cal-loc">${esc(GYM_SHORT[it.loc] || "")}</span>
+      <span class="cal-time"><span class="t-full">${esc(t0)}${t1 ? "–" + esc(t1) : ""}</span><span class="t-short">${esc(t0)}</span></span></button>`;
+  };
+  const cells = [
+    ...Array.from({ length: lead }, () => `<span class="cal-cell is-pad" aria-hidden="true"></span>`),
+    ...Array.from({ length: days }, (_, i) => cell(i + 1)),
+    ...Array.from({ length: rows * 7 - lead - days }, () => `<span class="cal-cell is-pad" aria-hidden="true"></span>`),
+  ].join("");
+  const arrow = (dir, path, off) => `<button class="cal-nav" data-cal-step="${dir}" aria-label="${dir < 0 ? "Previous" : "Next"} month"${off ? " disabled" : ""}>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+           stroke-linecap="round" stroke-linejoin="round"><path d="${path}"/></svg></button>`;
+  const dow = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  return `<section class="cal" aria-label="Month calendar" style="--cal-rows:${rows}">
+    <div class="cal-head">
+      ${arrow(-1, "M15 6l-6 6 6 6", ym === first)}
+      <h2 class="cal-title">${fmtDate(ym + "-01", { month:"long", year:"numeric" })}</h2>
+      ${arrow(1, "M9 6l6 6-6 6", ym === last)}
+      <div class="cal-key" aria-hidden="true">
+        <span><i class="ck-prac"></i>Practice</span><span><i class="ck-opt"></i>Optional</span><span><i class="ck-game"></i>Game</span>
+      </div>
+    </div>
+    <div class="cal-dow" aria-hidden="true">${dow.map(x => `<span><span class="t-full">${x}</span><span class="t-short">${x[0]}</span></span>`).join("")}</div>
+    <div class="cal-grid">${cells}</div>
+  </section>`;
 }
 
 /* Career table, in the spirit of a trading-card back: a row per season and
@@ -5408,6 +5561,29 @@ document.addEventListener("click", (e) => {
   if (sea) { state.season = Number(sea.dataset.season); state.seasonTab = "schedule"; state.leaders = null; render(); window.scrollTo(0, 0); return; }
   if (e.target.closest("[data-back-season]")) { state.season = null; state.leaders = null; render(); window.scrollTo(0, 0); return; }
 
+  const step = e.target.closest("[data-cal-step]");
+  if (step) {
+    const [y, m] = state.calMonth.split("-").map(Number);
+    const d = new Date(y, m - 1 + Number(step.dataset.calStep), 1);
+    state.calMonth = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    render();
+    return;
+  }
+  if (e.target.closest("[data-show-past]")) { state.showPast = !state.showPast; render(); return; }
+  const cday = e.target.closest("[data-cal-day]");
+  if (cday) {
+    if (cday.dataset.calDay < todayISO() && !state.showPast) { state.showPast = true; render(); }
+    const row = document.querySelector(`[data-sched-date="${cday.dataset.calDay}"]`);
+    if (row) {
+      const bar = document.querySelector(".appbar");
+      const top = bar && getComputedStyle(bar).display !== "none" ? bar.offsetHeight : 0;
+      window.scrollTo({ top: row.getBoundingClientRect().top + window.scrollY - top - 14, behavior: "smooth" });
+      row.classList.remove("is-flash");
+      void row.offsetWidth;                              // restart the highlight
+      row.classList.add("is-flash");
+    }
+    return;
+  }
   const dp = e.target.closest("[data-day-plan]");
   if (dp) { const id = parseId(dp.dataset.dayPlan); goTab("practice"); state.practice = id; state.fromSchedule = true; render(); window.scrollTo(0, 0); return; }
   if (e.target.closest("[data-back-schedule]")) { goTab("schedule"); return; }

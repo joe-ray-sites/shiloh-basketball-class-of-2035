@@ -61,7 +61,15 @@ The Schedule tab merges two lists in `index.html` by date, grouped by month:
 - **`GAMES`** holds games, shown as dark cards with white text. It is empty
   until the game schedule is out, and the tab says games are coming soon.
 
-The first event on or after today gets the "Next Up" badge, and past days dim.
+The first event on or after today gets the "Next Up" badge. Past days drop
+off the list, so it always starts with what's next; a "Show past days" button
+at the bottom brings them back.
+
+A month calendar sits at the top of the tab (`calendarView`). Its rows size
+themselves to keep it within about a third of the screen, arrows step through
+the months that have events, and tapping a day scrolls to it in the list
+(opening the past days first if needed). `GYM_SHORT` holds the short gym
+names it shows.
 
 ## Entering a game
 
