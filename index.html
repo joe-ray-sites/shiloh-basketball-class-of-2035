@@ -3622,7 +3622,7 @@ function drillLibraryView() {
    { id, name, side:"offense"|"defense", tag, summary,
      steps:[...], points:[...], drills:[DRILLS keys] } */
 const PLAYS = [
-  { id:"pass-and-cut", name:"Pass and Cut", side:"offense", tag:"Read & React · Layer 1",
+  { id:"pass-and-cut", name:"Layer 1: Pass and Cut", side:"offense", tag:"Read & React · Pass and Cut",
     summary:"Our first rule on offense: when you pass, you cut to the basket, and everyone fills the open spot.",
     steps:[
       "1 has the ball at the top. 2 and 3 are on the wings, 4 and 5 are in the corners.",
@@ -3638,7 +3638,7 @@ const PLAYS = [
       "Keep your spacing: stay out of each other's way so the cutter has room.",
     ],
     drills:["rrL1", "rrL1Warm", "passcut"] },
-  { id:"pass-and-cut-extended", name:"Pass and Cut - Extended", side:"offense", tag:"Read & React · Layers 1 and 3",
+  { id:"pass-and-cut-extended", name:"Layer 2: Pass and Cut + Dribble At", side:"offense", tag:"Read & React · Pass and Cut, Dribble At",
     summary:"Pass and Cut, then keep it going: a dribble at a teammate sends him to the basket, and a second pass and cut ends in a layup.",
     steps:[
       "Run Pass and Cut: 1 passes to 2 and cuts, 3 fills the top, 5 fills the wing, and 1 fills the open corner.",
@@ -3655,7 +3655,24 @@ const PLAYS = [
       "On the last cut, show a target hand so 5 can hit you in stride for the layup.",
     ],
     drills:["rrL3", "rrL1", "rrDrills13"] },
-  { id:"laker-cut", name:"Laker Cut", side:"offense", tag:"Read & React · Layer 2",
+  { id:"pass-and-cut-layer-3", name:"Layer 3: Pass and Cut + Dribble At + Laker Cut", side:"offense", tag:"Read & React · Pass and Cut, Dribble At, Laker Cut",
+    summary:"Layer 2, with one more read at the end: 2 cuts through to the low block, 5 passes in to him and makes a Laker cut, and 2 hits 5 for the layup.",
+    steps:[
+      "Run Pass and Cut: 1 passes to 2 and cuts, 3 fills the top, 5 fills the wing, and 1 fills the open corner.",
+      "2 dribbles at 3, so 3 cuts to the basket. 4 moves up into 2's old spot on the wing, and 3 fills the open corner.",
+      "2 passes to 5 and cuts. 5 dribbles up toward the top of the key.",
+      "Instead of finishing his cut at the rim, 2 cuts through to the low block on 5's side and posts up.",
+      "5 passes in to 2 on the block.",
+      "5 makes the Laker cut: he cuts hard to the basket right after his pass, and 2 hits him in stride for the layup. Then start it over from the top.",
+    ],
+    points:[
+      "2: get to the block, seal your man and show a target hand.",
+      "5: the moment the ball leaves your hands, cut. The pass and the cut are one move.",
+      "Cut down the middle of the lane, not out to the corner, so 2 has an easy pass.",
+      "2: hit the cutter in stride, out in front of him. If he's covered, turn and look to score yourself.",
+    ],
+    drills:["rrL2", "rrL3", "rrL1"] },
+  { id:"laker-cut", name:"Laker Cut", side:"offense", tag:"Read & React · Laker Cut",
     summary:"It starts like Pass and Cut, but the cutter flashes back up to the elbow, gets the ball and hits the wing on his Laker cut for a layup.",
     steps:[
       "1 has the ball at the top. 2 and 3 are on the wings, 4 and 5 are in the corners.",

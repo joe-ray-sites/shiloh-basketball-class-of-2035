@@ -66,10 +66,24 @@ PASS_AND_CUT_CAPTIONS = [
     (3.4, "1 flows out and fills the open corner"),
 ]
 
+# Layer 2 picks up where Pass and Cut ends: 2 dribbles at 3 (3 cuts, 4 fills
+# the wing, 3 fills the open corner), then 2 passes to 5 and cuts.
+DRIBBLE_AT = [
+    {"dribble": 2, "t": (5.3, 6.9), "path": [(6.5, 19.5), (13, 25.5), (22.5, 28.6)]},
+    {"move": 3, "t": (5.8, 7.3), "path": [(25, 29), (26.5, 18), (25.8, 9.5)]},
+    {"move": 4, "t": (5.9, 7.3), "path": [(3, 8), (4, 14), (6.5, 19.5)]},
+    {"pass": (2, 5), "t": (7.5, 8.1)},
+    {"move": 3, "t": (7.6, 9.0), "path": [(25.8, 9.5), (17, 7.6), (9, 7.2), (3, 8)]},
+]
+DRIBBLE_AT_CAPTIONS = [
+    (5.3, "2 dribbles at 3, so 3 cuts to the basket. 4 fills the wing"),
+    (7.5, "2 passes to 5 and cuts. 3 fills the open corner"),
+]
+
 PLAYS = [
     {
         "slug": "pass-and-cut",
-        "title": "Pass and Cut",
+        "title": "Layer 1: Pass and Cut",
         "start": FIVE_OUT,
         "ball": 1,
         "length": 6.8,
@@ -79,33 +93,52 @@ PLAYS = [
         ],
     },
     {
-        # Pass and Cut, then: 2 dribbles at 3 (3 cuts, 4 fills the wing, 3 fills
-        # the open corner), 2 passes to 5 and cuts, 5 dribbles up and hits 2
-        # for the layup.
+        # Pass and Cut, then the dribble at; 5 dribbles up and hits 2 for the
+        # layup.
         "slug": "pass-and-cut-extended",
-        "title": "Pass and Cut - Extended",
+        "title": "Layer 2: Pass and Cut + Dribble At",
         "start": FIVE_OUT,
         "ball": 1,
         "length": 12.6,
         "clear": [5.3],
         "diagram_from": 5.3,
-        "events": PASS_AND_CUT + [
-            {"dribble": 2, "t": (5.3, 6.9), "path": [(6.5, 19.5), (13, 25.5), (22.5, 28.6)]},
-            {"move": 3, "t": (5.8, 7.3), "path": [(25, 29), (26.5, 18), (25.8, 9.5)]},
-            {"move": 4, "t": (5.9, 7.3), "path": [(3, 8), (4, 14), (6.5, 19.5)]},
-            {"pass": (2, 5), "t": (7.5, 8.1)},
-            {"move": 3, "t": (7.6, 9.0), "path": [(25.8, 9.5), (17, 7.6), (9, 7.2), (3, 8)]},
+        "events": PASS_AND_CUT + DRIBBLE_AT + [
             {"move": 2, "t": (8.2, 10.0), "path": [(22.5, 28.6), (21.5, 19), (22.5, 13), (24, 10)]},
             {"dribble": 5, "t": (8.4, 9.6), "path": [(43.5, 19.5), (37, 25), (31, 27.5)]},
             {"pass": (5, 2), "t": (9.6, 10.1)},
             {"move": 2, "t": (10.1, 10.5), "path": [(24, 10), (24.6, 7.8)]},
             {"shot": 2, "t": (10.4, 10.9)},
         ],
-        "captions": PASS_AND_CUT_CAPTIONS + [
-            (5.3, "2 dribbles at 3, so 3 cuts to the basket. 4 fills the wing"),
-            (7.5, "2 passes to 5 and cuts. 3 fills the open corner"),
+        "captions": PASS_AND_CUT_CAPTIONS + DRIBBLE_AT_CAPTIONS + [
             (8.4, "5 dribbles up. 2 keeps cutting to the rim"),
             (9.6, "5 hits 2 for the layup!"),
+        ],
+    },
+    {
+        # Layer 2, but 2's cut ends on the low block: 5 passes in to him, makes
+        # a Laker cut and gets it back for the layup.
+        "slug": "pass-and-cut-layer-3",
+        "title": "Layer 3: Pass and Cut + Dribble At + Laker Cut",
+        "start": FIVE_OUT,
+        "ball": 1,
+        "length": 14.8,
+        "clear": [5.3, 10.4],
+        "diagram_from": 10.35,                        # 5 still has it (the pass leaves at 10.4)
+        "events": PASS_AND_CUT + DRIBBLE_AT + [
+            {"move": 2, "t": (8.2, 10.2), "path": [(22.5, 28.6), (21.5, 19), (23.5, 12.5), (27.8, 9.6), (31.3, 8.6)]},
+            {"dribble": 5, "t": (8.4, 9.6), "path": [(43.5, 19.5), (37, 25), (31, 27.5)]},
+            {"pass": (5, 2), "t": (10.4, 10.9)},
+            {"move": 5, "t": (11.1, 12.3), "path": [(31, 27.5), (27.8, 19), (25.6, 12.2), (24.8, 9.6)]},
+            {"beat": 5, "t": (11.1, 13.4)},
+            {"pass": (2, 5), "t": (11.7, 12.1)},              # hit him in stride
+            {"move": 5, "t": (12.3, 12.6), "path": [(24.8, 9.6), (24.6, 7.8)]},
+            {"shot": 5, "t": (12.5, 13.0)},
+        ],
+        "captions": PASS_AND_CUT_CAPTIONS + DRIBBLE_AT_CAPTIONS + [
+            (8.4, "5 dribbles up. 2 cuts through to the low block"),
+            (10.4, "5 passes in to 2 on the block"),
+            (11.1, "5 makes a Laker cut. 2 hits him in stride"),
+            (12.3, "5 makes the layup!"),
         ],
     },
     {
