@@ -189,7 +189,13 @@ Defense, BLOB (baseline out of bounds; a play with `side:"blob"`) and SLOB
 (sideline out of bounds; `side:"slob"`). Transition plays draw the full
 court (`"depth": 94`, attacking `"hoop": (25, 88.75)`), and their defenders
 start where they were and run back at a set speed after a short delay
-(`"chase"`), so the GIF shows our runners beating them down the floor. BLOB plays
+(`"chase"`), so the GIF shows our runners beating them down the floor.
+
+Defense plays flip the drawing (`"us_on_defense"`): we're the numbered
+circles and the offense is the squares. With `"pack": True` our five are
+placed by the Pack Line page's rules, by how many passes away each man is,
+and each defender wears a tag for his job right now (On Ball, 1 Away,
+2 Away, Cutter, Help). `"show_pack"` draws the pack line. BLOB plays
 show the out-of-bounds strip behind the baseline (`"oob"` in make-plays.py),
 SLOB plays show it down the left sideline (`"oob_side"`) and show more of the
 floor (`"depth"`, up to half court). Both draw screens as a line ending in a

@@ -3924,6 +3924,27 @@ const PLAYS = [
       "Dragon: trail the play and stay ready. If the defense walls up to stop the ball, the trailer is open.",
     ],
     drills:["rsArcs", "rsIntro", "trailer"] },
+  // ── Defense ──
+  { id:"pack-line", name:"Pack Line Defense", side:"defense", tag:"Pack Line · vs. a 5-out Read & React offense",
+    summary:"Our base defense against a 5-out offense running Read & React: pass and cut, drive and kick, dribble at, a baseline drive, and a pin and skip. The offense never shoots, so you can watch where each of our five belongs as the ball moves. Every defender is tagged with his job: on the ball, one pass away, two passes away, guarding a cutter, or helping.",
+    steps:[
+      "On the ball: pressure him, a close talker, and force him to the sideline or baseline, out of the highway.",
+      "One pass away: in the gap, a good step off your man, both feet inside the pack line, hand in the passing lane.",
+      "Two passes away: sink to the middle of the floor, feet in the paint.",
+      "Every pass: all five move on the air time of the pass. Your job can change on every pass, so watch the tags change.",
+      "Pass and cut: the passer's defender jumps to the ball and stays between the cutter and the ball.",
+      "Drive: the defender in the gap shows himself and stops the ball, then recovers to his man on the kick out with a close out.",
+      "Dribble at: the backdoor cut is already covered, because we're in the pack.",
+      "Baseline drive: the nearest defender steps over and cuts it off. No layups.",
+      "Pin screen and skip pass: fight over the screen (we don't switch), then make the long close out under control.",
+    ],
+    points:[
+      "Freeze check: at any moment, can you see your man and the ball? Are both feet inside the line?",
+      "We don't deny the wings. We dare them to throw it out there, then close out.",
+      "Help and recover is one word: show, make him stop or pass, then sprint back on an angle.",
+      "Close outs: two high hands, short choppy steps, and yell \"Shot!\".",
+    ],
+    drills:["pl2on2", "pl3on3", "plShell", "plVegas"] },
 ];
 const playById = (id) => PLAYS.find(p => p.id === id);
 const playGif = (p) => `assets/plays/${p.id}.gif`;
@@ -3960,7 +3981,7 @@ function playDetailView(p) {
     </div>
     <figure class="play-anim">
       <img src="${playGif(p)}" alt="${esc(p.name)}: animated play diagram" width="672" />
-      <figcaption>Loops on its own. Circles are us, squares with an X are the defense${p.side === "blob" || p.side === "slob" ? ", and a line ending in a T is a screen" : p.side === "transition" ? ". We start on defense at the top and race to the far basket" : ""}.
+      <figcaption>Loops on its own. ${p.side === "defense" ? "Circles are us on defense, tagged with each player's job right now; squares with an X are the offense; the dashed arc is the pack line" : "Circles are us, squares with an X are the defense"}${p.side === "blob" || p.side === "slob" ? ", and a line ending in a T is a screen" : p.side === "transition" ? ". We start on defense at the top and race to the far basket" : ""}.
         <a href="${playGif(p)}" download="${p.id}.gif">Download the GIF</a>
         ${p.source ? `<br>Source: <a href="${esc(p.source.url)}" target="_blank" rel="noopener noreferrer">${esc(p.source.label)}</a>` : ""}</figcaption>
     </figure>

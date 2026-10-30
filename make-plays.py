@@ -47,6 +47,14 @@ the defenders where they were and let them run back at that many feet per
 second, so our runners can beat them down the floor. "delay": 0.8 (or
 {5: 0.3, ...} per defender) is how long they stand watching the shot first.
 
+"pack": True places the defense by our Pack Line rules instead, by how many
+passes away each man is: pressure the ball and force it to the side, one
+pass away sit in the gap inside the line, two passes away sink to the
+middle, and stay between a cutter and the ball. "us_on_defense": True draws
+it from our side: we're the numbered circles on defense (tagged with the
+job each has right now) and the offense is the squares; "show_pack" draws
+the pack line, and "trail" colors the offense's arrows.
+
 "parts": [{...}, {...}] plays several short possessions back to back in one
 GIF, each with its own start, ball, length, events and captions (anything
 not given comes from the play). The card diagram shows the first part.
@@ -683,12 +691,79 @@ PLAYS = [
             (5.1, "Layup! We beat them down the floor"),
         ],
     },
+    # ── Defense ─────────────────────────────────────────────────────────────
+    {
+        # Our Pack Line against a 5-out Read & React offense that never
+        # shoots: pass & cut, a drive and kick, a dribble at, a baseline
+        # drive, then a pin and a skip. We're the numbered circles.
+        "slug": "pack-line",
+        "title": "Pack Line Defense",
+        "us_on_defense": True,
+        "pack": True,
+        "show_pack": True,
+        "trail": (205, 120, 105),
+        "fps": 15,
+        "chase": {"speed": 19},
+        "start": FIVE_OUT,
+        "ball": 1,
+        "length": 25.0,
+        "clear": [4.2, 8.7, 11.9, 17.6, 20.6],
+        "diagram_until": 0.01,                        # the card: where everyone stands
+        "events": [
+            # Layer 1: pass and cut
+            {"pass": (1, 2), "t": (4.2, 4.8)},
+            {"move": 1, "t": (4.9, 6.3), "path": [(25, 29), (24, 17), (24.5, 9)]},
+            {"move": 3, "t": (5.2, 6.6), "path": [(43.5, 19.5), (36, 26.5), (25, 29)]},
+            {"move": 5, "t": (5.5, 6.8), "path": [(47, 8), (46.5, 14), (43.5, 19.5)]},
+            {"move": 1, "t": (6.7, 8.1), "path": [(24.5, 9), (31, 8), (40, 7.4), (47, 8)]},
+            # Layer 4: drive and kick
+            {"dribble": 2, "t": (8.7, 9.8), "path": [(6.5, 19.5), (12, 16), (17.5, 12)]},
+            {"guard": 4, "t": (8.9, 10.0), "at": (15.2, 10.2), "recover": 0.9},
+            {"pass": (2, 4), "t": (9.9, 10.4)},
+            {"move": 2, "t": (10.5, 11.6), "path": [(17.5, 12), (12, 16), (6.5, 19.5)]},
+            # Layer 3: dribble at
+            {"pass": (4, 2), "t": (11.9, 12.4)},
+            {"dribble": 2, "t": (13.0, 14.2), "path": [(6.5, 19.5), (13, 25.5), (22.5, 28.6)]},
+            {"move": 3, "t": (13.4, 14.6), "path": [(25, 29), (26.5, 18), (25.8, 9.5)]},
+            {"move": 4, "t": (13.6, 14.8), "path": [(3, 8), (4, 14), (6.5, 19.5)]},
+            {"move": 3, "t": (14.8, 16.0), "path": [(25.8, 9.5), (17, 7.6), (9, 7.2), (3, 8)]},
+            {"pass": (2, 5), "t": (16.2, 16.8)},
+            # Layer 6: baseline drive
+            {"dribble": 5, "t": (17.6, 18.8), "path": [(43.5, 19.5), (43, 12.5), (38.5, 6.5), (33.5, 5)]},
+            {"guard": 1, "t": (17.8, 19.0), "at": (31.2, 5.6), "recover": 1.0},
+            {"pass": (5, 1), "t": (18.9, 19.4)},
+            {"move": 5, "t": (19.4, 20.5), "path": [(33.5, 5), (39, 10), (43.5, 19.5)]},
+            # Layer 7: pin and skip
+            {"move": 3, "screen": True, "t": (20.6, 21.4), "path": [(3, 8), (12, 11), (18, 13.2)]},
+            {"beat": 4, "t": (21.4, 22.8)},
+            {"pass": (1, 4), "t": (21.5, 22.3)},
+            {"move": 3, "t": (22.3, 23.3), "path": [(18, 13.2), (10, 10), (3, 8)]},
+        ],
+        "captions": [
+            (0.0, "We're on defense. 1 pressures the ball: force it to the side"),
+            (1.4, "One pass away (2, 3): in the gap, hand in the passing lane"),
+            (2.8, "Two passes away (4, 5): sink to the middle of the floor"),
+            (4.2, "Pass to the wing: all five move on the air time"),
+            (4.9, "1 jumps to the ball and stays between the cutter and the ball"),
+            (6.7, "Ball on the wing: now 4 and 3 are one away, 5 and 1 two away"),
+            (8.7, "2 drives. 4 is in the gap: show yourself and stop the ball"),
+            (9.9, "Kick out: 4 recovers. Close out under control, hands high"),
+            (11.9, "Every pass, every defender moves. See your man and the ball"),
+            (13.0, "Dribble at: 3 goes backdoor. We're in the pack: it's covered"),
+            (16.2, "Ball to the right side: the left side sinks to the middle"),
+            (17.6, "Baseline drive: 1 steps over and cuts it off. No layups"),
+            (18.9, "Pitch to the corner: 1 sprints back and closes out"),
+            (20.6, "Pin screen on 4. Fight over it: we don't switch"),
+            (21.5, "Skip pass: the long close out. Short, choppy steps"),
+            (23.0, "That's the Pack Line: one on the ball, four in the pack"),
+        ],
+    },
 ]
 
 # ── Look ────────────────────────────────────────────────────────────────────
 NAVY, ACCENT, RED = (7, 26, 46), (37, 150, 190), (216, 85, 63)
 BOARD, BALL, SEAM = (255, 255, 255), (232, 121, 43), (110, 45, 10)
-TRAIL = (7, 26, 46)
+TRAIL = (7, 26, 46)         # arrow color (set per play)
 FPS = 20
 SS = 2                      # draw at 2x, then shrink for smooth edges
 PX = 12.8 * SS              # pixels per foot
@@ -704,7 +779,8 @@ H = COURT_H + CAP_H
 
 
 def set_view(play):
-    global VIEW, TOP_FT, LEFT_FT, W, COURT_H, H, TARGET, BASKET
+    global VIEW, TOP_FT, LEFT_FT, W, COURT_H, H, TARGET, BASKET, TRAIL
+    TRAIL = play.get("trail", NAVY)
     BASKET = play.get("hoop", HOME)
     TARGET = play.get("toward", BASKET)
     VIEW = play.get("depth", DEPTH)
@@ -874,14 +950,18 @@ def chase_spots(play, t):
     his Pack Line spot, but no faster than play["chase"]["speed"] ft/s."""
     fps = play.get("fps", FPS)
     if "_chase" not in play:
-        cur = dict(play["chase"]["from"])
+        if "from" in play["chase"]:
+            cur = dict(play["chase"]["from"])
+        else:
+            pos, ball, holder, _, _ = state_at(play, 0)
+            cur = base_defense(play, pos, ball, ball_man(play, 0, pos, ball, holder))
         step = play["chase"]["speed"] / fps
         delay = play["chase"].get("delay", 0)
         wait = delay if isinstance(delay, dict) else {k: delay for k in cur}
         cache = []
         for i in range(int(play["length"] * fps) + 2):
-            pos, ball, _, _, _ = state_at(play, i / fps)
-            tgt = base_defense(play, pos, ball)
+            pos, ball, holder, _, _ = state_at(play, i / fps)
+            tgt = base_defense(play, pos, ball, ball_man(play, i / fps, pos, ball, holder))
             for k, c in cur.items():
                 if i / fps < wait.get(k, 0):
                     continue
@@ -928,10 +1008,67 @@ def apply_guards(play, t, spots):
     return hit
 
 
-def base_defense(play, pos, ball):
+def base_defense(play, pos, ball, ballman=None):
+    if play.get("pack"):
+        return pack_rules(pos, ball, ballman)[0]
     if play.get("press"):
         return press_at(pos, ball)
     return defense_at(pos, ball, play.get("sag", 1.0), play.get("reach"))
+
+
+def ball_man(play, t, pos, ball, holder):
+    """Whose ball it is for the defense: the holder, or the receiver as soon
+    as a pass is in the air (we move on the air time), or the man nearest."""
+    if holder is not None:
+        return holder
+    for e in play["events"]:
+        if "pass" in e and e["t"][0] <= t < e["t"][1]:
+            return e["pass"][1]
+    return min(pos, key=lambda n: dist(pos[n], ball))
+
+
+def pack_jobs(pos, ballman):
+    """Each defender's job: "ball", "one" or "two" passes away, or "cutter"
+    for a man inside the arc. Passes away go by the order of the perimeter
+    players around the basket: the ball's neighbors are one pass away."""
+    jobs = {ballman: "ball"}
+    perim = [n for n in pos if n != ballman and dist(pos[n], BASKET) >= 11]
+    for n in pos:
+        if n not in jobs and n not in perim:
+            jobs[n] = "cutter"
+    ang = lambda n: math.atan2(pos[n][1] - BASKET[1], pos[n][0] - BASKET[0])
+    ring = sorted(perim + [ballman], key=ang)
+    i = ring.index(ballman)
+    near = {ring[j] for j in (i - 1, i + 1) if 0 <= j < len(ring)}
+    for n in perim:
+        jobs[n] = "one" if n in near else "two"
+    return jobs
+
+
+def pack_rules(pos, ball, ballman=None):
+    """Our Pack Line, by the rules on the Pack Line page."""
+    if ballman is None:
+        ballman = min(pos, key=lambda n: dist(pos[n], ball))
+    jobs = pack_jobs(pos, ballman)
+    spots = {}
+    for n, man in pos.items():
+        to_rim = (BASKET[0] - man[0], BASKET[1] - man[1])
+        L = math.hypot(*to_rim) or 1
+        u = (to_rim[0] / L, to_rim[1] / L)
+        job = jobs[n]
+        if job == "ball":                                  # pressure, shade the middle: force him to the side
+            tgt = (man[0] + u[0] * 3.0 + (0.9 if man[0] < 25 else -0.9), man[1] + u[1] * 3.0)
+        elif job == "one":                                 # in the gap, a good step off, inside the line
+            step = max(4.5, L - 14.5)
+            tgt = lerp((man[0] + u[0] * step, man[1] + u[1] * step), ball, 0.2)
+            if dist(tgt, BASKET) > PACK - 1:              # both feet inside the line
+                tgt = lerp(BASKET, tgt, (PACK - 1) / dist(tgt, BASKET))
+        elif job == "two":                                 # sink to the middle of the floor
+            tgt = (25 + (man[0] - 25) * 0.2, max(8.0, min(15.0, man[1] * 0.55 + 4)))
+        else:                                              # a cutter: stay between him and the ball
+            tgt = lerp(man, ball, 0.22)
+        spots[n] = tgt
+    return keep_apart(spots, pos), jobs
 
 
 def press_at(pos, ball):
@@ -1206,10 +1343,93 @@ def caption(d, play, t, total):
     d.text((sx + bw + 12 * SS, top + 29 * SS), caps[i][1], font=F_CAP, fill=(255, 255, 255), anchor="lm")
 
 
+JOB_TAGS = {"ball": ("ON BALL", NAVY), "one": ("1 AWAY", ACCENT), "two": ("2 AWAY", (31, 157, 87)),
+            "cutter": ("CUTTER", (110, 120, 132)), "help": ("HELP", (232, 121, 43))}
+
+
+def pack_line(d):
+    """The pack line: a dashed arc 16 feet from the rim."""
+    bx, by = P(*HOME)
+    r = PACK * PX
+    a = -19
+    while a < 199:
+        d.arc([bx - r, by - r, bx + r, by + r], a, a + 5, fill=(150, 196, 214), width=int(2 * SS))
+        a += 9
+
+
+def place_tags(d, spots, pos, jobs):
+    """Put each job tag on whichever side of its circle (below, above, right,
+    left) covers the fewest players and other tags. In feet."""
+    bodies = [(p, 1.6) for p in list(pos.values()) + list(spots.values())]
+    placed, out = [], {}
+    for n in sorted(spots, key=lambda n: jobs[n] != "ball"):    # the ball's tag picks first
+        p = spots[n]
+        hw = (d.textlength(JOB_TAGS[jobs[n]][0], font=F_TAG) + 10 * SS) / 2 / PX
+        hh = 8 * SS / PX
+        def penalty(c):
+            x0, x1, y0, y1 = c[0] - hw, c[0] + hw, c[1] - hh, c[1] + hh
+            pen = 0.0
+            for q, r in bodies:
+                if q is p:
+                    continue
+                dx = max(x0 - q[0], 0, q[0] - x1)
+                dy = max(y0 - q[1], 0, q[1] - y1)
+                pen += max(0.0, r - math.hypot(dx, dy))
+            for (a0, a1, b0, b1) in placed:
+                pen += 3 * max(0.0, min(x1, a1) - max(x0, a0)) * max(0.0, min(y1, b1) - max(y0, b0))
+            pen += max(0.0, x1 - 50) + max(0.0, -x0) + max(0.0, -y0) + max(0.0, y1 - VIEW)
+            return pen
+        cands = [(p[0], p[1] + 2.75), (p[0], p[1] - 2.75), (p[0] + 1.6 + hw, p[1]), (p[0] - 1.6 - hw, p[1])]
+        best = min(cands, key=penalty)                       # ties keep the earlier (below) spot
+        placed.append((best[0] - hw, best[0] + hw, best[1] - hh, best[1] + hh))
+        out[n] = best
+    return out
+
+
+def tag(d, at, job):
+    text, color = JOB_TAGS[job]
+    x, y = P(*at)
+    w = d.textlength(text, font=F_TAG) + 10 * SS
+    d.rounded_rectangle([x - w / 2, y - 8 * SS, x + w / 2, y + 8 * SS], radius=6 * SS, fill=color)
+    d.text((x, y + 0.5 * SS), text, font=F_TAG, fill=(255, 255, 255), anchor="mm")
+
+
+def defense_frame(play, t, d, diagram):
+    """Us on defense: the offense is the squares, we're the numbered circles,
+    each tagged with his job right now."""
+    pos, bp, holder, air, trails = state_at(play, t)
+    if not diagram:
+        for tr in trails:
+            trail(d, *tr)
+    spots = defense_for(play, t, pos, bp)
+    jobs = pack_jobs(pos, ball_man(play, t, pos, bp, holder))
+    for e in play["events"]:                       # a helper stepping over to stop a drive
+        if "guard" in e and e["t"][0] <= t < e["t"][1]:
+            jobs[e["guard"]] = "help"
+    for n, p in pos.items():
+        defender(d, p)
+        if n == holder:
+            x, y = P(*p)
+            r2 = 1.2 * PX + 4 * SS
+            d.rectangle([x - r2, y - r2, x + r2, y + r2], outline=ACCENT, width=int(2 * SS))
+    for n, p in spots.items():
+        offense(d, n, p, False)
+    for n, at in place_tags(d, spots, pos, jobs).items():  # tags on top of everyone
+        tag(d, at, jobs[n])
+    ball(d, bp, air)
+
+
 def frame(play, t, diagram=False):
     img = Image.new("RGB", (W, H if not diagram else COURT_H), BOARD)
     d = ImageDraw.Draw(img)
     court(d)
+    if play.get("show_pack"):
+        pack_line(d)
+    if play.get("us_on_defense"):
+        defense_frame(play, play.get("diagram_from", 0) if diagram else t, d, diagram)
+        if not diagram:
+            caption(d, play, t, play["length"])
+        return img.resize((img.width // SS, img.height // SS), Image.LANCZOS)
     if diagram:                                        # everything at once, players at the start
         t0 = play.get("diagram_from", 0)
         pos, _, holder, _, _ = state_at(play, t0)
