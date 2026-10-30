@@ -71,7 +71,7 @@ PASS_AND_CUT_CAPTIONS = [
     (3.4, "1 flows out and fills the open corner"),
 ]
 
-# Layer 2 picks up where Pass and Cut ends: 2 dribbles at 3 (3 cuts, 4 fills
+# Layer 3 (Dribble At) picks up where Pass and Cut ends: 2 dribbles at 3 (3 cuts, 4 fills
 # the wing, 3 fills the open corner), then 2 passes to 5 and cuts.
 DRIBBLE_AT = [
     {"dribble": 2, "t": (5.3, 6.9), "path": [(6.5, 19.5), (13, 25.5), (22.5, 28.6)]},
@@ -80,13 +80,13 @@ DRIBBLE_AT = [
     {"pass": (2, 5), "t": (7.5, 8.1)},
     {"move": 3, "t": (7.6, 9.0), "path": [(25.8, 9.5), (17, 7.6), (9, 7.2), (3, 8)]},
 ]
-# Layer 2's finish: 2 cuts, 5 dribbles up and hits him.
+# Layer 3's finish: 2 cuts, 5 dribbles up and hits him.
 LAYER_2_HIT = [
     {"move": 2, "t": (8.2, 10.0), "path": [(22.5, 28.6), (21.5, 19), (22.5, 13), (24, 10)]},
     {"dribble": 5, "t": (8.4, 9.6), "path": [(43.5, 19.5), (37, 25), (31, 27.5)]},
     {"pass": (5, 2), "t": (9.6, 10.1)},
 ]
-# Layer 3's middle: 2 cuts through to the block and 5 passes in to him.
+# Layers 1-3's middle: 2 cuts through to the block and 5 passes in to him.
 LAYER_3_POST = [
     {"move": 2, "t": (8.2, 10.2), "path": [(22.5, 28.6), (21.5, 19), (23.5, 12.5), (27.8, 9.6), (31.3, 8.6)]},
     {"dribble": 5, "t": (8.4, 9.6), "path": [(43.5, 19.5), (37, 25), (31, 27.5)]},
@@ -143,7 +143,7 @@ PLAYS = [
         # Pass and Cut, then the dribble at; 5 dribbles up and hits 2 for the
         # layup.
         "slug": "pass-and-cut-extended",
-        "title": "Layer 2: Pass and Cut + Dribble At",
+        "title": "Layer 3: Pass and Cut + Dribble At",
         "start": FIVE_OUT,
         "ball": 1,
         "length": 12.6,
@@ -159,10 +159,10 @@ PLAYS = [
         ],
     },
     {
-        # Layer 2, but 1's man steps in to stop 2's layup, so 2 kicks it out
+        # Layer 3, but 1's man steps in to stop 2's layup, so 2 kicks it out
         # to 1 in the corner for the 3.
         "slug": "layer-2-alt-3",
-        "title": "Layer 2 Alternate: 3 Point Shot",
+        "title": "Layer 3 Alternate: 3 Point Shot",
         "start": FIVE_OUT,
         "ball": 1,
         "length": 13.8,
@@ -181,10 +181,10 @@ PLAYS = [
         ],
     },
     {
-        # Layer 2, but 2's cut ends on the low block: 5 passes in to him, makes
+        # Layer 3, but 2's cut ends on the low block: 5 passes in to him, makes
         # a Laker cut and gets it back for the layup.
         "slug": "pass-and-cut-layer-3",
-        "title": "Layer 3: Pass and Cut + Dribble At + Laker Cut",
+        "title": "Layers 1-3: Pass and Cut + Dribble At + Laker Cut",
         "start": FIVE_OUT,
         "ball": 1,
         "length": 14.8,
@@ -203,10 +203,10 @@ PLAYS = [
         ],
     },
     {
-        # Layer 3, but 5's man stays with him on the Laker cut and 4's man
+        # Layers 1-3, but 5's man stays with him on the Laker cut and 4's man
         # helps; 4 rotates up to the top and 2 hits him for the 3.
         "slug": "layer-3-alt-3",
-        "title": "Layer 3 Alternate: 3 Point Shot",
+        "title": "Layers 1-3 Alternate: 3 Point Shot",
         "start": FIVE_OUT,
         "ball": 1,
         "length": 16.0,
@@ -259,7 +259,7 @@ PLAYS = [
         # goes right, 4's man sinks into the lane to help, 2 pins him, 3
         # dribbles up to shorten the skip and hits 4 popping out to the wing.
         "slug": "layer-5-pin-skip",
-        "title": "Layer 5: Pin & Skip",
+        "title": "Layer 7: Pin & Skip",
         "start": FIVE_OUT,
         "ball": 1,
         "length": 8.2,
@@ -292,7 +292,7 @@ PLAYS = [
         # him, makes the Laker cut (4 fills his wing spot) and gets it back
         # for the layup.
         "slug": "laker-cut",
-        "title": "Laker Cut",
+        "title": "Layer 2: Laker Cut",
         "start": FIVE_OUT,
         "ball": 1,
         "length": 8.6,

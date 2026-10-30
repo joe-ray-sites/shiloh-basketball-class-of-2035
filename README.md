@@ -168,9 +168,11 @@ dribbles and shots, plus the captions shown under the court. A long play can
 clear its arrows between phases (`clear`) and draw its still diagram from a
 later phase (`diagram_from`), or stop its arrows after the first phase
 (`diagram_until`). Plays can share their phases: the offense
-layers build on each other, so Layer 2 reuses the Pass and Cut events
-(`PASS_AND_CUT`) and Layer 3 reuses those plus the dribble at
-(`DRIBBLE_AT`); each "Alternate" play reuses its layer's phases and changes
+layers build on each other, so Layer 3 reuses the Pass and Cut events
+(`PASS_AND_CUT`) and Layers 1–3 reuses those plus the dribble at
+(`DRIBBLE_AT`). Play names follow Rick Torbett's official layer numbers
+(1 Pass & Cut, 2 Laker cut, 3 Dribble At, 4 Circle Movement, 7 Pin & Skip).
+Each "Alternate" play reuses its layer's phases and changes
 only the finish. A defender can be sent to help, or to sink into the lane,
 and then recover late (`"guard"`), which is how the kick-out and skip plays
 show why the shooter is open. Offense is circled
