@@ -184,8 +184,12 @@ numbers; the defense (squares with an X) is placed automatically by Pack Line
 rules, or set `"defense": False`. To add a play, add its choreography there
 and its words to `PLAYS` with the same id, then run the script.
 
-Filters: All, Offense, Defense, BLOB (baseline out of bounds; a play with
-`side:"blob"`) and SLOB (sideline out of bounds; `side:"slob"`). BLOB plays
+Filters: All, Offense, Transition (Race & Space; `side:"transition"`),
+Defense, BLOB (baseline out of bounds; a play with `side:"blob"`) and SLOB
+(sideline out of bounds; `side:"slob"`). Transition plays draw the full
+court (`"depth": 94`, attacking `"hoop": (25, 88.75)`), and their defenders
+start where they were and run back at a set speed after a short delay
+(`"chase"`), so the GIF shows our runners beating them down the floor. BLOB plays
 show the out-of-bounds strip behind the baseline (`"oob"` in make-plays.py),
 SLOB plays show it down the left sideline (`"oob_side"`) and show more of the
 floor (`"depth"`, up to half court). Both draw screens as a line ending in a

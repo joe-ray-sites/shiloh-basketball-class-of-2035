@@ -885,6 +885,7 @@ button.game{width:100%;text-align:left;font:inherit;cursor:pointer;}
   letter-spacing:.8px;text-transform:uppercase;padding:3px 9px;border-radius:7px;color:#fff;background:var(--navy);}
 .play-info .play-side.defense{background:var(--loss);}
 .play-info .play-side.blob,.play-info .play-side.slob{background:var(--accent);}
+.play-info .play-side.transition{background:var(--win);}
 .play-anim{margin:16px 0 0;max-width:680px;}
 .play-anim img{display:block;width:100%;height:auto;border-radius:16px;border:1px solid var(--line);background:#fff;}
 .play-anim figcaption{font-size:12.5px;color:var(--muted);line-height:1.5;padding:8px 4px 0;}
@@ -3886,11 +3887,48 @@ const PLAYS = [
       "3: if the pass is open, throw it on time. If not, go to 1. A safe inbound beats a forced one.",
     ],
     drills:["usScreen", "us5on0", "bfcMikan"] },
+  // ── Transition (Race & Space) ──
+  { id:"race-space-rebound", name:"Race & Space: Off a Rebound", side:"transition", tag:"Race & Space · Defensive rebound to a layup",
+    source:{ label:"Mike Neighbors' transition notes, Hoop Thoughts", url:"http://hoopthoughts.blogspot.com/2017/06/mike-neighbors-transition-offense.html" },
+    summary:"Rebound and go. Everybody has a job and a lane: the outlet goes quick, 5 sprints rim to rim, 2 and 3 sprint to the corners, and 1 throws it ahead to whoever beat his man down the floor.",
+    steps:[
+      "We're on defense at the top. Their shot misses and 4 grabs the rebound.",
+      "1 gets wide to the right for the outlet, and 4 throws it to him right away.",
+      "5 is the Rabbit: he sprints rim to rim, straight down the middle, to occupy the deep defender.",
+      "2 and 3 are the Locks: they sprint the lanes wide and deep, all the way to the corners. 4 is the Dragon and trails the play.",
+      "1 pushes the dribble and throws it ahead, up the street, to 3, who is running ahead of his man.",
+      "5 holds the deep defender on the block, so the rim is open. 3 attacks it for the layup.",
+    ],
+    points:[
+      "The race starts the moment we get the ball. Don't jog, don't look back: sprint your lane.",
+      "Outlet: quick or long, or both. The ball should beat everyone down the floor.",
+      "Rabbit: run rim to rim even if you never get the ball. Taking the deep defender with you is what opens the layup.",
+      "Locks: stay wide and get all the way to the corner. Spacing is what makes the race work.",
+    ],
+    drills:["rsArcs", "rsIntro", "trailer"] },
+  { id:"race-space-make", name:"Race & Space: Off a Made Shot", side:"transition", tag:"Race & Space · Made basket to a layup",
+    source:{ label:"Mike Neighbors' transition notes, Hoop Thoughts", url:"http://hoopthoughts.blogspot.com/2017/06/mike-neighbors-transition-offense.html" },
+    summary:"Even after they score, we race. 4 takes it out fast, 1 gets it right away and attacks the middle, and when the deep defender has to step up to stop him, 5 is open at the rim.",
+    steps:[
+      "They score at the top. 4 grabs the ball and steps out of bounds right away, no waiting.",
+      "1 gets to the right side at the free-throw line extended, and 4 inbounds it to him right away.",
+      "5 sprints rim to rim and runs to the block opposite the ball. 2 and 3 sprint the lanes to the corners.",
+      "1 crosses the street with the dribble and attacks down the middle while the defense is still running back.",
+      "4 steps in and trails the play as the Dragon.",
+      "The deep defender has to step up to stop 1, so 1 dumps it off to 5 at the rim for the layup.",
+    ],
+    points:[
+      "A made basket is not a time out. The fastest inbound wins the race.",
+      "1: get the ball and go. Attack downhill; a defender running backward can't guard you.",
+      "5: run to the block opposite the ball and show your hands. If your man leaves you, you score.",
+      "Dragon: trail the play and stay ready. If the defense walls up to stop the ball, the trailer is open.",
+    ],
+    drills:["rsArcs", "rsIntro", "trailer"] },
 ];
 const playById = (id) => PLAYS.find(p => p.id === id);
 const playGif = (p) => `assets/plays/${p.id}.gif`;
 const playDiagram = (p) => `assets/plays/${p.id}.png`;
-const sideLabel = (s) => s === "defense" ? "Defense" : s === "blob" ? "BLOB" : s === "slob" ? "SLOB" : "Offense";
+const sideLabel = (s) => s === "defense" ? "Defense" : s === "blob" ? "BLOB" : s === "slob" ? "SLOB" : s === "transition" ? "Transition" : "Offense";
 
 function playsView() {
   if (state.play && playById(state.play)) return playDetailView(playById(state.play));
@@ -3907,9 +3945,9 @@ function playsView() {
       </span>
     </button>`;
   return `
-    <div class="chips">${chip("all", "All")}${chip("offense", "Offense")}${chip("defense", "Defense")}${chip("blob", "BLOB")}${chip("slob", "SLOB")}</div>
+    <div class="chips">${chip("all", "All")}${chip("offense", "Offense")}${chip("transition", "Transition")}${chip("defense", "Defense")}${chip("blob", "BLOB")}${chip("slob", "SLOB")}</div>
     ${list.length ? `<div class="plays-grid">${list.map(card).join("")}</div>`
-      : `<p class="empty">No ${f === "all" ? "" : f === "defense" ? "defensive " : f === "blob" ? "baseline out-of-bounds " : f === "slob" ? "sideline out-of-bounds " : "offensive "}plays yet.</p>`}`;
+      : `<p class="empty">No ${f === "all" ? "" : f === "defense" ? "defensive " : f === "blob" ? "baseline out-of-bounds " : f === "slob" ? "sideline out-of-bounds " : f === "transition" ? "transition " : "offensive "}plays yet.</p>`}`;
 }
 
 function playDetailView(p) {
@@ -3922,7 +3960,7 @@ function playDetailView(p) {
     </div>
     <figure class="play-anim">
       <img src="${playGif(p)}" alt="${esc(p.name)}: animated play diagram" width="672" />
-      <figcaption>Loops on its own. Circles are us, squares with an X are the defense${p.side === "blob" || p.side === "slob" ? ", and a line ending in a T is a screen" : ""}.
+      <figcaption>Loops on its own. Circles are us, squares with an X are the defense${p.side === "blob" || p.side === "slob" ? ", and a line ending in a T is a screen" : p.side === "transition" ? ". We start on defense at the top and race to the far basket" : ""}.
         <a href="${playGif(p)}" download="${p.id}.gif">Download the GIF</a>
         ${p.source ? `<br>Source: <a href="${esc(p.source.url)}" target="_blank" rel="noopener noreferrer">${esc(p.source.label)}</a>` : ""}</figcaption>
     </figure>

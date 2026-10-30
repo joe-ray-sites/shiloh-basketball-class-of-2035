@@ -41,6 +41,12 @@ at 47 once the view reaches them).
 ball handler's man in front of him until he gets by), and "toward": (x, y)
 is where players hold the ball facing (default: the basket).
 
+Full-court transition plays set "depth": 94 and "hoop": (25, 88.75) to attack
+the far basket, and "chase": {"from": {1: (x, y), ...}, "speed": 14} to start
+the defenders where they were and let them run back at that many feet per
+second, so our runners can beat them down the floor. "delay": 0.8 (or
+{5: 0.3, ...} per defender) is how long they stand watching the shot first.
+
 "parts": [{...}, {...}] plays several short possessions back to back in one
 GIF, each with its own start, ball, length, events and captions (anything
 not given comes from the play). The card diagram shows the first part.
@@ -600,6 +606,83 @@ PLAYS = [
             (4.6, "2 hits 4 on the block for the layup!"),
         ],
     },
+    # ── Race & Space transition (full court) ───────────────────────────────
+    # Mike Neighbors' roles: 1 is the Ball (Racker), 5 the Rabbit (rim runner),
+    # 2 and 3 the Locks (corner runners), 4 the Dragon (trailer). We defend the
+    # top basket and race to the far one.
+    {
+        # Off a miss: 4 rebounds and outlets to 1, 1 throws it ahead to 3
+        # running the right lane, 5 holds the deep defender, 3 lays it in.
+        "slug": "race-space-rebound",
+        "title": "Race & Space: Off a Rebound",
+        "depth": 94,
+        "hoop": (25, 88.75),
+        "fps": 15,
+        "start": {4: (22, 6.5), 5: (29.5, 8.5), 1: (31, 24), 2: (10, 17), 3: (40, 17)},
+        "ball": 4,
+        "chase": {"from": {4: (20.5, 10.5), 5: (27, 44), 1: (26, 27), 2: (8, 21), 3: (43, 21.5)},
+                  "speed": 11, "delay": {4: 0.8, 1: 0.7, 2: 0.7, 3: 0.7, 5: 0.3}},
+        "length": 7.2,
+        "events": [
+            {"move": 1, "t": (0.3, 1.0), "path": [(31, 24), (37, 23), (42, 24)]},
+            {"pass": (4, 1), "t": (0.9, 1.4)},
+            {"move": 5, "t": (0.5, 4.4), "path": [(29.5, 8.5), (27, 30), (24, 60), (21, 82), (19.5, 86.5)]},
+            {"move": 3, "t": (0.6, 3.3), "path": [(40, 17), (45, 38), (46, 58), (44.5, 71)]},
+            {"move": 2, "t": (0.6, 4.4), "path": [(10, 17), (5, 45), (4, 74), (3, 86)]},
+            {"dribble": 1, "t": (1.5, 3.0), "path": [(42, 24), (37, 38), (32.5, 51)]},
+            {"pass": (1, 3), "t": (3.0, 3.6)},
+            {"dribble": 3, "t": (3.7, 4.7), "path": [(44.5, 71), (39, 80), (30.8, 85.6)]},
+            {"shot": 3, "t": (4.7, 5.2)},
+            {"move": 1, "t": (3.6, 5.2), "path": [(32.5, 51), (36, 62), (40, 70)]},
+            {"move": 4, "t": (1.3, 5.8), "path": [(22, 6.5), (24, 30), (25, 55), (25, 66)]},
+        ],
+        "captions": [
+            (0.0, "Off a miss: 4 grabs the rebound. Everybody races"),
+            (0.9, "4 outlets to 1, quick. 5 sprints rim to rim"),
+            (1.6, "2 and 3 sprint the lanes to the corners. 4 trails"),
+            (3.0, "1 throws it ahead to 3, up the street"),
+            (3.7, "5 holds the deep defender. 3 attacks the rim"),
+            (4.7, "3 beats them all down the floor for the layup!"),
+        ],
+    },
+    {
+        # Off a make: 4 grabs it, steps out and inbounds to 1 right away, 1
+        # crosses the street and attacks the middle; the deep defender
+        # leaves 5 to stop him, and 1 dumps it to 5 at the rim.
+        "slug": "race-space-make",
+        "title": "Race & Space: Off a Made Shot",
+        "depth": 94,
+        "oob": 4.5,
+        "hoop": (25, 88.75),
+        "fps": 15,
+        "start": {4: (24, 5.5), 5: (30, 10), 1: (32, 24), 2: (12, 18), 3: (44, 12)},
+        "ball": 4,
+        "chase": {"from": {4: (25.5, 9.5), 5: (30, 45), 1: (28, 27), 2: (14, 22), 3: (40, 15)},
+                  "speed": 11, "delay": {4: 1.0, 1: 1.0, 2: 1.0, 3: 1.0, 5: 0.3}},
+        "length": 7.4,
+        "events": [
+            {"move": 4, "t": (0.2, 0.9), "path": [(24, 5.5), (26, 1.5), (27, -2.2)]},
+            {"move": 1, "t": (0.3, 1.0), "path": [(32, 24), (37, 21), (40, 19)]},
+            {"pass": (4, 1), "t": (1.0, 1.5)},
+            {"move": 5, "t": (0.4, 4.4), "path": [(30, 10), (27, 30), (24, 60), (20.5, 82), (18.5, 86.5)]},
+            {"move": 2, "t": (0.5, 4.3), "path": [(12, 18), (5, 45), (4, 75), (3, 86)]},
+            {"move": 3, "t": (0.5, 4.2), "path": [(44, 12), (46, 40), (46.5, 70), (47, 86)]},
+            {"dribble": 1, "t": (1.6, 4.4), "path": [(40, 19), (36, 35), (28.5, 52), (26.5, 68), (25.5, 77)]},
+            {"guard": 5, "t": (4.0, 5.4), "at": (24, 81), "recover": 1.0},
+            {"pass": (1, 5), "t": (4.5, 4.9)},
+            {"move": 5, "t": (4.9, 5.2), "path": [(18.5, 86.5), (22, 87.6)]},
+            {"shot": 5, "t": (5.1, 5.6)},
+            {"move": 4, "t": (1.6, 5.8), "path": [(27, -2.2), (24, 20), (20, 48), (19, 63)]},
+        ],
+        "captions": [
+            (0.0, "Off a make: 4 grabs it and steps out of bounds, fast"),
+            (1.0, "4 inbounds to 1 right away. Don't wait"),
+            (1.6, "1 crosses the street with the dribble. 5 runs rim to rim"),
+            (2.7, "2 and 3 sprint to the corners. 4 trails as the Dragon"),
+            (4.0, "The deep defender steps up to stop 1. 1 dumps it to 5"),
+            (5.1, "Layup! We beat them down the floor"),
+        ],
+    },
 ]
 
 # ── Look ────────────────────────────────────────────────────────────────────
@@ -621,7 +704,8 @@ H = COURT_H + CAP_H
 
 
 def set_view(play):
-    global VIEW, TOP_FT, LEFT_FT, W, COURT_H, H, TARGET
+    global VIEW, TOP_FT, LEFT_FT, W, COURT_H, H, TARGET, BASKET
+    BASKET = play.get("hoop", HOME)
     TARGET = play.get("toward", BASKET)
     VIEW = play.get("depth", DEPTH)
     TOP_FT = play.get("oob", 0)
@@ -629,7 +713,8 @@ def set_view(play):
     W = int((50 + LEFT_FT) * PX + 2 * PAD)
     COURT_H = int((VIEW + TOP_FT) * PX + 2 * PAD)
     H = COURT_H + CAP_H
-BASKET = (25, 5.25)
+HOME = (25, 5.25)            # the basket at the top of the drawing
+BASKET = HOME               # the basket we attack (set per play)
 TARGET = BASKET             # where the ball handler holds the ball facing (set per play)
 PACK = 16                   # pack line, feet from the rim
 
@@ -784,9 +869,34 @@ def hold_spot(me, toward):
     return (me[0] + dx / d * 1.25 + 0.9, me[1] + dy / d * 1.25 + 0.4)
 
 
+def chase_spots(play, t):
+    """Transition defense: each defender starts where he was and runs toward
+    his Pack Line spot, but no faster than play["chase"]["speed"] ft/s."""
+    fps = play.get("fps", FPS)
+    if "_chase" not in play:
+        cur = dict(play["chase"]["from"])
+        step = play["chase"]["speed"] / fps
+        delay = play["chase"].get("delay", 0)
+        wait = delay if isinstance(delay, dict) else {k: delay for k in cur}
+        cache = []
+        for i in range(int(play["length"] * fps) + 2):
+            pos, ball, _, _, _ = state_at(play, i / fps)
+            tgt = base_defense(play, pos, ball)
+            for k, c in cur.items():
+                if i / fps < wait.get(k, 0):
+                    continue
+                dx, dy = tgt[k][0] - c[0], tgt[k][1] - c[1]
+                L = math.hypot(dx, dy)
+                cur[k] = tgt[k] if L <= step else (c[0] + dx / L * step, c[1] + dy / L * step)
+            cache.append(dict(cur))
+        play["_chase"] = cache
+    cache = play["_chase"]
+    return dict(cache[min(len(cache) - 1, max(0, round(t * fps)))])
+
+
 def defense_for(play, t, pos, ball):
     """Pack Line spots, then hold back any defender who's been screened."""
-    spots = base_defense(play, pos, ball)
+    spots = chase_spots(play, t) if play.get("chase") else base_defense(play, pos, ball)
     for e in play["events"]:
         if "beat" not in e:
             continue
@@ -859,7 +969,7 @@ def defense_at(pos, ball, sag=1.0, reach=None):
             tgt = lerp(man, tgt, reach / dist(tgt, man))
         if dist(tgt, BASKET) < 2.6:                        # don't park on the rim: trail beside him
             side = 1 if man[0] <= BASKET[0] else -1
-            tgt = (man[0] + 3.2 * side, man[1] + 1.2)
+            tgt = (man[0] + 3.2 * side, man[1] + (1.2 if BASKET[1] < 47 else -1.2))
         v = (tgt[0] - man[0], tgt[1] - man[1])
         L = math.hypot(*v)
         if L < 3.2:                                        # never sit on top of him
@@ -975,14 +1085,39 @@ def court(d):
         d.arc([cx - r, cy - r, cx + r, cy + r], a0, a1, fill=NAVY, width=lw)
     # three-point line: straight corners, then the arc
     R = 19.75
-    d.line([P(25 - R, 0), P(25 - R, BASKET[1])], fill=NAVY, width=lw)
-    d.line([P(25 + R, 0), P(25 + R, BASKET[1])], fill=NAVY, width=lw)
-    bx, by = P(*BASKET)
+    d.line([P(25 - R, 0), P(25 - R, HOME[1])], fill=NAVY, width=lw)
+    d.line([P(25 + R, 0), P(25 + R, HOME[1])], fill=NAVY, width=lw)
+    bx, by = P(*HOME)
     rr = R * PX
     d.arc([bx - rr, by - rr, bx + rr, by + rr], 0, 180, fill=NAVY, width=lw)
     # backboard and rim
     d.line([P(22, 4), P(28, 4)], fill=NAVY, width=int(3 * SS))
     d.line([P(25, 4), P(25, 4.5)], fill=NAVY, width=lw)
+    rim = 0.75 * PX
+    d.ellipse([bx - rim, by - rim, bx + rim, by + rim], outline=NAVY, width=lw)
+    if VIEW >= 94:                                     # full court: the far end, mirrored
+        far_end(d, lw)
+
+
+def far_end(d, lw):
+    F = lambda x, y: P(x, 94 - y)
+    for x0, x1 in ((0, 3), (47, 50)):                  # hash marks
+        d.line([F(x0, 28), F(x1, 28)], fill=NAVY, width=lw)
+    d.rectangle([F(19, 19), F(31, 0)], outline=NAVY, width=lw)            # lane
+    cx, cy = F(25, 19)
+    r = 6 * PX
+    d.arc([cx - r, cy - r, cx + r, cy + r], 180, 360, fill=NAVY, width=lw)
+    for k in range(9):
+        a0 = k * 20
+        d.arc([cx - r, cy - r, cx + r, cy + r], a0, a0 + 11, fill=NAVY, width=lw)
+    R = 19.75
+    d.line([F(25 - R, 0), F(25 - R, HOME[1])], fill=NAVY, width=lw)
+    d.line([F(25 + R, 0), F(25 + R, HOME[1])], fill=NAVY, width=lw)
+    bx, by = F(*HOME)
+    rr = R * PX
+    d.arc([bx - rr, by - rr, bx + rr, by + rr], 180, 360, fill=NAVY, width=lw)
+    d.line([F(22, 4), F(28, 4)], fill=NAVY, width=int(3 * SS))
+    d.line([F(25, 4), F(25, 4.5)], fill=NAVY, width=lw)
     rim = 0.75 * PX
     d.ellipse([bx - rim, by - rim, bx + rim, by + rim], outline=NAVY, width=lw)
 
@@ -1084,7 +1219,7 @@ def frame(play, t, diagram=False):
         for tr in trails:
             trail(d, tr[0], tr[1], True)
         if play.get("defense", True):
-            spots = base_defense(play, pos, hold_spot(pos[holder], TARGET))
+            spots = chase_spots(play, t0) if play.get("chase") else base_defense(play, pos, hold_spot(pos[holder], TARGET))
             if apply_guards(play, t0, spots):                # a helper in the lane at that moment
                 spots = keep_apart(spots, pos)
             for p in spots.values():
