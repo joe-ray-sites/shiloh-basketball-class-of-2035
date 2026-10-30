@@ -670,6 +670,9 @@ button.prac{width:100%;text-align:left;font:inherit;cursor:pointer;}
 
 /* ── MENU / SEASON LIST ROWS ──────────────────────────────── */
 .mlist{display:flex;flex-direction:column;gap:10px;max-width:560px;}
+.mgroup{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:13px;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--navy);margin:14px 2px 0;}
+.mgroup:first-child{margin-top:0;}
 .mrow{display:flex;align-items:center;gap:14px;width:100%;text-align:left;
   background:#fff;border:1px solid var(--line);border-radius:16px;
   padding:16px 16px;font:inherit;cursor:pointer;transition:.16s;}
@@ -2324,34 +2327,41 @@ const fmtDate = (iso, opts) =>
 const NAV = [
   { id:"schedule", label:"Schedule",   icon:"M8 2v4M16 2v4M3 9h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" },
   { id:"plays",    label:"Plays",      icon:"M4 4l5 5M9 4L4 9M17.5 14.5a3 3 0 1 1 0 6 3 3 0 0 1 0-6zM7 13c0 4 3 6.5 6.5 6.5M7 13l-2 2M7 13l2 2" },
-  { id:"practice", label:"Practice",   icon:"M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 12h6M9 16h4" },
+  { id:"readreact", label:"Offense",   icon:"M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17l9 5 9-5" },
   { id:"menu",     label:"Menu",       icon:"M4 7h16M4 12h16M4 17h16" },
 ];
 const HOME_TAB = NAV[0].id;   // the logo returns here
 
-// Pages reached through Menu rather than the bar itself.
+// Pages reached through Menu rather than the bar itself, shown in groups.
+const MENU_GROUPS = [
+  { id:"learn",  label:"Learn" },
+  { id:"team",   label:"Team" },
+  { id:"league", label:"League" },
+];
 const MENU_PAGES = [
-  { id:"stats", label:"Team Stats", desc:"Season totals, leaders and box scores",
-    icon:"M4 20V10M10 20v-7M16 20V4M22 20H2" },
-  { id:"philosophy", label:"Basketball Philosophy", desc:"How the Saints play, and why",
+  { id:"philosophy", group:"learn", label:"Basketball Philosophy", desc:"How the Saints play, and why",
     icon:"M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" },
-  { id:"deflevels", label:"Defensive Levels", desc:"The four levels of a defender, and the drills for each",
-    icon:"M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3zM9 12l2 2 4-4" },
-  { id:"packline", label:"Pack Line Defense", desc:"Pressure the ball, pack the paint, box out",
+  { id:"packline", group:"learn", label:"Pack Line Defense", desc:"Pressure the ball, pack the paint, box out",
     icon:"M3 20a9 9 0 0 1 18 0M7.5 20a4.5 4.5 0 0 1 9 0M12 20h.01" },
-  { id:"deftrans", label:"Transition Defense", desc:"Get back, guard the team, split the court",
+  { id:"deflevels", group:"learn", label:"Defensive Levels", desc:"The four levels of a defender, and the drills for each",
+    icon:"M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3zM9 12l2 2 4-4" },
+  { id:"deftrans", group:"learn", label:"Transition Defense", desc:"Get back, guard the team, split the court",
     icon:"M3 12h13M11 6l6 6-6 6M19 5v14" },
-  { id:"readreact", label:"Read & React Offense", desc:"The layers we run and the teaching videos",
-    icon:"M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17l9 5 9-5" },
-  { id:"players", label:"Players", desc:"The roster: player cards, nicknames and season stats",
+  { id:"practice", group:"learn", label:"Practice", desc:"Season practice plans, the drill library and the practice builder",
+    icon:"M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 12h6M9 16h4" },
+  { id:"players", group:"team", label:"Players", desc:"The roster: player cards, nicknames and season stats",
     icon:"M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" },
-  { id:"coaches", label:"Coaches", desc:"The staff guiding the Saints",
+  { id:"coaches", group:"team", label:"Coaches", desc:"The staff guiding the Saints",
     icon:"M12 2l2.4 5 5.6.6-4.2 3.9 1.2 5.5L12 19.3 6.9 22l1.2-5.5L4 12.6 9.6 12z" },
-  { id:"leaguemtg", label:"League Directors Meeting", desc:"NWA League, Fall 2026–27: dates, format and key info",
+  { id:"stats", group:"team", label:"Team Stats", desc:"Season totals, leaders and box scores",
+    icon:"M4 20V10M10 20v-7M16 20V4M22 20H2" },
+  { id:"leaguemtg", group:"league", label:"League Directors Meeting", desc:"NWA League, Fall 2026–27: dates, format and key info",
     icon:"M7 3h10v4H7zM5 7h14v14H5zM9 12h6M9 16h6" },
-  { id:"leaguerules", label:"League Rules", desc:"AAO NWA League rules: clock, free throws, man defense",
+  { id:"leaguerules", group:"league", label:"League Rules", desc:"AAO NWA League rules: clock, free throws, man defense",
     icon:"M4 4h11l5 5v11H4zM15 4v5h5M8 13h8M8 17h5" },
 ];
+// Read & React lives in the bar now; drill links to it still need its name.
+const PAGE_LABELS = { readreact:"Read & React Offense" };
 // Menu stays lit while you're on one of its pages.
 const navTabFor = (tab) => MENU_PAGES.some(m => m.id === tab) ? "menu" : tab;
 const TABS = NAV.map(n => n.id).concat(MENU_PAGES.map(m => m.id));
@@ -2767,7 +2777,8 @@ function careerSection(p) {
 
 /* ── Menu page ────────────────────────────────────────────── */
 function menuView() {
-  return `<div class="mlist">${MENU_PAGES.map(m => `
+  return `<div class="mlist">${MENU_GROUPS.map(g => `
+    <h2 class="mgroup">${g.label}</h2>${MENU_PAGES.filter(m => m.group === g.id).map(m => `
     <button class="mrow" data-tab="${m.id}">
       <span class="mrow-ico">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -2779,7 +2790,7 @@ function menuView() {
       </span>
       <svg class="mrow-go" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
            stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-    </button>`).join("")}</div>`;
+    </button>`).join("")}`).join("")}</div>`;
 }
 
 /* ── Past seasons ─────────────────────────────────────────────
@@ -3503,7 +3514,8 @@ const outIcon  = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" st
 function drillLink(d) {
   if (d.page && !d.video) {
     const pg = MENU_PAGES.find(m => m.id === d.page);
-    return `<a class="vid read" href="#${d.page}" data-tab="${d.page}">Read it on our ${esc(pg ? pg.label : "coaching")} page</a>`;
+    const label = pg ? pg.label : PAGE_LABELS[d.page] || "coaching";
+    return `<a class="vid read" href="#${d.page}" data-tab="${d.page}">Read it on our ${esc(label)} page</a>`;
   }
   const href = d.video || d.url;
   const isVideo = !!d.video || d.src === "usab" || d.src === "jrnba";

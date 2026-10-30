@@ -92,7 +92,7 @@ hasn't started; the live site never shows it.
 
 ## Practice plans
 
-The Practice tab lists the season plans in the `PRACTICES` array in
+Menu → Practice lists the season plans in the `PRACTICES` array in
 `index.html`, one per practice day. Each plan matches its slot (Thursdays 60
 minutes, Mondays and the Tuesday session 90) and follows the coaching pages:
 start side by side, shooting and Vegas Close Outs every practice, a Pack Line
@@ -142,8 +142,8 @@ charts are inserted; their data lives in `SHOT_PCT` / `SHOT_PPS` next to it.
 
 ## Coaching pages
 
-Menu also holds Defensive Levels, Pack Line Defense, Transition Defense and
-Read & React Offense, in `DEF_LEVELS_MD`, `PACK_LINE_MD`, `DEF_TRANSITION_MD`
+Menu also holds Defensive Levels, Pack Line Defense and Transition Defense,
+and the Offense tab is Read & React Offense, in `DEF_LEVELS_MD`, `PACK_LINE_MD`, `DEF_TRANSITION_MD`
 and `READ_REACT_MD` (same markdown mini-format; indent
 two spaces to nest a bullet, `[text](url)` for links, `[text](#packline)`
 to link to another page in the app). The Read & React
@@ -206,7 +206,11 @@ defense tighter (`"sag"`, and `"reach"` to keep each defender within a few
 feet of his man). A play can credit where it came from with
 `source:{ label, url }`.
 
-Players now lives in the Menu, next to Coaches.
+The bottom bar is Schedule, Plays, Offense (the Read & React page) and Menu.
+The Menu is grouped by `MENU_GROUPS`: Learn (Basketball Philosophy, Pack Line
+Defense, Defensive Levels, Transition Defense, Practice), Team (Players,
+Coaches, Team Stats) and League (the two league pages). Each entry in
+`MENU_PAGES` names its `group`.
 
 ## League pages
 
