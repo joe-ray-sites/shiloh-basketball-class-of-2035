@@ -1934,9 +1934,10 @@ const PRACTICES = [
       { min:5,  drill:"redlight",  note:"Side by side. Faster calls this week." },
       { min:10, drill:"usShoot",   note:"Catch-and-shoot from our spots, then two minutes of free throws." },
       { min:5,  drill:"plVegas",   note:"Driver vs shooter, then the offense gets one live dribble." },
-      { min:10, drill:"rrL3",      note:"Layer 3 Dribble At: the dribbler comes at you, you cut backdoor. Walk, jog, run." },
-      { min:12, drill:"dlHelp22",  note:"2 on 2, then 3 on 3. Show on the drive, recover on the pass. Help and recover is one word." },
-      { min:8,  drill:"jnKnockout", note:"Dribble Knockout. Protect your ball, eyes up." },
+      { min:8,  drill:"rrL3",      note:"Layer 3 Dribble At: the dribbler comes at you, you cut backdoor. Walk, jog, run." },
+      { min:8,  drill:"rrDrills13", note:"Now put Layers 1–3 together with the drills from the video: pass and cut, Laker cut, dribble at. Every player reps every read." },
+      { min:8,  drill:"dlHelp22",  note:"2 on 2, then 3 on 3. Show on the drive, recover on the pass. Help and recover is one word." },
+      { min:6,  drill:"jnKnockout", note:"Dribble Knockout. Protect your ball, eyes up." },
       { min:10, drill:"twodrib",   note:"4 on 4, Layers 1–3, two-dribble limit. Defense in the pack. Reward the extra pass out loud." },
     ] },
   { id:6, title:"Race & Space", date:null,
@@ -1968,15 +1969,16 @@ const PRACTICES = [
     goal:"Layer 4: when the ball drives, everyone circles. On defense, keep the ball in the alley, take a charge, and play the 4-on-4 Pack Line shell.",
     blocks:[
       { min:5,  drill:"redlight",  note:"Side by side to start." },
-      { min:8,  drill:"usCross",   note:"Low and quick at every cone, change of pace out of it." },
-      { min:12, drill:"usShoot",   note:"Catch-and-shoot from the corners and wings, then free throws." },
+      { min:6,  drill:"usCross",   note:"Low and quick at every cone, change of pace out of it." },
+      { min:10, drill:"usShoot",   note:"Catch-and-shoot from the corners and wings, then free throws." },
       { min:6,  drill:"plVegas" },
       { min:8,  drill:"dlFall",    note:"Technique first, then as a group. Fall on both cheeks, hands up." },
       { min:8,  drill:"dlAlley",   note:"Full-court alley. Beaten? Sprint ahead and recover the bubble." },
+      { min:8,  drill:"rrDrills13", note:"Layers 1–3 drills from the video as the warm-up for Layer 4. Quick reads, game speed." },
       { min:12, drill:"rrL4Cone",  note:"Teach Layer 4 circle movement with the cone and tennis-ball drill." },
       { min:12, drill:"plShell",   note:"Freeze checks first, then drives, then cutters. Last 4 minutes live." },
-      { min:8,  drill:"cone",      note:"30-second rounds. Eyes up or the touch doesn't count." },
-      { min:11, drill:"us5on5",    note:"4 on 4 live. Layers 1–4 on offense, Pack Line on defense." },
+      { min:6,  drill:"cone",      note:"30-second rounds. Eyes up or the touch doesn't count." },
+      { min:9,  drill:"us5on5",    note:"4 on 4 live. Layers 1–4 on offense, Pack Line on defense." },
     ] },
   { id:9, title:"Post Day", date:null,
     goal:"Layer 5 post slides on offense. On defense our post defender plays alone, because we don't double, so he walls up and everyone boxes out.",
@@ -1994,14 +1996,15 @@ const PRACTICES = [
     goal:"Layer 7 Pin & Skip to beat a packed-in defense, Transition 120 to put our defensive levels together, and 2 on 2 on 2 transition defense.",
     blocks:[
       { min:5,  drill:"jnWarm",    note:"Side by side, dynamic warm-up." },
-      { min:8,  drill:"jnGatesD",  note:"Both hands through every gate." },
-      { min:12, drill:"usShoot",   note:"Skip-pass catch-and-shoot from the corners and wings, then free throws." },
+      { min:6,  drill:"jnGatesD",  note:"Both hands through every gate." },
+      { min:10, drill:"usShoot",   note:"Skip-pass catch-and-shoot from the corners and wings, then free throws." },
       { min:6,  drill:"plVegas",   note:"Close out on the skip pass." },
+      { min:8,  drill:"rrDrills13", note:"Layers 1–3 drills from the video at game speed, then we add Pin & Skip on top." },
       { min:12, drill:"rrL7",      note:"Pin the help defender, skip it over the top, shoot or drive the closeout." },
       { min:12, drill:"dlTrans120", note:"Alley full court, then guard the pass, the corner drive, the skip and the shot. Box out." },
-      { min:12, drill:"td222",     note:"Keep it on one side, off defender sprints back to narrow the floor. Talk." },
+      { min:10, drill:"td222",     note:"Keep it on one side, off defender sprints back to narrow the floor. Talk." },
       { min:8,  drill:"pirate",    note:"Coach picks the crowd favorite." },
-      { min:15, drill:"us5on5",    note:"4 on 4 full court. Race the arcs on every defensive rebound." },
+      { min:13, drill:"us5on5",    note:"4 on 4 full court. Race the arcs on every defensive rebound." },
     ] },
   { id:11, title:"Game Ready", date:null,
     goal:"Last practice before games. Put it all together the way it looks on game day: free throws, Read & React, Race & Space, the Pack Line and a full scrimmage.",
@@ -3139,7 +3142,7 @@ const savePlanState = () => { lsSet(EDITS_KEY, EDITS); lsSet(HIDDEN_KEY, HIDDEN)
 /* Bump PLAN_REV whenever the season plans are rewritten. A coach's edits to
    the old versions become "Mine" plans instead of overriding the new ones,
    and hidden/ordered season plans reset, so nothing is lost or mismatched. */
-const PLAN_REV = 2, PLAN_REV_KEY = "shiloh-bb.planRev";
+const PLAN_REV = 3, PLAN_REV_KEY = "shiloh-bb.planRev";
 if (lsGet(PLAN_REV_KEY, 1) !== PLAN_REV) {
   Object.entries(EDITS).forEach(([id, e], n) => {
     if (!validPlan(e)) return;
