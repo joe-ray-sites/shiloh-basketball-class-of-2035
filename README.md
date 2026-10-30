@@ -171,11 +171,15 @@ later phase (`diagram_from`), or stop its arrows after the first phase
 layers build on each other, so Layer 3 reuses the Pass and Cut events
 (`PASS_AND_CUT`) and Layers 1–3 reuses those plus the dribble at
 (`DRIBBLE_AT`). Play names follow Rick Torbett's official layer numbers
-(1 Pass & Cut, 2 Laker cut, 3 Dribble At, 4 Circle Movement, 7 Pin & Skip).
+(1 Pass & Cut, 2 Laker cut, 3 Dribble At, 4 Circle Movement, 5 Post slides,
+7 Pin & Skip, 13 Post pass & X cut, 18 Press break).
 Each "Alternate" play reuses its layer's phases and changes
 only the finish. A defender can be sent to help, or to sink into the lane,
 and then recover late (`"guard"`), which is how the kick-out and skip plays
-show why the shooter is open. Offense is circled
+show why the shooter is open. A play can run several short possessions
+back to back in one GIF (`"parts"`, used where a layer has two reads), and
+the press break plays full court against man pressure (`"press"`,
+`"depth": 60`). Offense is circled
 numbers; the defense (squares with an X) is placed automatically by Pack Line
 rules, or set `"defense": False`. To add a play, add its choreography there
 and its words to `PLAYS` with the same id, then run the script.

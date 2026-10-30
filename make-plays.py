@@ -37,6 +37,14 @@ sideline and the inbounder stands at x < 0. "depth": 53 shows more of the
 floor (the hash marks at 28 feet, and the half-court line and center circle
 at 47 once the view reaches them).
 
+"press": True plays full-court man pressure instead (deny every pass, the
+ball handler's man in front of him until he gets by), and "toward": (x, y)
+is where players hold the ball facing (default: the basket).
+
+"parts": [{...}, {...}] plays several short possessions back to back in one
+GIF, each with its own start, ball, length, events and captions (anything
+not given comes from the play). The card diagram shows the first part.
+
 "clear": [5.3] wipes the arrows drawn so far at 5.3 seconds, so a long play
 reads in phases. "diagram_from": 5.3 draws the still diagram from that
 moment (players where they stand then, only the arrows that follow).
@@ -287,6 +295,139 @@ PLAYS = [
         ],
     },
     {
+        # Read & React basic post slides: when the ball is driven, the post
+        # gets out of the way. Under him, he goes up; over him, he goes down.
+        # 4 out, 1 in: 5 on the right mid-post.
+        "slug": "layer-5-post-slides",
+        "title": "Layer 5: Basic Post Slides",
+        "start": {1: (25, 29), 2: (6.5, 19.5), 3: (43.5, 19.5), 4: (3, 8), 5: (31.5, 12)},
+        "ball": 3,
+        "parts": [
+            {
+                "length": 5.4,
+                "events": [
+                    {"dribble": 3, "t": (0.8, 2.3), "path": [(43.5, 19.5), (43.2, 12.5), (39.5, 7), (34.5, 5.2)]},
+                    {"move": 5, "t": (0.9, 2.0), "path": [(31.5, 12), (32, 16), (30.5, 19.5)]},
+                    {"guard": 5, "t": (1.6, 3.2), "at": (30.2, 4.6), "recover": 1.2},
+                    {"pass": (3, 5), "t": (2.4, 2.9)},
+                    {"shot": 5, "t": (3.3, 4.0)},
+                ],
+                "captions": [
+                    (0.0, "Post rule: when the ball drives, get out of the way"),
+                    (0.8, "3 drives baseline, UNDER 5. 5 slides UP to the elbow"),
+                    (2.4, "5's man helps on the drive. 3 hits 5"),
+                    (3.3, "5 is open at the elbow. Shoot it!"),
+                ],
+            },
+            {
+                "length": 5.4,
+                "events": [
+                    {"dribble": 3, "t": (0.8, 2.3), "path": [(43.5, 19.5), (36.5, 18.8), (30, 15.5), (27, 11.5)]},
+                    {"move": 5, "t": (0.9, 2.0), "path": [(31.5, 12), (34, 8.5), (37.5, 6)]},
+                    {"guard": 5, "t": (1.6, 3.2), "at": (27.5, 7.8), "recover": 1.2},
+                    {"pass": (3, 5), "t": (2.4, 2.9)},
+                    {"shot": 5, "t": (3.3, 4.0)},
+                ],
+                "captions": [
+                    (0.0, "Same rule, other way: the drive goes OVER the post"),
+                    (0.8, "3 drives middle, OVER 5. 5 slides DOWN to the short corner"),
+                    (2.4, "5's man helps on the drive. 3 dumps it to 5"),
+                    (3.3, "5 is open in the short corner. Score it!"),
+                ],
+            },
+        ],
+    },
+    {
+        # Read & React post pass & cut, east-west. X cut: after the post
+        # feed, the passer screens away for the guard above him, who cuts
+        # to the basket. Relocate: if the passer's man drops to double the
+        # post, the passer relocates to the corner for the kick-out.
+        "slug": "layer-13-x-cut",
+        "title": "Layer 13: Post Pass & X Cut, East-West",
+        "start": {1: (25, 29), 2: (6.5, 19.5), 3: (43.5, 19.5), 4: (3, 8), 5: (31.5, 12)},
+        "ball": 3,
+        "reach": 5,
+        "parts": [
+            {
+                "length": 5.9,
+                "events": [
+                    {"pass": (3, 5), "t": (0.8, 1.4)},
+                    {"move": 3, "screen": True, "t": (1.5, 2.4), "path": [(43.5, 19.5), (36.5, 22.5), (29, 22.6)]},
+                    {"move": 1, "t": (2.4, 3.5), "path": [(25, 29), (31, 27.8), (34, 22), (29.6, 13.5), (26.2, 10)]},
+                    {"beat": 1, "t": (2.4, 4.6)},
+                    {"move": 3, "t": (3.0, 3.9), "path": [(29, 22.6), (26.6, 26.4), (25, 29)]},
+                    {"pass": (5, 1), "t": (3.3, 3.7)},
+                    {"move": 1, "t": (3.7, 4.0), "path": [(26.2, 10), (24.9, 7.7)]},
+                    {"shot": 1, "t": (3.9, 4.4)},
+                ],
+                "captions": [
+                    (0.0, "X cut: 3 has it on the wing, 5 posts up"),
+                    (0.8, "3 passes in to 5"),
+                    (1.5, "3 screens away for 1 at the top"),
+                    (2.4, "1 cuts off the screen to the basket"),
+                    (3.3, "5 hits 1 for the layup! 3 replaces at the top"),
+                ],
+            },
+            {
+                "length": 5.6,
+                "events": [
+                    {"pass": (3, 5), "t": (0.8, 1.4)},
+                    {"guard": 3, "t": (1.2, 3.3), "at": (34.8, 13.6), "recover": 1.2},
+                    {"move": 3, "t": (1.6, 2.6), "path": [(43.5, 19.5), (46, 14), (47, 8)]},
+                    {"pass": (5, 3), "t": (2.8, 3.3)},
+                    {"shot": 3, "t": (3.6, 4.3)},
+                ],
+                "captions": [
+                    (0.0, "Relocate: same start, 3 feeds the post"),
+                    (0.8, "3 passes in. His man drops down to double 5"),
+                    (1.6, "3 relocates to the open corner"),
+                    (2.8, "5 kicks it back out to 3"),
+                    (3.6, "3 is wide open. Knock it down!"),
+                ],
+            },
+        ],
+    },
+    {
+        # Read & React press break (from the youth guide): our spots run
+        # full court. 2 screens for 3, 1 inbounds to 2 on the wide side and
+        # cuts up the middle, 3 fills behind, 4 fills the wing; 2 hits 1 in
+        # the middle and we run.
+        "slug": "layer-18-press-break",
+        "title": "Layer 18: Press Break",
+        "oob": 4.5,
+        "depth": 60,
+        "press": True,
+        "toward": (25, 90),
+        "diagram_until": 5.8,                         # the card: the break, not the push
+        "start": {1: (30, -2.2), 2: (19.5, 16), 3: (26, 22.5), 4: (5, 42), 5: (45, 42)},
+        "ball": 1,
+        "length": 9.4,
+        "events": [
+            {"move": 2, "screen": True, "t": (0.8, 1.5), "path": [(19.5, 16), (22, 18.2), (24, 19.5)]},
+            {"move": 3, "t": (1.5, 2.7), "path": [(26, 22.5), (21, 22.8), (13, 17.5), (6.5, 12)]},
+            {"beat": 3, "t": (1.5, 3.4)},
+            {"move": 2, "t": (1.7, 2.8), "path": [(24, 19.5), (32, 17), (44, 12)]},
+            {"pass": (1, 2), "t": (2.8, 3.4)},
+            {"move": 1, "t": (3.5, 5.0), "path": [(30, -2.2), (28, 5), (26, 17), (25, 30)]},
+            {"beat": 1, "t": (3.5, 5.6)},
+            {"move": 3, "t": (3.6, 4.8), "path": [(6.5, 12), (13, 5), (21, 3.8)]},
+            {"move": 4, "t": (3.6, 5.2), "path": [(5, 42), (4.5, 27), (6.5, 13)]},
+            {"pass": (2, 1), "t": (5.0, 5.6)},
+            {"dribble": 1, "t": (5.9, 7.6), "path": [(25, 30), (25, 42), (25.5, 55)]},
+            {"move": 5, "t": (5.9, 7.4), "path": [(45, 42), (44, 50), (42, 57)]},
+            {"move": 4, "t": (5.9, 7.8), "path": [(6.5, 13), (6, 32), (8, 56)]},
+            {"move": 2, "t": (6.2, 7.8), "path": [(44, 12), (38, 28), (32, 42)]},
+        ],
+        "captions": [
+            (0.0, "We're pressed. 1 takes it out, 2 and 3 stack, 4 and 5 deep"),
+            (0.8, "2 screens for 3. 3 cuts left, 2 pops to the right"),
+            (2.8, "1 inbounds to 2, to the wide side"),
+            (3.5, "1 cuts hard up the middle. 3 fills behind, 4 fills the wing"),
+            (5.0, "2 hits 1 in the middle"),
+            (5.9, "Press broken! 1 pushes the middle, 4 and 5 run the lanes"),
+        ],
+    },
+    {
         # Pass and Cut start, but 1 stops his cut in the paint and flashes to
         # the ball-side elbow (left end of the free-throw line); 2 passes to
         # him, makes the Laker cut (4 fills his wing spot) and gets it back
@@ -480,7 +621,8 @@ H = COURT_H + CAP_H
 
 
 def set_view(play):
-    global VIEW, TOP_FT, LEFT_FT, W, COURT_H, H
+    global VIEW, TOP_FT, LEFT_FT, W, COURT_H, H, TARGET
+    TARGET = play.get("toward", BASKET)
     VIEW = play.get("depth", DEPTH)
     TOP_FT = play.get("oob", 0)
     LEFT_FT = play.get("oob_side", 0)
@@ -488,6 +630,7 @@ def set_view(play):
     COURT_H = int((VIEW + TOP_FT) * PX + 2 * PAD)
     H = COURT_H + CAP_H
 BASKET = (25, 5.25)
+TARGET = BASKET             # where the ball handler holds the ball facing (set per play)
 PACK = 16                   # pack line, feet from the rim
 
 
@@ -627,7 +770,7 @@ def state_at(play, t):
             kind = "dribble" if "dribble" in e else "screen" if e.get("screen") else "move"
             trails.append((kind, upto(e["_path"], f), done))
     if holder is not None:
-        ball = hold_spot(pos[holder], BASKET)
+        ball = hold_spot(pos[holder], TARGET)
         air = max(air, bounce)
     elif shot is not None:
         ball = shot
@@ -643,15 +786,14 @@ def hold_spot(me, toward):
 
 def defense_for(play, t, pos, ball):
     """Pack Line spots, then hold back any defender who's been screened."""
-    sag = play.get("sag", 1.0)
-    spots = defense_at(pos, ball, sag, play.get("reach"))
+    spots = base_defense(play, pos, ball)
     for e in play["events"]:
         if "beat" not in e:
             continue
         a, b = e["t"]
         if a <= t < b:
             p0, b0, _, _, _ = state_at(play, a)
-            stuck = defense_at(p0, b0, sag, play.get("reach"))[e["beat"]]
+            stuck = base_defense(play, p0, b0)[e["beat"]]
             g = ((t - a) / (b - a)) ** 3
             spots[e["beat"]] = lerp(stuck, spots[e["beat"]], g)
     apply_guards(play, t, spots)
@@ -676,6 +818,31 @@ def apply_guards(play, t, spots):
     return hit
 
 
+def base_defense(play, pos, ball):
+    if play.get("press"):
+        return press_at(pos, ball)
+    return defense_at(pos, ball, play.get("sag", 1.0), play.get("reach"))
+
+
+def press_at(pos, ball):
+    """Full-court man pressure: deny every pass, and play in front of the
+    ball handler until he gets past half of the backcourt."""
+    spots = {}
+    for n, man in pos.items():
+        if dist(man, ball) < 2.5:
+            if man[1] < 0:                                 # the inbounder: arms up, just in bounds
+                tgt = (man[0], 1.6)
+            else:                                          # in front of him, then beaten behind him
+                w = max(0.0, min(1.0, (man[1] - 24) / 10))
+                tgt = lerp((man[0], man[1] + 3.0), (man[0] + 1.6, man[1] - 3.2), w)
+        else:                                              # deny: between him and the ball
+            v = (ball[0] - man[0], ball[1] - man[1])
+            L = math.hypot(*v) or 1
+            tgt = (man[0] + v[0] / L * 2.8, man[1] + v[1] / L * 2.8)
+        spots[n] = tgt
+    return keep_apart(spots, pos)
+
+
 def defense_at(pos, ball, sag=1.0, reach=None):
     """Pack Line: pressure the ball, everyone else sags inside the line toward
     the ball. Weighted by distance to the ball so nothing jumps."""
@@ -685,11 +852,11 @@ def defense_at(pos, ball, sag=1.0, reach=None):
         k = (0.36 - 0.22 * w) * sag                        # how far to sag
         tgt = lerp(man, BASKET, k)
         tgt = lerp(tgt, ball, 0.14 * (1 - w))              # shade to the ball
-        if reach and dist(tgt, man) > reach:               # don't play off him too far
-            tgt = lerp(man, tgt, reach / dist(tgt, man))
         if sag >= 1 and dist(tgt, BASKET) > PACK and w < 0.5:   # stay inside the pack line
             d = dist(tgt, BASKET)
             tgt = lerp(BASKET, tgt, (PACK + (d - PACK) * 0.35) / d)
+        if reach and dist(tgt, man) > reach:               # don't play off him too far
+            tgt = lerp(man, tgt, reach / dist(tgt, man))
         if dist(tgt, BASKET) < 2.6:                        # don't park on the rim: trail beside him
             side = 1 if man[0] <= BASKET[0] else -1
             tgt = (man[0] + 3.2 * side, man[1] + 1.2)
@@ -917,14 +1084,14 @@ def frame(play, t, diagram=False):
         for tr in trails:
             trail(d, tr[0], tr[1], True)
         if play.get("defense", True):
-            spots = defense_at(pos, hold_spot(pos[holder], BASKET), play.get("sag", 1.0), play.get("reach"))
+            spots = base_defense(play, pos, hold_spot(pos[holder], TARGET))
             if apply_guards(play, t0, spots):                # a helper in the lane at that moment
                 spots = keep_apart(spots, pos)
             for p in spots.values():
                 defender(d, p)
         for n, p in pos.items():
             offense(d, n, p, n == holder)
-        ball(d, hold_spot(pos[holder], BASKET))
+        ball(d, hold_spot(pos[holder], TARGET))
     else:
         pos, bp, holder, air, trails = state_at(play, t)
         for tr in trails:
@@ -941,10 +1108,13 @@ def frame(play, t, diagram=False):
 
 def build(play, out_dir):
     set_view(play)
-    prepare(play)
+    parts = [dict(play, **part) for part in play["parts"]] if "parts" in play else [play]
     fps = play.get("fps", FPS)
-    n = int(play["length"] * fps)
-    frames = [frame(play, i / fps) for i in range(n)]
+    frames = []
+    for part in parts:
+        prepare(part)
+        frames += [frame(part, i / fps) for i in range(int(part["length"] * fps))]
+    n = len(frames)
     # one shared palette so colors don't flicker from frame to frame
     sample = Image.new("RGB", (frames[0].width, frames[0].height * 4))
     for k, f in enumerate([frames[0], frames[n // 3], frames[2 * n // 3], frames[-1]]):
@@ -954,7 +1124,7 @@ def build(play, out_dir):
     path = os.path.join(out_dir, play["slug"] + ".gif")
     gif[0].save(path, save_all=True, append_images=gif[1:], duration=1000 // fps, loop=0, optimize=False)
     png = os.path.join(out_dir, play["slug"] + ".png")
-    frame(play, 0, diagram=True).save(png, optimize=True)
+    frame(parts[0], 0, diagram=True).save(png, optimize=True)
     print(f"{play['slug']}: {n} frames, {os.path.getsize(path) // 1024} KB gif, {os.path.getsize(png) // 1024} KB png")
 
 
