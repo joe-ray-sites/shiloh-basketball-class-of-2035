@@ -24,10 +24,15 @@ and the captions shown under the court:
                                                            sealed: he's stuck, then catches up
 
 "sag": 0.45 makes the defense play tighter on their men (under the basket on
-inbounds plays) instead of sagging to the Pack Line.
+inbounds plays) instead of sagging to the Pack Line. "reach": 4.5 keeps every
+defender within that many feet of his man (sideline plays, far from the rim).
 
 Out-of-bounds plays set "oob": 4.5 to show that many feet behind the
 baseline (shaded), so the inbounder can stand off the court at y < 0.
+Sideline plays set "oob_side": 4.5 instead: the strip runs down the left
+sideline and the inbounder stands at x < 0. "depth": 53 shows more of the
+floor (the hash marks at 28 feet, and the half-court line and center circle
+at 47 once the view reaches them).
 
 "clear": [5.3] wipes the arrows drawn so far at 5.3 seconds, so a long play
 reads in phases. "diagram_from": 5.3 draws the still diagram from that
@@ -197,6 +202,85 @@ PLAYS = [
             (4.4, "2 hits 5 for the layup!"),
         ],
     },
+    # ── Sideline out of bounds (SLOB) ───────────────────────────────────────
+    {
+        # Breakthrough Basketball's Stack SLOB, flipped to the left sideline:
+        # 1 pops to the ball, dribbles away while 5 posts the open side, and 4
+        # and 2 screen down for 3 as the second option.
+        "slug": "slob-stack",
+        "title": "Stack",
+        "oob_side": 4.5,
+        "depth": 38,
+        "sag": 0.45,
+        "reach": 4.5,
+        "start": {4: (-2.2, 28), 3: (11.5, 28), 1: (15.3, 28), 2: (19.1, 28), 5: (22.9, 28)},
+        "ball": 4,
+        "length": 8.0,
+        "events": [
+            {"move": 1, "t": (1.0, 1.9), "path": [(15.3, 28), (12, 31), (6.5, 33.5)]},
+            {"beat": 1, "t": (1.0, 2.6)},
+            {"move": 3, "t": (1.0, 2.0), "path": [(11.5, 28), (8, 24), (5, 19.5)]},
+            {"move": 2, "t": (1.2, 2.1), "path": [(19.1, 28), (16.5, 31), (13, 32.5)]},
+            {"move": 5, "t": (1.1, 2.2), "path": [(22.9, 28), (30, 24.5), (37, 22.5)]},
+            {"pass": (4, 1), "t": (2.0, 2.5)},
+            {"dribble": 1, "t": (2.8, 4.6), "path": [(6.5, 33.5), (18, 33), (29, 30.5), (36.5, 26.5)]},
+            {"move": 4, "screen": True, "t": (2.8, 3.7), "path": [(-2.2, 28), (2.5, 28), (6, 24.6)]},
+            {"move": 2, "screen": True, "t": (2.8, 3.7), "path": [(13, 32.5), (11.5, 28), (9.6, 24.6)]},
+            {"move": 5, "t": (3.7, 4.6), "path": [(37, 22.5), (35.5, 15), (31.8, 8.6)]},
+            {"beat": 5, "t": (3.7, 6.6)},
+            {"move": 3, "t": (3.8, 4.8), "path": [(5, 19.5), (9.5, 20.8), (13.5, 24.5), (15.5, 29.5)]},
+            {"beat": 3, "t": (3.8, 5.6)},
+            {"pass": (1, 5), "t": (4.8, 5.3)},
+            {"move": 5, "t": (5.3, 5.6), "path": [(31.8, 8.6), (29.6, 7.0)]},
+            {"shot": 5, "t": (5.5, 6.0)},
+        ],
+        "captions": [
+            (0.0, "4 takes it out. 3, 1, 2 and 5 stack across from him"),
+            (1.0, "1 cuts hard to the ball. 3 breaks to the wing"),
+            (2.0, "4 passes in to 1. 5 floats away"),
+            (2.8, "1 dribbles away. 4 and 2 screen down for 3"),
+            (3.7, "5 cuts hard to the block. 3 comes off the screens"),
+            (4.8, "1 hits 5 on the block for the layup!"),
+        ],
+    },
+    {
+        # Coach's Clipboard "Pairs": two screening pairs. 4 screens for 2,
+        # who comes over the top for the catch; 5 screens for 1, the safety.
+        # 4 seals after his screen and 2 hits him on the block.
+        "slug": "slob-pairs",
+        "title": "Pairs",
+        "oob_side": 4.5,
+        "depth": 53,
+        "sag": 0.45,
+        "reach": 4.5,
+        "start": {3: (-2.2, 46), 4: (16.5, 12.5), 2: (33, 8), 1: (18, 39), 5: (20, 44)},
+        "ball": 3,
+        "length": 7.6,
+        "events": [
+            {"move": 4, "screen": True, "t": (1.0, 1.8), "path": [(16.5, 12.5), (22, 12.3), (27.4, 11.6)]},
+            {"move": 5, "screen": True, "t": (1.0, 1.6), "path": [(20, 44), (20.3, 42.6), (20.6, 41.5)]},
+            {"move": 2, "t": (1.8, 3.0), "path": [(33, 8), (31.2, 13.8), (23, 16.4), (12, 18.2), (5.5, 20.5)]},
+            {"beat": 2, "t": (1.8, 3.8)},
+            {"move": 1, "t": (1.8, 2.9), "path": [(18, 39), (23, 41.5), (23.5, 46), (22, 50.5)]},
+            {"pass": (3, 2), "t": (3.0, 3.7)},
+            {"move": 4, "t": (3.4, 4.3), "path": [(27.4, 11.6), (23, 8.8), (18.2, 8)]},
+            {"beat": 4, "t": (3.4, 6.6)},
+            {"move": 3, "t": (3.7, 4.6), "path": [(-2.2, 46), (3, 42), (7, 38)]},
+            {"move": 5, "t": (3.7, 4.7), "path": [(20.6, 41.5), (22, 36), (24, 31)]},
+            {"move": 1, "t": (3.7, 4.7), "path": [(22, 50.5), (28, 47), (33, 42)]},
+            {"pass": (2, 4), "t": (4.6, 5.1)},
+            {"move": 4, "t": (5.1, 5.4), "path": [(18.2, 8), (21, 6.6)]},
+            {"shot": 4, "t": (5.3, 5.8)},
+        ],
+        "captions": [
+            (0.0, "3 takes it out at half court. 4 and 2 low, 5 and 1 high"),
+            (1.0, "4 screens for 2. 5 screens for 1"),
+            (1.8, "2 comes over the top to the wing. 1 is the safety"),
+            (3.0, "3 passes in to 2"),
+            (3.7, "4 seals his man and posts up. 5 pops to the top"),
+            (4.6, "2 hits 4 on the block for the layup!"),
+        ],
+    },
 ]
 
 # ── Look ────────────────────────────────────────────────────────────────────
@@ -209,16 +293,21 @@ PX = 12.8 * SS              # pixels per foot
 PAD = 16 * SS
 DEPTH = 33                  # feet of court shown below the baseline
 CAP_H = 58 * SS
-W = int(50 * PX + 2 * PAD)
+VIEW = DEPTH                # feet shown for this play (set per play)
 TOP_FT = 0                  # feet shown behind the baseline (set per play)
+LEFT_FT = 0                 # feet shown outside the left sideline (set per play)
+W = int(50 * PX + 2 * PAD)
 COURT_H = int(DEPTH * PX + 2 * PAD)
 H = COURT_H + CAP_H
 
 
 def set_view(play):
-    global TOP_FT, COURT_H, H
+    global VIEW, TOP_FT, LEFT_FT, W, COURT_H, H
+    VIEW = play.get("depth", DEPTH)
     TOP_FT = play.get("oob", 0)
-    COURT_H = int((DEPTH + TOP_FT) * PX + 2 * PAD)
+    LEFT_FT = play.get("oob_side", 0)
+    W = int((50 + LEFT_FT) * PX + 2 * PAD)
+    COURT_H = int((VIEW + TOP_FT) * PX + 2 * PAD)
     H = COURT_H + CAP_H
 BASKET = (25, 5.25)
 PACK = 16                   # pack line, feet from the rim
@@ -240,7 +329,7 @@ F_TAG = font(int(12 * SS), narrow=True)
 
 
 def P(x, y):
-    return (PAD + x * PX, PAD + (y + TOP_FT) * PX)
+    return (PAD + (x + LEFT_FT) * PX, PAD + (y + TOP_FT) * PX)
 
 
 # ── Geometry helpers ─────────────────────────────────────────────────────────
@@ -377,20 +466,20 @@ def hold_spot(me, toward):
 def defense_for(play, t, pos, ball):
     """Pack Line spots, then hold back any defender who's been screened."""
     sag = play.get("sag", 1.0)
-    spots = defense_at(pos, ball, sag)
+    spots = defense_at(pos, ball, sag, play.get("reach"))
     for e in play["events"]:
         if "beat" not in e:
             continue
         a, b = e["t"]
         if a <= t < b:
             p0, b0, _, _, _ = state_at(play, a)
-            stuck = defense_at(p0, b0, sag)[e["beat"]]
+            stuck = defense_at(p0, b0, sag, play.get("reach"))[e["beat"]]
             g = ((t - a) / (b - a)) ** 3
             spots[e["beat"]] = lerp(stuck, spots[e["beat"]], g)
     return keep_apart(spots, pos)
 
 
-def defense_at(pos, ball, sag=1.0):
+def defense_at(pos, ball, sag=1.0, reach=None):
     """Pack Line: pressure the ball, everyone else sags inside the line toward
     the ball. Weighted by distance to the ball so nothing jumps."""
     spots = {}
@@ -399,6 +488,8 @@ def defense_at(pos, ball, sag=1.0):
         k = (0.36 - 0.22 * w) * sag                        # how far to sag
         tgt = lerp(man, BASKET, k)
         tgt = lerp(tgt, ball, 0.14 * (1 - w))              # shade to the ball
+        if reach and dist(tgt, man) > reach:               # don't play off him too far
+            tgt = lerp(man, tgt, reach / dist(tgt, man))
         if sag >= 1 and dist(tgt, BASKET) > PACK and w < 0.5:   # stay inside the pack line
             d = dist(tgt, BASKET)
             tgt = lerp(BASKET, tgt, (PACK + (d - PACK) * 0.35) / d)
@@ -436,7 +527,7 @@ def keep_apart(spots, pos, gap_off=3.1, gap_def=2.7):
                     L = math.hypot(vx, vy) or 1
                     push = (gap_def - dd) / 2
                     x, y = x + vx / L * push, y + vy / L * push
-            spots[n] = (min(48.6, max(1.4, x)), min(DEPTH - 1.4, max(1.0, y)))
+            spots[n] = (min(48.6, max(1.4, x)), min(VIEW - 1.4, max(1.0, y)))
     return spots
 
 
@@ -494,7 +585,22 @@ def court(d):
         d.rectangle([P(0, -TOP_FT), P(50, 0)], fill=(236, 240, 244))
         d.text((P(1.2, -TOP_FT / 2)[0], P(0, -TOP_FT / 2)[1]), "OUT OF BOUNDS", font=F_TAG,
                fill=(140, 152, 166), anchor="lm")
-    d.rectangle([P(0, 0), P(50, DEPTH)], outline=NAVY, width=lw)
+    if LEFT_FT:                                        # out of bounds past the left sideline
+        d.rectangle([P(-LEFT_FT, 0), P(0, VIEW)], fill=(236, 240, 244))
+        tag = Image.new("L", (int(d.textlength("OUT OF BOUNDS", font=F_TAG)) + 4, int(16 * SS)), 0)
+        ImageDraw.Draw(tag).text((2, tag.height / 2), "OUT OF BOUNDS", font=F_TAG, fill=255, anchor="lm")
+        tag = tag.rotate(90, expand=True)
+        x0, _ = P(-LEFT_FT / 2, 0)
+        d.bitmap((int(x0 - tag.width / 2), int(P(0, VIEW)[1] - tag.height - 1.2 * PX)), tag, fill=(140, 152, 166))
+    d.rectangle([P(0, 0), P(50, VIEW)], outline=NAVY, width=lw)
+    if VIEW > DEPTH:                                   # hash marks, 28 feet from the baseline
+        for x0, x1 in ((0, 3), (47, 50)):
+            d.line([P(x0, 28), P(x1, 28)], fill=NAVY, width=lw)
+    if VIEW > 47:                                      # half-court line and the center circle
+        d.line([P(0, 47), P(50, 47)], fill=NAVY, width=lw)
+        cx, cy = P(25, 47)
+        r = 6 * PX
+        d.ellipse([cx - r, cy - r, cx + r, cy + r], outline=NAVY, width=lw)
     d.rectangle([P(19, 0), P(31, 19)], outline=NAVY, width=lw)            # lane
     # free-throw circle: solid outside the lane, dashed inside
     cx, cy = P(25, 19)
@@ -614,7 +720,7 @@ def frame(play, t, diagram=False):
         for tr in trails:
             trail(d, tr[0], tr[1], True)
         if play.get("defense", True):
-            for p in defense_at(pos, hold_spot(pos[holder], BASKET), play.get("sag", 1.0)).values():
+            for p in defense_at(pos, hold_spot(pos[holder], BASKET), play.get("sag", 1.0), play.get("reach")).values():
                 defender(d, p)
         for n, p in pos.items():
             offense(d, n, p, n == holder)

@@ -884,7 +884,7 @@ button.game{width:100%;text-align:left;font:inherit;cursor:pointer;}
 .play-info .play-side{align-self:flex-start;font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:11px;
   letter-spacing:.8px;text-transform:uppercase;padding:3px 9px;border-radius:7px;color:#fff;background:var(--navy);}
 .play-info .play-side.defense{background:var(--loss);}
-.play-info .play-side.blob{background:var(--accent);}
+.play-info .play-side.blob,.play-info .play-side.slob{background:var(--accent);}
 .play-anim{margin:16px 0 0;max-width:680px;}
 .play-anim img{display:block;width:100%;height:auto;border-radius:16px;border:1px solid var(--line);background:#fff;}
 .play-anim figcaption{font-size:12.5px;color:var(--muted);line-height:1.5;padding:8px 4px 0;}
@@ -1448,6 +1448,7 @@ const COACHES = [
   { id:1, name:"Coach Joe Ray",       role:"Head Coach",      tag:"Head Coach" },
   { id:2, name:"Coach Matt Milliren", role:"Assistant Coach", tag:"Assistant" },
   { id:3, name:"Coach Rodney Barnes", role:"Assistant Coach", tag:"Assistant" },
+  { id:4, name:"Coach Lawson Ray",    role:"Assistant Coach, In Training", tag:"In Training" },
 ];
 
 /* ── PRACTICE PLANS ────────────────────────────────────────────
@@ -3708,11 +3709,49 @@ const PLAYS = [
       "1: if nothing is open, step to the ball so 2 can get it in safely.",
     ],
     drills:["usScreen", "bfcMikan"] },
+
+  // ── Sideline out of bounds (SLOB) ──
+  { id:"slob-stack", name:"Stack", side:"slob", tag:"Sideline out of bounds · stack set",
+    source:{ label:"Sideline Out of Bounds - Stack, Breakthrough Basketball", url:"https://www.breakthroughbasketball.com/plays/sideline-out-of-bounds-stack" },
+    summary:"A simple stack play that gets the ball in safely against pressure, then gives 5 an easy post-up on the side of the floor we just emptied. 3 coming off a double screen is the second option.",
+    steps:[
+      "4 takes the ball out on the sideline. 3, 1, 2 and 5 line up in a stack straight across from him, 3 closest to the ball.",
+      "1 cuts hard to the ball. 3 breaks away to the wing. 2 cuts toward the ball as a decoy, and 5 floats away to make space.",
+      "4 passes in to 1.",
+      "1 dribbles to the other side of the floor. 4 steps in, and he and 2 set a down screen for 3.",
+      "As 1 dribbles toward him, 5 cuts hard to the low block and posts up. 3 comes off the double screen.",
+      "1 hits 5 on the block for the layup. If 5 is covered, look for 3. If neither is open, pull it out and run our offense.",
+    ],
+    points:[
+      "1: cut hard and show a target hand. Catch it, then look up the floor before you dribble.",
+      "5: wait until 1 starts dribbling your way, then sprint to the block and seal your man.",
+      "4 and 2: screen shoulder to shoulder, set and still. 3: wait for the screen, then come off it shoulder to shoulder.",
+      "4: if 1 is covered, 5 is the safety. Never throw it into a crowd.",
+    ],
+    drills:["usCuts", "usDPP", "usScreen"] },
+  { id:"slob-pairs", name:"Pairs", side:"slob", tag:"Sideline out of bounds · two screening pairs",
+    source:{ label:"Sideline Plays (Pairs), Coach's Clipboard", url:"https://www.coachesclipboard.net/youth/SidelinePlays.html" },
+    summary:"Two pairs set two screens at the same time. 4 screens for 2, who comes over the top for the catch; 5 screens for 1, who comes back as the safety. Then 4 seals his man and 2 hits him on the block.",
+    steps:[
+      "3 takes the ball out at half court. 4 and 2 are a pair down low; 5 and 1 are a pair up high.",
+      "4 screens for 2, and 5 screens for 1. Both at the same time.",
+      "2 comes over the top of the screen to the wing. 1 cuts back to the ball as the safety pass.",
+      "3 passes in to 2.",
+      "After his screen, 4 seals his man and posts up on the block. 3 steps in, 5 pops to the top, and 1 spaces out.",
+      "2 hits 4 on the block for the layup. If 4 isn't open, 2 can shoot, or reverse it and run our offense.",
+    ],
+    points:[
+      "Screeners are often the ones who come open. 4: after your screen, turn, seal and show a target hand.",
+      "2: wait for the screen, then cut hard over the top of it, shoulder to shoulder with 4.",
+      "1: if 2 is covered, come all the way back to the ball so 3 gets it in safely.",
+      "3: if the pass is open, throw it on time. If not, go to 1. A safe inbound beats a forced one.",
+    ],
+    drills:["usScreen", "us5on0", "bfcMikan"] },
 ];
 const playById = (id) => PLAYS.find(p => p.id === id);
 const playGif = (p) => `assets/plays/${p.id}.gif`;
 const playDiagram = (p) => `assets/plays/${p.id}.png`;
-const sideLabel = (s) => s === "defense" ? "Defense" : s === "blob" ? "BLOB" : "Offense";
+const sideLabel = (s) => s === "defense" ? "Defense" : s === "blob" ? "BLOB" : s === "slob" ? "SLOB" : "Offense";
 
 function playsView() {
   if (state.play && playById(state.play)) return playDetailView(playById(state.play));
@@ -3729,9 +3768,9 @@ function playsView() {
       </span>
     </button>`;
   return `
-    <div class="chips">${chip("all", "All")}${chip("offense", "Offense")}${chip("defense", "Defense")}${chip("blob", "BLOB")}</div>
+    <div class="chips">${chip("all", "All")}${chip("offense", "Offense")}${chip("defense", "Defense")}${chip("blob", "BLOB")}${chip("slob", "SLOB")}</div>
     ${list.length ? `<div class="plays-grid">${list.map(card).join("")}</div>`
-      : `<p class="empty">No ${f === "all" ? "" : f === "defense" ? "defensive " : f === "blob" ? "baseline out-of-bounds " : "offensive "}plays yet.</p>`}`;
+      : `<p class="empty">No ${f === "all" ? "" : f === "defense" ? "defensive " : f === "blob" ? "baseline out-of-bounds " : f === "slob" ? "sideline out-of-bounds " : "offensive "}plays yet.</p>`}`;
 }
 
 function playDetailView(p) {
@@ -3744,7 +3783,7 @@ function playDetailView(p) {
     </div>
     <figure class="play-anim">
       <img src="${playGif(p)}" alt="${esc(p.name)}: animated play diagram" width="672" />
-      <figcaption>Loops on its own. Circles are us, squares with an X are the defense${p.side === "blob" ? ", and a line ending in a T is a screen" : ""}.
+      <figcaption>Loops on its own. Circles are us, squares with an X are the defense${p.side === "blob" || p.side === "slob" ? ", and a line ending in a T is a screen" : ""}.
         <a href="${playGif(p)}" download="${p.id}.gif">Download the GIF</a>
         ${p.source ? `<br>Source: <a href="${esc(p.source.url)}" target="_blank" rel="noopener noreferrer">${esc(p.source.label)}</a>` : ""}</figcaption>
     </figure>
