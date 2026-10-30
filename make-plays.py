@@ -37,6 +37,8 @@ at 47 once the view reaches them).
 "clear": [5.3] wipes the arrows drawn so far at 5.3 seconds, so a long play
 reads in phases. "diagram_from": 5.3 draws the still diagram from that
 moment (players where they stand then, only the arrows that follow).
+"diagram_until": 5.25 stops the still diagram's arrows there instead, so a
+long play's card shows just its first phase.
 
 Defenders are placed automatically by Pack Line rules: tight on the ball,
 sagged inside the line off the ball, and they shift while the pass is in
@@ -82,14 +84,40 @@ DRIBBLE_AT_CAPTIONS = [
 
 PLAYS = [
     {
+        # Pass and Cut around the horn: 2 passes to 3, 3 to 5, and 5 to 4,
+        # cutting each time while the open spots fill; 4 hits 5 on his cut.
         "slug": "pass-and-cut",
         "title": "Layer 1: Pass and Cut",
         "start": FIVE_OUT,
         "ball": 1,
-        "length": 6.8,
-        "events": PASS_AND_CUT,
+        "length": 17.6,
+        "clear": [5.3, 9.2, 13.1],
+        "diagram_until": 5.25,
+        "events": PASS_AND_CUT + [
+            {"pass": (2, 3), "t": (5.3, 5.9)},
+            {"move": 2, "t": (6.0, 7.4), "path": [(6.5, 19.5), (13, 15), (20.5, 10.6), (24, 9)]},
+            {"move": 4, "t": (6.3, 7.6), "path": [(3, 8), (4, 14), (6.5, 19.5)]},
+            {"move": 2, "t": (7.4, 8.8), "path": [(24, 9), (17, 7.6), (9, 7.2), (3, 8)]},
+            {"pass": (3, 5), "t": (9.2, 9.8)},
+            {"move": 3, "t": (9.9, 11.3), "path": [(25, 29), (25.5, 17), (25, 9)]},
+            {"move": 4, "t": (10.2, 11.6), "path": [(6.5, 19.5), (14, 26.5), (25, 29)]},
+            {"move": 2, "t": (10.5, 11.8), "path": [(3, 8), (4, 14), (6.5, 19.5)]},
+            {"move": 3, "t": (11.3, 12.7), "path": [(25, 9), (17, 7.6), (9, 7.2), (3, 8)]},
+            {"pass": (5, 4), "t": (13.1, 13.7)},
+            {"move": 5, "t": (13.8, 15.2), "path": [(43.5, 19.5), (37, 14.5), (29.5, 10.2), (25.6, 8.8)]},
+            {"beat": 5, "t": (13.8, 16.4)},
+            {"pass": (4, 5), "t": (14.5, 14.9)},              # hit him in stride
+            {"move": 5, "t": (15.2, 15.5), "path": [(25.6, 8.8), (24.8, 7.6)]},
+            {"shot": 5, "t": (15.4, 15.9)},
+        ],
         "captions": PASS_AND_CUT_CAPTIONS + [
-            (5.0, "Every spot is filled. Pass and cut again!"),
+            (5.3, "2 passes to 3 and cuts. 4 fills the wing"),
+            (7.4, "2 flows out and fills the open corner"),
+            (9.2, "3 passes to 5 and cuts. 4 fills the top, 2 fills the wing"),
+            (11.3, "3 flows out and fills the open corner"),
+            (13.1, "5 passes to 4 and cuts to the basket"),
+            (14.5, "4 hits 5 in stride"),
+            (15.4, "5 makes the layup!"),
         ],
     },
     {
@@ -749,7 +777,7 @@ def frame(play, t, diagram=False):
         pos, _, holder, _, _ = state_at(play, t0)
         holder = holder or play["ball"]
         late = dict(play, clear=list(play.get("clear", [])) + ([t0] if t0 else []))
-        _, _, _, _, trails = state_at(late, play["length"])
+        _, _, _, _, trails = state_at(late, play.get("diagram_until", play["length"]))
         for tr in trails:
             trail(d, tr[0], tr[1], True)
         if play.get("defense", True):
