@@ -170,7 +170,10 @@ later phase (`diagram_from`), or stop its arrows after the first phase
 (`diagram_until`). Plays can share their phases: the offense
 layers build on each other, so Layer 2 reuses the Pass and Cut events
 (`PASS_AND_CUT`) and Layer 3 reuses those plus the dribble at
-(`DRIBBLE_AT`). Offense is circled
+(`DRIBBLE_AT`); each "Alternate" play reuses its layer's phases and changes
+only the finish. A defender can be sent to help, or to sink into the lane,
+and then recover late (`"guard"`), which is how the kick-out and skip plays
+show why the shooter is open. Offense is circled
 numbers; the defense (squares with an X) is placed automatically by Pack Line
 rules, or set `"defense": False`. To add a play, add its choreography there
 and its words to `PLAYS` with the same id, then run the script.

@@ -22,6 +22,9 @@ and the captions shown under the court:
     {"move": 5, "screen": True, ...}                       a screen: the line ends in a T
     {"beat": 5, "t": (a, b)}                               5's defender is screened or
                                                            sealed: he's stuck, then catches up
+    {"guard": 3, "t": (a, b), "at": (x, y)}                3's defender leaves to help (or
+                                                           sinks into the lane) at (x, y), then
+                                                           recovers late ("recover": seconds)
 
 "sag": 0.45 makes the defense play tighter on their men (under the basket on
 inbounds plays) instead of sagging to the Pack Line. "reach": 4.5 keeps every
@@ -77,6 +80,22 @@ DRIBBLE_AT = [
     {"pass": (2, 5), "t": (7.5, 8.1)},
     {"move": 3, "t": (7.6, 9.0), "path": [(25.8, 9.5), (17, 7.6), (9, 7.2), (3, 8)]},
 ]
+# Layer 2's finish: 2 cuts, 5 dribbles up and hits him.
+LAYER_2_HIT = [
+    {"move": 2, "t": (8.2, 10.0), "path": [(22.5, 28.6), (21.5, 19), (22.5, 13), (24, 10)]},
+    {"dribble": 5, "t": (8.4, 9.6), "path": [(43.5, 19.5), (37, 25), (31, 27.5)]},
+    {"pass": (5, 2), "t": (9.6, 10.1)},
+]
+# Layer 3's middle: 2 cuts through to the block and 5 passes in to him.
+LAYER_3_POST = [
+    {"move": 2, "t": (8.2, 10.2), "path": [(22.5, 28.6), (21.5, 19), (23.5, 12.5), (27.8, 9.6), (31.3, 8.6)]},
+    {"dribble": 5, "t": (8.4, 9.6), "path": [(43.5, 19.5), (37, 25), (31, 27.5)]},
+    {"pass": (5, 2), "t": (10.4, 10.9)},
+]
+LAYER_3_CAPTIONS = [
+    (8.4, "5 dribbles up. 2 cuts through to the low block"),
+    (10.4, "5 passes in to 2 on the block"),
+]
 DRIBBLE_AT_CAPTIONS = [
     (5.3, "2 dribbles at 3, so 3 cuts to the basket. 4 fills the wing"),
     (7.5, "2 passes to 5 and cuts. 3 fills the open corner"),
@@ -130,16 +149,35 @@ PLAYS = [
         "length": 12.6,
         "clear": [5.3],
         "diagram_from": 5.3,
-        "events": PASS_AND_CUT + DRIBBLE_AT + [
-            {"move": 2, "t": (8.2, 10.0), "path": [(22.5, 28.6), (21.5, 19), (22.5, 13), (24, 10)]},
-            {"dribble": 5, "t": (8.4, 9.6), "path": [(43.5, 19.5), (37, 25), (31, 27.5)]},
-            {"pass": (5, 2), "t": (9.6, 10.1)},
+        "events": PASS_AND_CUT + DRIBBLE_AT + LAYER_2_HIT + [
             {"move": 2, "t": (10.1, 10.5), "path": [(24, 10), (24.6, 7.8)]},
             {"shot": 2, "t": (10.4, 10.9)},
         ],
         "captions": PASS_AND_CUT_CAPTIONS + DRIBBLE_AT_CAPTIONS + [
             (8.4, "5 dribbles up. 2 keeps cutting to the rim"),
             (9.6, "5 hits 2 for the layup!"),
+        ],
+    },
+    {
+        # Layer 2, but 1's man steps in to stop 2's layup, so 2 kicks it out
+        # to 1 in the corner for the 3.
+        "slug": "layer-2-alt-3",
+        "title": "Layer 2 Alternate: 3 Point Shot",
+        "start": FIVE_OUT,
+        "ball": 1,
+        "length": 13.8,
+        "clear": [5.3],
+        "diagram_from": 5.3,
+        "events": PASS_AND_CUT + DRIBBLE_AT + LAYER_2_HIT + [
+            {"guard": 1, "t": (9.4, 10.6), "at": (29, 6.3), "recover": 1.4},
+            {"pass": (2, 1), "t": (10.6, 11.2)},
+            {"shot": 1, "t": (11.5, 12.2)},
+        ],
+        "captions": PASS_AND_CUT_CAPTIONS + DRIBBLE_AT_CAPTIONS + [
+            (8.4, "5 dribbles up. 2 keeps cutting to the rim"),
+            (9.6, "5 hits 2. 1's man steps in to stop the layup"),
+            (10.6, "2 kicks it out to 1 in the corner"),
+            (11.5, "1 knocks down the 3!"),
         ],
     },
     {
@@ -152,21 +190,100 @@ PLAYS = [
         "length": 14.8,
         "clear": [5.3, 10.4],
         "diagram_from": 10.35,                        # 5 still has it (the pass leaves at 10.4)
-        "events": PASS_AND_CUT + DRIBBLE_AT + [
-            {"move": 2, "t": (8.2, 10.2), "path": [(22.5, 28.6), (21.5, 19), (23.5, 12.5), (27.8, 9.6), (31.3, 8.6)]},
-            {"dribble": 5, "t": (8.4, 9.6), "path": [(43.5, 19.5), (37, 25), (31, 27.5)]},
-            {"pass": (5, 2), "t": (10.4, 10.9)},
+        "events": PASS_AND_CUT + DRIBBLE_AT + LAYER_3_POST + [
             {"move": 5, "t": (11.1, 12.3), "path": [(31, 27.5), (27.8, 19), (25.6, 12.2), (24.8, 9.6)]},
             {"beat": 5, "t": (11.1, 13.4)},
             {"pass": (2, 5), "t": (11.7, 12.1)},              # hit him in stride
             {"move": 5, "t": (12.3, 12.6), "path": [(24.8, 9.6), (24.6, 7.8)]},
             {"shot": 5, "t": (12.5, 13.0)},
         ],
-        "captions": PASS_AND_CUT_CAPTIONS + DRIBBLE_AT_CAPTIONS + [
-            (8.4, "5 dribbles up. 2 cuts through to the low block"),
-            (10.4, "5 passes in to 2 on the block"),
+        "captions": PASS_AND_CUT_CAPTIONS + DRIBBLE_AT_CAPTIONS + LAYER_3_CAPTIONS + [
             (11.1, "5 makes a Laker cut. 2 hits him in stride"),
             (12.3, "5 makes the layup!"),
+        ],
+    },
+    {
+        # Layer 3, but 5's man stays with him on the Laker cut and 4's man
+        # helps; 4 rotates up to the top and 2 hits him for the 3.
+        "slug": "layer-3-alt-3",
+        "title": "Layer 3 Alternate: 3 Point Shot",
+        "start": FIVE_OUT,
+        "ball": 1,
+        "length": 16.0,
+        "clear": [5.3, 10.4],
+        "diagram_from": 10.35,
+        "events": PASS_AND_CUT + DRIBBLE_AT + LAYER_3_POST + [
+            {"move": 5, "t": (11.1, 12.3), "path": [(31, 27.5), (27.8, 19), (25.6, 12.2), (24.8, 9.6)]},
+            {"move": 4, "t": (11.3, 12.5), "path": [(6.5, 19.5), (14, 26.5), (25, 29)]},
+            {"guard": 4, "t": (11.5, 12.8), "at": (20, 14), "recover": 1.3},
+            {"pass": (2, 4), "t": (12.8, 13.4)},
+            {"shot": 4, "t": (13.7, 14.4)},
+        ],
+        "captions": PASS_AND_CUT_CAPTIONS + DRIBBLE_AT_CAPTIONS + LAYER_3_CAPTIONS + [
+            (11.1, "5 makes a Laker cut. 4 rotates up to the top"),
+            (12.8, "5 is covered, so 2 passes out to 4"),
+            (13.7, "4 knocks down the 3!"),
+        ],
+    },
+    {
+        # Read & React circle movement: 1 drives north-south down the right
+        # side of the lane and everyone moves one spot the same way (3 to the
+        # corner, 5 along the baseline, 4 up to the wing, 2 behind the drive).
+        # 3's man helps, so 1 pitches to 3 in the corner.
+        "slug": "layer-4-circle",
+        "title": "Layer 4: Circle Movement: Dribble Penetration, North-South",
+        "start": FIVE_OUT,
+        "ball": 1,
+        "length": 6.6,
+        "diagram_until": 2.65,                        # the card shows the circle, not the pitch
+        "events": [
+            {"dribble": 1, "t": (0.8, 2.4), "path": [(25, 29), (28.2, 22), (29.2, 15.5), (28.4, 11.5)]},
+            {"move": 3, "t": (1.0, 2.3), "path": [(43.5, 19.5), (46, 14), (47, 8)]},
+            {"move": 5, "t": (1.0, 2.6), "path": [(47, 8), (42, 2.6), (25, 1.9), (8, 2.6), (3, 8)]},
+            {"move": 4, "t": (1.1, 2.4), "path": [(3, 8), (4, 14), (6.5, 19.5)]},
+            {"move": 2, "t": (1.1, 2.5), "path": [(6.5, 19.5), (14, 26.5), (25, 29)]},
+            {"guard": 3, "t": (1.9, 2.9), "at": (31.5, 7), "recover": 1.3},
+            {"pass": (1, 3), "t": (2.7, 3.3)},
+            {"shot": 3, "t": (3.6, 4.3)},
+        ],
+        "captions": [
+            (0.0, "1 has the ball at the top. Everyone is spaced out"),
+            (0.8, "1 drives hard, north-south. Everyone circles his way"),
+            (1.8, "3 to the corner, 5 runs the baseline, 4 and 2 move up"),
+            (2.7, "3's man helps on the drive. 1 pitches to 3"),
+            (3.6, "3 is wide open. Knock it down!"),
+        ],
+    },
+    {
+        # Read & React pin & skip, the youth "baby skip" version: the ball
+        # goes right, 4's man sinks into the lane to help, 2 pins him, 3
+        # dribbles up to shorten the skip and hits 4 popping out to the wing.
+        "slug": "layer-5-pin-skip",
+        "title": "Layer 5: Pin & Skip",
+        "start": FIVE_OUT,
+        "ball": 1,
+        "length": 8.2,
+        "diagram_from": 3.15,                         # the card: the pin, the pop and the skip
+        "events": [
+            {"pass": (1, 3), "t": (0.8, 1.45)},
+            {"move": 1, "t": (1.6, 3.0), "path": [(25, 29), (26, 17), (25.5, 9.5)]},
+            {"guard": 4, "t": (1.4, 5.3), "at": (16.5, 9.5), "recover": 1.2},
+            {"move": 2, "screen": True, "t": (2.6, 3.5), "path": [(6.5, 19.5), (9, 15), (13, 11.8)]},
+            {"move": 4, "t": (3.3, 4.4), "path": [(3, 8), (3.6, 14), (6.5, 19.5)]},
+            {"dribble": 3, "t": (3.4, 4.5), "path": [(43.5, 19.5), (37, 25), (31, 27.5)]},
+            {"move": 1, "t": (3.2, 4.7), "path": [(25.5, 9.5), (33, 9.5), (39, 13.5), (43.5, 19.5)]},
+            {"pass": (3, 4), "t": (4.6, 5.3)},
+            {"move": 2, "t": (4.7, 5.7), "path": [(13, 11.8), (7, 9), (3, 8)]},
+            {"shot": 4, "t": (5.7, 6.4)},
+        ],
+        "captions": [
+            (0.0, "1 has the ball at the top"),
+            (0.8, "1 passes to 3"),
+            (1.6, "1 cuts. 4's man sinks into the lane to help"),
+            (2.6, "2 pins the helper. 4 pops out to the wing"),
+            (3.6, "3 dribbles up to shorten the skip. 1 fills"),
+            (4.6, "3 skips it to 4. 2 fills the corner"),
+            (5.7, "4 is wide open. Knock it down!"),
         ],
     },
     {
@@ -475,7 +592,7 @@ def state_at(play, t):
             continue
         f = ease((t - a) / (b - a))
         done = t >= b
-        if "beat" in e:
+        if "beat" in e or "guard" in e:
             continue
         if b <= cleared:                          # an earlier phase: apply it, don't draw it
             if "pass" in e:
@@ -537,7 +654,26 @@ def defense_for(play, t, pos, ball):
             stuck = defense_at(p0, b0, sag, play.get("reach"))[e["beat"]]
             g = ((t - a) / (b - a)) ** 3
             spots[e["beat"]] = lerp(stuck, spots[e["beat"]], g)
+    apply_guards(play, t, spots)
     return keep_apart(spots, pos)
+
+
+def apply_guards(play, t, spots):
+    """Helpers: over to help (or sunk into the lane), then a late recovery.
+    Returns True if any guard event is in play at t."""
+    hit = False
+    for e in play["events"]:
+        if "guard" not in e:
+            continue
+        a, b = e["t"]
+        n, rec = e["guard"], e.get("recover", 1.0)
+        if a <= t < b:
+            spots[n] = lerp(spots[n], e["at"], ease((t - a) / min(0.6, b - a)))
+            hit = True
+        elif b <= t < b + rec:
+            spots[n] = lerp(e["at"], spots[n], ease((t - b) / rec))
+            hit = True
+    return hit
 
 
 def defense_at(pos, ball, sag=1.0, reach=None):
@@ -781,7 +917,10 @@ def frame(play, t, diagram=False):
         for tr in trails:
             trail(d, tr[0], tr[1], True)
         if play.get("defense", True):
-            for p in defense_at(pos, hold_spot(pos[holder], BASKET), play.get("sag", 1.0), play.get("reach")).values():
+            spots = defense_at(pos, hold_spot(pos[holder], BASKET), play.get("sag", 1.0), play.get("reach"))
+            if apply_guards(play, t0, spots):                # a helper in the lane at that moment
+                spots = keep_apart(spots, pos)
+            for p in spots.values():
                 defender(d, p)
         for n, p in pos.items():
             offense(d, n, p, n == holder)
