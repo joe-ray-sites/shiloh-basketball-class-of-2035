@@ -55,6 +55,10 @@ it from our side: we're the numbered circles on defense (tagged with the
 job each has right now) and the offense is the squares; "show_pack" draws
 the pack line, and "trail" colors the offense's arrows.
 
+"slow": 1.15 plays the GIF 15% slower, and "hold_after_pass": 1.0 freezes the
+picture for that many seconds just after every catch, so players can study
+where everyone is.
+
 "parts": [{...}, {...}] plays several short possessions back to back in one
 GIF, each with its own start, ball, length, events and captions (anything
 not given comes from the play). The card diagram shows the first part.
@@ -69,11 +73,12 @@ Defenders are placed automatically by Pack Line rules: tight on the ball,
 sagged inside the line off the ball, and they shift while the pass is in
 the air. Set "defense": False to draw offense only.
 """
+import io
 import math
 import os
 import sys
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageSequence
 
 # ── Plays ────────────────────────────────────────────────────────────────────
 # Our five-out spots: 1 top, 2 left wing, 3 right wing, 4 left corner, 5 right corner.
@@ -742,6 +747,8 @@ PLAYS = [
         # drive, then a pin and a skip. We're the numbered circles.
         "slug": "pack-line",
         "title": "Pack Line Defense",
+        "slow": 1.15,                                  # 15% slower, so the movement is easy to follow
+        "hold_after_pass": 1.0,                        # freeze after every catch: check everyone's spot
         "us_on_defense": True,
         "pack": True,
         "show_pack": True,
@@ -1509,10 +1516,20 @@ def build(play, out_dir):
     set_view(play)
     parts = [dict(play, **part) for part in play["parts"]] if "parts" in play else [play]
     fps = play.get("fps", FPS)
-    frames = []
+    frames, durs = [], []
+    step = 1000 / fps                                  # "slow" rescales this below
     for part in parts:
         prepare(part)
-        frames += [frame(part, i / fps) for i in range(int(part["length"] * fps))]
+        times = [i / fps for i in range(int(part["length"] * fps))]
+        frames += [frame(part, t) for t in times]
+        d = [step] * len(times)
+        hold = part.get("hold_after_pass", 0)
+        for e in part["events"] if hold else []:       # freeze just after each catch
+            if "pass" in e:
+                k = next((i for i, t in enumerate(times) if t >= e["t"][1] + 0.2), None)
+                if k is not None:
+                    d[k] += hold * 1000
+        durs += d
     n = len(frames)
     # one shared palette so colors don't flicker from frame to frame
     sample = Image.new("RGB", (frames[0].width, frames[0].height * 4))
@@ -1521,7 +1538,25 @@ def build(play, out_dir):
     pal = sample.quantize(colors=255, method=Image.Quantize.MEDIANCUT)
     gif = [f.quantize(palette=pal, dither=Image.Dither.NONE) for f in frames]
     path = os.path.join(out_dir, play["slug"] + ".gif")
-    gif[0].save(path, save_all=True, append_images=gif[1:], duration=1000 // fps, loop=0, optimize=False)
+    plain = play.get("slow", 1.0) == 1.0 and not any(p.get("hold_after_pass") for p in parts)
+    if plain:
+        duration = 1000 // fps
+    else:
+        # GIF delays come in hundredths of a second, so measure how fast the
+        # plain GIF really plays and make "slow" relative to that
+        buf = io.BytesIO()
+        gif[0].save(buf, format="GIF", save_all=True, append_images=gif[1:], duration=1000 // fps, loop=0)
+        buf.seek(0)
+        real = sum(f.info.get("duration", 0) for f in ImageSequence.Iterator(Image.open(buf)))
+        scale = real * play.get("slow", 1.0) / (step * n)
+        durs = [x * scale if x == step else step * scale + (x - step) for x in durs]
+        duration, run, shown = [], 0.0, 0             # spread the rounding so the average is exact
+        for x in durs:
+            run += x
+            nxt = int(round(run / 10)) * 10
+            duration.append(nxt - shown)
+            shown = nxt
+    gif[0].save(path, save_all=True, append_images=gif[1:], duration=duration, loop=0, optimize=False)
     png = os.path.join(out_dir, play["slug"] + ".png")
     frame(parts[0], 0, diagram=True).save(png, optimize=True)
     print(f"{play['slug']}: {n} frames, {os.path.getsize(path) // 1024} KB gif, {os.path.getsize(png) // 1024} KB png")

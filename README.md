@@ -195,7 +195,9 @@ Defense plays flip the drawing (`"us_on_defense"`): we're the numbered
 circles and the offense is the squares. With `"pack": True` our five are
 placed by the Pack Line page's rules, by how many passes away each man is,
 and each defender wears a tag for his job right now (On Ball, 1 Away,
-2 Away, Cutter, Help). `"show_pack"` draws the pack line. BLOB plays
+2 Away, Cutter, Help). `"show_pack"` draws the pack line. A play can also
+play slower (`"slow": 1.15` is 15% slower than normal) and freeze for a
+moment after every catch (`"hold_after_pass": 1.0`, in seconds). BLOB plays
 show the out-of-bounds strip behind the baseline (`"oob"` in make-plays.py),
 SLOB plays show it down the left sideline (`"oob_side"`) and show more of the
 floor (`"depth"`, up to half court). Both draw screens as a line ending in a
