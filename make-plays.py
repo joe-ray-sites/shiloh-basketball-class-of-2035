@@ -128,6 +128,22 @@ DRIBBLE_AT_CAPTIONS = [
     (7.5, "2 passes to 5 and cuts. 3 fills the open corner"),
 ]
 
+# Press break opening, shared by both press breaks: 2 screens for 3, 3 cuts
+# left, 2 pops right, and 1 inbounds to 2 on the wide side.
+PRESS_START = {1: (30, -2.2), 2: (19.5, 16), 3: (26, 22.5), 4: (5, 42), 5: (45, 42)}
+PRESS_INBOUND = [
+    {"move": 2, "screen": True, "t": (0.8, 1.5), "path": [(19.5, 16), (22, 18.2), (24, 19.5)]},
+    {"move": 3, "t": (1.5, 2.7), "path": [(26, 22.5), (21, 22.8), (13, 17.5), (6.5, 12)]},
+    {"beat": 3, "t": (1.5, 3.4)},
+    {"move": 2, "t": (1.7, 2.8), "path": [(24, 19.5), (32, 17), (44, 12)]},
+    {"pass": (1, 2), "t": (2.8, 3.4)},
+]
+PRESS_CAPTIONS = [
+    (0.0, "We're pressed. 1 takes it out, 2 and 3 stack, 4 and 5 deep"),
+    (0.8, "2 screens for 3. 3 cuts left, 2 pops to the right"),
+    (2.8, "1 inbounds to 2, to the wide side"),
+]
+
 # Race & Space off a miss: the opening both rebound plays share. 4 rebounds
 # and outlets to 1, everyone races, and 1 throws it ahead to 3.
 RS_REBOUND_START = {4: (22, 6.5), 5: (29.5, 8.5), 1: (31, 24), 2: (10, 17), 3: (40, 17)}
@@ -440,15 +456,10 @@ PLAYS = [
         "press": True,
         "toward": (25, 90),
         "diagram_until": 5.8,                         # the card: the break, not the push
-        "start": {1: (30, -2.2), 2: (19.5, 16), 3: (26, 22.5), 4: (5, 42), 5: (45, 42)},
+        "start": PRESS_START,
         "ball": 1,
         "length": 9.4,
-        "events": [
-            {"move": 2, "screen": True, "t": (0.8, 1.5), "path": [(19.5, 16), (22, 18.2), (24, 19.5)]},
-            {"move": 3, "t": (1.5, 2.7), "path": [(26, 22.5), (21, 22.8), (13, 17.5), (6.5, 12)]},
-            {"beat": 3, "t": (1.5, 3.4)},
-            {"move": 2, "t": (1.7, 2.8), "path": [(24, 19.5), (32, 17), (44, 12)]},
-            {"pass": (1, 2), "t": (2.8, 3.4)},
+        "events": PRESS_INBOUND + [
             {"move": 1, "t": (3.5, 5.0), "path": [(30, -2.2), (28, 5), (26, 17), (25, 30)]},
             {"beat": 1, "t": (3.5, 5.6)},
             {"move": 3, "t": (3.6, 4.8), "path": [(6.5, 12), (13, 5), (21, 3.8)]},
@@ -459,13 +470,95 @@ PLAYS = [
             {"move": 4, "t": (5.9, 7.8), "path": [(6.5, 13), (6, 32), (8, 56)]},
             {"move": 2, "t": (6.2, 7.8), "path": [(44, 12), (38, 28), (32, 42)]},
         ],
-        "captions": [
-            (0.0, "We're pressed. 1 takes it out, 2 and 3 stack, 4 and 5 deep"),
-            (0.8, "2 screens for 3. 3 cuts left, 2 pops to the right"),
-            (2.8, "1 inbounds to 2, to the wide side"),
+        "captions": PRESS_CAPTIONS + [
             (3.5, "1 cuts hard up the middle. 3 fills behind, 4 fills the wing"),
             (5.0, "2 hits 1 in the middle"),
             (5.9, "Press broken! 1 pushes the middle, 4 and 5 run the lanes"),
+        ],
+    },
+    {
+        # The middle is denied, so we reverse it: 2 back to 3 behind the ball,
+        # 2 cuts up the middle, 3 swings it to 4, and 4 hits 2 in the middle.
+        "slug": "layer-18-press-reverse",
+        "title": "Layer 18 Alternate: Press Break Reversal",
+        "oob": 4.5,
+        "depth": 60,
+        "press": True,
+        "soft_behind": True,
+        "toward": (25, 90),
+        "diagram_until": 7.8,                         # the card: the reversal, not the push
+        "start": PRESS_START,
+        "ball": 1,
+        "length": 11.6,
+        "events": PRESS_INBOUND + [
+            {"move": 1, "t": (3.5, 5.0), "path": [(30, -2.2), (28, 5), (26, 17), (25, 30)]},
+            {"move": 3, "t": (3.6, 4.8), "path": [(6.5, 12), (12, 6.5), (17.5, 5)]},
+            {"move": 4, "t": (3.6, 5.2), "path": [(5, 42), (4.5, 27), (6.5, 13)]},
+            {"pass": (2, 3), "t": (5.1, 5.7)},
+            {"move": 1, "t": (5.6, 6.8), "path": [(25, 30), (33, 29), (42, 24)]},
+            {"move": 2, "t": (5.7, 7.0), "path": [(44, 12), (36, 20), (27, 29)]},
+            {"beat": 2, "t": (5.7, 7.9)},
+            {"guard": 4, "t": (5.4, 6.5), "at": (14.5, 21), "recover": 1.0},
+            {"pass": (3, 4), "t": (6.1, 6.7)},
+            {"pass": (4, 2), "t": (7.1, 7.7)},
+            {"dribble": 2, "t": (8.0, 9.6), "path": [(27, 29), (26, 42), (25.5, 55)]},
+            {"move": 5, "t": (8.0, 9.5), "path": [(45, 42), (44, 50), (42, 57)]},
+            {"move": 4, "t": (8.0, 9.9), "path": [(6.5, 13), (6, 32), (8, 56)]},
+            {"move": 1, "t": (8.2, 9.9), "path": [(42, 24), (37, 35), (33, 45)]},
+            {"move": 3, "t": (8.4, 9.9), "path": [(17.5, 5), (19, 18), (20, 32)]},
+        ],
+        "captions": PRESS_CAPTIONS + [
+            (3.5, "1 cuts up the middle, but his man takes it away"),
+            (5.1, "2 reverses it back to 3, then cuts to the middle"),
+            (6.1, "3 swings it to 4. 1 fills the open spot"),
+            (7.1, "4 hits 2 in the middle"),
+            (8.0, "Press broken! 2 pushes the middle, 4 and 5 run the lanes"),
+        ],
+    },
+    {
+        # 4 and 1: 5 holds the right block while the four perimeter players
+        # run Layers 1 and 2 around him. Pass and cut, swing, post feed and a
+        # Laker cut; then 3 drives the lane, 5's man helps, and 3 drops it
+        # to 5 for the layup.
+        "slug": "four-and-one",
+        "title": "4 and 1",
+        "start": {1: (25, 29), 2: (6.5, 19.5), 3: (43.5, 19.5), 4: (3, 8), 5: (31.8, 7.5)},
+        "ball": 1,
+        "length": 14.4,
+        "clear": [5.2, 10.2],
+        "diagram_from": 10.15,                        # the card: the drive and the drop-off
+        "events": [
+            # Layer 1: pass and cut
+            {"pass": (1, 2), "t": (0.8, 1.4)},
+            {"move": 1, "t": (1.6, 3.0), "path": [(25, 29), (24, 17), (23.5, 10.5)]},
+            {"move": 3, "t": (1.9, 3.3), "path": [(43.5, 19.5), (36, 26.5), (25, 29)]},
+            {"move": 1, "t": (3.2, 4.6), "path": [(23.5, 10.5), (28, 13.5), (36, 15.5), (43.5, 19.5)]},
+            # Layer 2: swing it, feed the post, Laker cut
+            {"pass": (2, 3), "t": (5.2, 5.8)},
+            {"pass": (3, 1), "t": (6.3, 6.9)},
+            {"guard": 5, "t": (6.6, 8.4), "at": (31.6, 4.4), "recover": 0.8},   # 5 seals him behind
+            {"pass": (1, 5), "t": (7.3, 7.8)},
+            {"beat": 1, "t": (7.3, 8.6)},                  # his man holds a beat, then covers the cut
+            {"move": 1, "t": (7.9, 9.0), "path": [(43.5, 19.5), (37, 15.5), (31.5, 13), (27, 10.5), (25, 7.8)]},
+            {"move": 1, "t": (9.0, 10.0), "path": [(25, 7.8), (33, 4.5), (41, 5.5), (47, 8)]},
+            {"move": 3, "t": (8.6, 9.3), "path": [(25, 29), (29, 28.5), (33, 27)]},
+            {"pass": (5, 3), "t": (9.4, 9.9)},
+            # the finish: drive and drop it off to 5
+            {"dribble": 3, "t": (10.3, 11.4), "path": [(33, 27), (31, 20), (28.5, 13.5)]},
+            {"guard": 5, "t": (10.7, 12.2), "at": (28.4, 10.4), "recover": 1.0},
+            {"pass": (3, 5), "t": (11.5, 11.9)},
+            {"move": 5, "t": (11.9, 12.2), "path": [(31.8, 7.5), (29.2, 6.4)]},
+            {"shot": 5, "t": (12.1, 12.6)},
+        ],
+        "captions": [
+            (0.0, "4 and 1: 5 on the low block, four around the arc"),
+            (0.8, "1 passes to 2 and cuts to the basket"),
+            (1.9, "3 fills the top. 1 cuts through and fills the open wing"),
+            (5.2, "Swing it: 2 to 3, then 3 to 1"),
+            (7.3, "1 feeds the post and makes the Laker cut"),
+            (9.2, "The cut's covered. 3 slides over, 5 kicks it out to him"),
+            (10.3, "3 drives the lane. 5's man has to help"),
+            (11.5, "3 drops it off to 5 on the block. Layup!"),
         ],
     },
     {
@@ -1063,7 +1156,7 @@ def base_defense(play, pos, ball, ballman=None):
     if play.get("pack"):
         return pack_rules(pos, ball, ballman)[0]
     if play.get("press"):
-        return press_at(pos, ball)
+        return press_at(pos, ball, play.get("soft_behind", False))
     return defense_at(pos, ball, play.get("sag", 1.0), play.get("reach"))
 
 
@@ -1122,9 +1215,11 @@ def pack_rules(pos, ball, ballman=None):
     return keep_apart(spots, pos), jobs
 
 
-def press_at(pos, ball):
+def press_at(pos, ball, soft_behind=False):
     """Full-court man pressure: deny every pass, and play in front of the
-    ball handler until he gets past half of the backcourt."""
+    ball handler until he gets past half of the backcourt. With soft_behind,
+    a man behind the ball is guarded from the upcourt side, so the pass back
+    is open (real pressure gives that pass up)."""
     spots = {}
     for n, man in pos.items():
         if dist(man, ball) < 2.5:
@@ -1137,6 +1232,9 @@ def press_at(pos, ball):
             v = (ball[0] - man[0], ball[1] - man[1])
             L = math.hypot(*v) or 1
             tgt = (man[0] + v[0] / L * 2.8, man[1] + v[1] / L * 2.8)
+            if soft_behind:
+                w = max(0.0, min(1.0, (ball[1] - man[1] - 1) / 4))
+                tgt = lerp(tgt, (man[0], man[1] + 4.0), w)
         spots[n] = tgt
     return keep_apart(spots, pos)
 

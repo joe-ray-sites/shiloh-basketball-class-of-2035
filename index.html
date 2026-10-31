@@ -1539,7 +1539,8 @@ const CATS = {
 const SOURCES = { btb: "Breakthrough Basketball", usab: "USA Basketball",
                   jrnba: "Jr. NBA", bfc: "Basketball For Coaches", rr: "Read & React · Better Basketball",
                   cc: "Coach's Clipboard", champ: "Championship Productions", clinic: "Coaching clinic video",
-                  rs: "Race & Space · Tyler Coston", saints: "Saints coaching pages" };
+                  rs: "Race & Space · Tyler Coston", saints: "Saints coaching pages",
+                  tm: "Coach Tony Miller" };
 const YT = (id, t) => `https://www.youtube.com/watch?v=${id}${t ? "&t=" + t + "s" : ""}`;
 
 const DRILLS = {
@@ -1883,6 +1884,9 @@ const DRILLS = {
   plVegas:    { name:"Vegas Close Outs", cat:"def", src:"cc",
                 url:"https://www.coachesclipboard.net/PackLineDefenseDrills.html",
                 desc:"Toss the ball to a partner and close out: two high hands, low stance, short choppy steps, yell \"Shot!\". The offense catches in triple threat, jabs and rips through. Every practice." },
+  tmClose4:   { name:"4-Man Closeout Drill", cat:"def", src:"tm",
+                url:YT("Trh45QOV72c"), video:YT("Trh45QOV72c"),
+                desc:"Coach Tony Miller's four-player close-out drill (a one-minute video: watch it for the setup). Every close out under control: two high hands, short choppy steps, and a contest on the catch." },
   pl2on2:     { name:"2-on-2 Pack Line Positioning", cat:"def", src:"cc",
                 url:"https://www.coachesclipboard.net/PackLineDefenseDrills.html",
                 desc:"Two passers, two defenders. One pressures the ball; the other sits in the gap with both feet inside the pack line. On every pass they swap jobs while the ball is in the air. Run it top-to-wing, wing-to-corner and two-guard front." },
@@ -2013,11 +2017,12 @@ const PRACTICES = [
       { min:8,  drill:"usSpeed",   note:"Push it ahead. Race a partner, both hands." },
       { min:10, drill:"rrPitch2",  note:"Drive and kick, shooter ready in the next spot. Count makes." },
       { min:6,  drill:"plVegas",   note:"Every practice." },
+      { min:6,  drill:"tmClose4",  note:"New close-out drill: watch the one-minute video for the setup. Same rules as Vegas: two high hands, choppy steps, \"Shot!\"" },
       { min:8,  drill:"dlBowz",    note:"Every rebound starts our break: box out, then R.O.A.R." },
-      { min:15, drill:"rsArcs",    note:"Rim runner sprints to the rim, corner runners to the corners, ball races ahead. Walk, jog, run, then 4 on 0 to a shot before the defense is set." },
+      { min:12, drill:"rsArcs",    note:"Rim runner sprints to the rim, corner runners to the corners, ball races ahead. Walk, jog, run, then 4 on 0 to a shot before the defense is set." },
       { min:12, drill:"td111",     note:"Force it out of the highway, split the court, five seconds to score. The waiting defender talks." },
       { min:8,  drill:"jnPacman",  note:"Lines only. Ghosts dribble." },
-      { min:18, drill:"us5on5",    note:"4 on 4 full court. Every defensive rebound: outlet and race. The shooter touches the baseline before getting back." },
+      { min:15, drill:"us5on5",    note:"4 on 4 full court. Every defensive rebound: outlet and race. The shooter touches the baseline before getting back." },
     ] },
   { id:7, title:"Help & Recover", date:null,
     goal:"Level 2 defense inside the pack: jump to the ball, swipe the gap, bump the cutter. Test Layers 1–3.",
@@ -2038,11 +2043,12 @@ const PRACTICES = [
       { min:6,  drill:"usCross",   note:"Low and quick at every cone, change of pace out of it." },
       { min:10, drill:"usShoot",   note:"Catch-and-shoot from the corners and wings, then free throws." },
       { min:6,  drill:"plVegas" },
-      { min:8,  drill:"dlFall",    note:"Technique first, then as a group. Fall on both cheeks, hands up." },
-      { min:8,  drill:"dlAlley",   note:"Full-court alley. Beaten? Sprint ahead and recover the bubble." },
+      { min:6,  drill:"tmClose4",  note:"Close outs, round two: four at a time, game speed." },
+      { min:6,  drill:"dlFall",    note:"Technique first, then as a group. Fall on both cheeks, hands up." },
+      { min:6,  drill:"dlAlley",   note:"Full-court alley. Beaten? Sprint ahead and recover the bubble." },
       { min:8,  drill:"rrDrills13", note:"Layers 1–3 drills from the video as the warm-up for Layer 4. Quick reads, game speed." },
       { min:12, drill:"rrL4Cone",  note:"Teach Layer 4 circle movement with the cone and tennis-ball drill." },
-      { min:12, drill:"plShell",   note:"Freeze checks first, then drives, then cutters. Last 4 minutes live." },
+      { min:10, drill:"plShell",   note:"Freeze checks first, then drives, then cutters. Last 4 minutes live." },
       { min:6,  drill:"cone",      note:"30-second rounds. Eyes up or the touch doesn't count." },
       { min:9,  drill:"us5on5",    note:"4 on 4 live. Layers 1–4 on offense, Pack Line on defense." },
     ] },
@@ -2065,12 +2071,13 @@ const PRACTICES = [
       { min:6,  drill:"jnGatesD",  note:"Both hands through every gate." },
       { min:10, drill:"usShoot",   note:"Skip-pass catch-and-shoot from the corners and wings, then free throws." },
       { min:6,  drill:"plVegas",   note:"Close out on the skip pass." },
+      { min:6,  drill:"tmClose4",  note:"The long close out on the skip pass is tonight's defense. Under control, hands high." },
       { min:8,  drill:"rrDrills13", note:"Layers 1–3 drills from the video at game speed, then we add Pin & Skip on top." },
       { min:12, drill:"rrL7",      note:"Pin the help defender, skip it over the top, shoot or drive the closeout." },
-      { min:12, drill:"dlTrans120", note:"Alley full court, then guard the pass, the corner drive, the skip and the shot. Box out." },
-      { min:10, drill:"td222",     note:"Keep it on one side, off defender sprints back to narrow the floor. Talk." },
+      { min:10, drill:"dlTrans120", note:"Alley full court, then guard the pass, the corner drive, the skip and the shot. Box out." },
+      { min:8,  drill:"td222",     note:"Keep it on one side, off defender sprints back to narrow the floor. Talk." },
       { min:8,  drill:"pirate",    note:"Coach picks the crowd favorite." },
-      { min:13, drill:"us5on5",    note:"4 on 4 full court. Race the arcs on every defensive rebound." },
+      { min:11, drill:"us5on5",    note:"4 on 4 full court. Race the arcs on every defensive rebound." },
     ] },
   { id:11, title:"Game Ready", date:null,
     goal:"Last practice before games. Put it all together the way it looks on game day: free throws, Read & React, Race & Space, the Pack Line and a full scrimmage.",
@@ -3306,7 +3313,7 @@ const savePlanState = () => { lsSet(EDITS_KEY, EDITS); lsSet(HIDDEN_KEY, HIDDEN)
 /* Bump PLAN_REV whenever the season plans are rewritten. A coach's edits to
    the old versions become "Mine" plans instead of overriding the new ones,
    and hidden/ordered season plans reset, so nothing is lost or mismatched. */
-const PLAN_REV = 3, PLAN_REV_KEY = "shiloh-bb.planRev";
+const PLAN_REV = 4, PLAN_REV_KEY = "shiloh-bb.planRev";
 if (lsGet(PLAN_REV_KEY, 1) !== PLAN_REV) {
   Object.entries(EDITS).forEach(([id, e], n) => {
     if (!validPlan(e)) return;
@@ -3980,6 +3987,41 @@ const PLAYS = [
       "Don't hold the ball in the corner and don't dribble into a trap. Pass it, then cut.",
     ],
     drills:["rrL3", "us2on1", "usZigzag"] },
+  { id:"layer-18-press-reverse", name:"Layer 18 Alternate: Press Break Reversal", side:"offense", tag:"Read & React · Press break, reverse it",
+    source:{ label:"Implementing the Read and React for Youth Teams (Jeff Brand)", url:"https://cdn4.sportngin.com/attachments/document/2baf-2534169/Read_and_React_Complete_Guide.pdf" },
+    summary:"When they take away the middle, reverse it. The same start as our press break, but 1's man denies the middle, so 2 throws it back to 3, 3 swings it to 4, and 4 hits 2 cutting up the middle. Four passes in the backcourt, and the press is broken.",
+    steps:[
+      "After a made basket, 1 takes the ball out. 2 and 3 stack near the free-throw line, and 4 and 5 are deep.",
+      "2 screens for 3. 3 cuts out to the left, 2 pops to the right, and 1 inbounds to 2 on the wide side.",
+      "1 cuts up the middle, but his man takes the middle away. 3 fills behind the ball and 4 comes up to the left wing.",
+      "2 reverses the ball back to 3. On the pass, 2 cuts up the middle, and 1 clears out to fill the open spot.",
+      "3 swings it to 4 on the left side. The defense shifted to the ball, so the other side is open.",
+      "4 hits 2 in the middle. 2 pushes it up the floor, and 4 and 5 run the lanes. Press broken.",
+    ],
+    points:[
+      "The pass behind you is almost always open. Use it: a reversal makes the whole press shift.",
+      "On every pass, the passer cuts to the middle. The middle breaks the press.",
+      "Keep the triangle: a pass behind, a pass to the middle and a pass ahead, on every catch.",
+      "Never dribble into the corner. Pass, then cut.",
+    ],
+    drills:["rrL1", "us2on1", "usZigzag"] },
+  { id:"four-and-one", name:"4 and 1", side:"offense", tag:"Read & React · 4 out, 1 in: Layers 1 and 2",
+    summary:"5 holds the low block while the other four run Layers 1 and 2 around him: pass and cut, swing it, feed the post and Laker cut. Then 3 drives the lane, 5's man has to help, and 3 drops it off to 5 for the layup.",
+    steps:[
+      "4 out, 1 in: 5 is on the right low block. 1 is at the top, 2 and 3 are on the wings, and 4 is in the left corner.",
+      "Layer 1: 1 passes to 2 and cuts to the basket. 3 fills the top, and 1 cuts through and fills the open wing.",
+      "Swing it: 2 to 3, then 3 to 1 on the right wing.",
+      "Layer 2: 5 seals his man and 1 feeds the post, then makes the Laker cut to the basket.",
+      "The cut is covered, so 1 flows out to the corner. 3 slides over and 5 kicks it back out to him.",
+      "3 drives the lane. 5's man has to step up to stop him, so 3 drops it off to 5 on the block for the layup.",
+    ],
+    points:[
+      "5: stay on the block, seal your man and show a target hand. You're the finisher.",
+      "Perimeter: pass and cut every time, and fill the open spot. Keep the four spots filled so the lane stays open for 5.",
+      "Post feed: hit him on the side away from his defender, then cut right away.",
+      "Driver: attack the gap. When 5's man leaves him, the drop-off is a layup.",
+    ],
+    drills:["rrL1", "rrL2", "bfcMikan"] },
 
   // ── Baseline out of bounds (BLOB) ──
   { id:"line-under", name:"Line Under", side:"blob", tag:"Baseline out of bounds · post layup",
