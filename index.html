@@ -545,6 +545,7 @@ html:not(.unlocked) #modal{display:none !important;}
 .ha.home{background:var(--accent);color:#fff;}
 .ha.away{background:rgba(255,255,255,.14);color:#fff;}
 .game-when{font-size:12.5px;color:rgba(255,255,255,.72);margin-top:4px;}
+.game-site{font-size:12px;color:rgba(255,255,255,.6);margin-top:2px;}
 .game-right{margin-left:auto;flex:0 0 auto;text-align:right;order:1;}
 .game-res{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:17px;padding:5px 12px;border-radius:10px;white-space:nowrap;color:#fff;}
 .game-res.win{background:var(--win);}
@@ -2133,7 +2134,8 @@ const PRACTICE_DAYS = [
    game gets played and everything else — each player's season totals, the
    Team Stats page, the box score and the leaders — derives from it.
 
-   Game:   { id, week, date, opp, home, final, us, them, video?, playoff?, stats }
+   Game:   { id, week, date, time?, opp, home, site?, final, us, them, video?, playoff?, stats }
+           `site` is where it's played, shown under the date.
 
    stats.players — keyed by JERSEY NUMBER, not name:
      { pts, fgm, fga, tpm, tpa, ftm, fta, oreb, dreb, reb, ast, stl, blk, to, fouls }
@@ -2158,7 +2160,11 @@ const PRACTICE_DAYS = [
      { id:9, week:"Playoff", date:"2027-02-06", opp:"TBD", playoff:true },
    `time` is optional. While this list is empty the Schedule tab says the
    games are coming soon and shows practices only. */
-const GAMES = [];
+const GAMES = [
+  // Boys 4th Silver, Pool A. Home team listed second on the league card.
+  { id:1, week:"Wk 1", date:"2026-11-07", time:"2:40 PM", opp:"Bentonville West (Cooper)", home:true,
+    site:"AAO Rogers · Gatorade court" },
+];
 
 /* ── DEMO GAME (?demo=1 only) ─────────────────────────────────
    A complete made-up box score so the stats pages can be checked before the
@@ -2733,6 +2739,7 @@ function gameRow(g, opts) {
         ${esc(g.opp)}
       </h3>
       <div class="game-when">${fmtDate(g.date, { weekday:"short", month:"short", day:"numeric", year:"numeric" })}${g.time && !scored ? ` · ${esc(g.time)}` : ""}${scored ? " · Final" : ""}</div>
+      ${g.site ? `<div class="game-site">${esc(g.site)}</div>` : ""}
     </div>
     <div class="game-right">${right}</div>`;
 
@@ -2868,7 +2875,7 @@ function calendarView(events, today, nextEv) {
       const label = it.opp ? `${it.home === false ? "@" : "vs"} ${it.opp}` : "Game";
       return `<button class="cal-cell is-game${past}${next}${today_}" data-cal-day="${iso}"
           aria-label="${esc(when)}: ${esc(label)}${it.time ? ", " + esc(it.time) : ""}">
-        <b>${d}</b><span class="cal-loc">${esc(label)}</span><span class="cal-time">${esc(it.time || "Game")}</span></button>`;
+        <b>${d}</b><span class="cal-loc">${esc(label)}</span><span class="cal-time"><span class="t-full">${esc(it.time || "Game")}</span><span class="t-short">${esc(String(it.time || "Game").replace(/\s*[AP]M$/, ""))}</span></span></button>`;
     }
     if (it.off) {
       return `<button class="cal-cell is-off${today_}" data-cal-day="${iso}" aria-label="${esc(when)}: no practice, ${esc(it.note || "")}">
@@ -5383,6 +5390,7 @@ function render() {
         ? `Every player · ${TEAM.season}`
         : `${TEAM.season} · ${PLAYED.length} game${PLAYED.length === 1 ? "" : "s"} played`)
   : boxGame            ? `Box score · ${fmtDate(boxGame.date)}`
+  : GAMES.length && !PLAYED.length ? `${TEAM.season} · first game ${fmtDate(GAMES[0].date, { weekday:"short", month:"short", day:"numeric" })}`
   : GAMES.length         ? `${TEAM.season} · ${PLAYED.length} of ${GAMES.length} games played`
   :                        `${TEAM.season} · practices · games coming soon`;
 
