@@ -546,6 +546,12 @@ html:not(.unlocked) #modal{display:none !important;}
 .ha.away{background:rgba(255,255,255,.14);color:#fff;}
 .game-when{font-size:12.5px;color:rgba(255,255,255,.72);margin-top:4px;}
 .game-site{font-size:12px;color:rgba(255,255,255,.6);margin-top:2px;}
+.game-kit{display:inline-flex;align-items:center;gap:7px;margin-top:9px;padding:4px 11px 4px 8px;border-radius:999px;
+  background:rgba(255,255,255,.1);color:#fff;font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:12.5px;
+  letter-spacing:.6px;text-transform:uppercase;}
+.game-kit svg path{stroke:#fff;stroke-width:1.4;stroke-linejoin:round;}
+.game-kit.home svg path{fill:#fff;}
+.game-kit.away svg path{fill:#3d8fd6;}
 .game-right{margin-left:auto;flex:0 0 auto;text-align:right;order:1;}
 .game-res{font-family:"Roboto Condensed",sans-serif;font-weight:700;font-size:17px;padding:5px 12px;border-radius:10px;white-space:nowrap;color:#fff;}
 .game-res.win{background:var(--win);}
@@ -2136,6 +2142,8 @@ const PRACTICE_DAYS = [
 
    Game:   { id, week, date, time?, opp, home, site?, final, us, them, video?, playoff?, stats }
            `site` is where it's played, shown under the date.
+           `home` comes from the league card: (H) next to us is home, (A) is
+           away. Home wears white jerseys, away wears blue; the card says so.
 
    stats.players — keyed by JERSEY NUMBER, not name:
      { pts, fgm, fga, tpm, tpa, ftm, fta, oreb, dreb, reb, ast, stl, blk, to, fouls }
@@ -2720,6 +2728,14 @@ function coachCard(c) {
   </article>`;
 }
 
+// Home (H on the league card) wears white, away (A) wears blue.
+function jerseyTag(home) {
+  return `<div class="game-kit ${home ? "home" : "away"}">
+      <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 3H6.6C6.6 5 5.2 6.4 3.5 6.4V21h17V6.4c-1.7 0-3.1-1.4-3.1-3.4h-1.9c0 2-1.8 3.6-3.5 3.6S8.5 5 8.5 3z"/></svg>
+      ${home ? "White" : "Blue"} jerseys
+    </div>`;
+}
+
 function gameRow(g, opts) {
   const scored = g.final && g.us != null;
   const won  = scored && g.us > g.them;
@@ -2740,6 +2756,7 @@ function gameRow(g, opts) {
       </h3>
       <div class="game-when">${fmtDate(g.date, { weekday:"short", month:"short", day:"numeric", year:"numeric" })}${g.time && !scored ? ` · ${esc(g.time)}` : ""}${scored ? " · Final" : ""}</div>
       ${g.site ? `<div class="game-site">${esc(g.site)}</div>` : ""}
+      ${g.final ? "" : jerseyTag(g.home)}
     </div>
     <div class="game-right">${right}</div>`;
 
