@@ -596,10 +596,10 @@ PLAYS = [
     },
     # ── Baseline out of bounds (BLOB) ───────────────────────────────────────
     {
-        # Don Kelbick's "Line Under" (Breakthrough Basketball): 4 cuts up the
+        # OBJ: Don Kelbick's "Line Under" (Breakthrough Basketball): 4 cuts up the
         # lane and catches over the top, 5 seals and ducks in, 4 hits 5.
         "slug": "line-under",
-        "title": "Line Under",
+        "title": "OBJ",
         "oob": 4.5,
         "sag": 0.45,
         "start": {2: (33, -2.2), 4: (32, 7.5), 5: (18, 7.5), 1: (3, 3.5), 3: (47, 3.5)},
@@ -627,7 +627,7 @@ PLAYS = [
         # Breakthrough Basketball's Box Set 4 ("Up Screener"), the classic
         # screen the screener: 5 up-screens for 3, 4 screens for 5, 5 dives.
         "slug": "box-up-screener",
-        "title": "Box: Screen the Screener",
+        "title": "BOX",
         "oob": 4.5,
         "sag": 0.45,
         "start": {2: (33, -2.2), 5: (31.8, 8), 4: (18.2, 8), 3: (31.5, 19), 1: (18.5, 19)},

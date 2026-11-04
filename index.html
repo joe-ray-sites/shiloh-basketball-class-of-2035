@@ -1894,6 +1894,10 @@ const DRILLS = {
   tmClose4:   { name:"4-Man Closeout Drill", cat:"def", src:"tm",
                 url:YT("Trh45QOV72c"), video:YT("Trh45QOV72c"),
                 desc:"Coach Tony Miller's four-player close-out drill (a one-minute video: watch it for the setup). Every close out under control: two high hands, short choppy steps, and a contest on the catch." },
+  blobPlays:  { name:"BLOB Plays: OBJ & BOX", cat:"off", src:"saints", plays:["line-under", "box-up-screener"],
+                desc:"Our two baseline out-of-bounds plays from the playbook. Walk them, jog them, then run them against a defense. Everyone learns every spot." },
+  slobPlays:  { name:"SLOB Plays: Stack & Pairs", cat:"off", src:"saints", plays:["slob-stack", "slob-pairs"],
+                desc:"Our two sideline out-of-bounds plays from the playbook. Walk them, jog them, then run them against a defense. Everyone learns every spot." },
   pl2on2:     { name:"2-on-2 Pack Line Positioning", cat:"def", src:"cc",
                 url:"https://www.coachesclipboard.net/PackLineDefenseDrills.html",
                 desc:"Two passers, two defenders. One pressures the ball; the other sits in the gap with both feet inside the pack line. On every pass they swap jobs while the ball is in the air. Run it top-to-wing, wing-to-corner and two-guard front." },
@@ -2009,12 +2013,12 @@ const PRACTICES = [
     goal:"Layer 3: a dribble coming at you means cut. On defense, help and recover inside the pack. Shots every night.",
     blocks:[
       { min:5,  drill:"redlight",  note:"Side by side. Faster calls this week." },
-      { min:10, drill:"usShoot",   note:"Catch-and-shoot from our spots, then two minutes of free throws." },
+      { min:10, drill:"blobPlays", note:"Baseline out of bounds: OBJ, then BOX. Walk it, jog it, run it, then add a defense. Everybody takes a turn inbounding." },
       { min:5,  drill:"plVegas",   note:"Driver vs shooter, then the offense gets one live dribble." },
       { min:8,  drill:"rrL3",      note:"Layer 3 Dribble At: the dribbler comes at you, you cut backdoor. Walk, jog, run." },
       { min:8,  drill:"rrDrills13", note:"Now put Layers 1–3 together with the drills from the video: pass and cut, Laker cut, dribble at. Every player reps every read." },
       { min:8,  drill:"dlHelp22",  note:"2 on 2, then 3 on 3. Show on the drive, recover on the pass. Help and recover is one word." },
-      { min:6,  drill:"jnKnockout", note:"Dribble Knockout. Protect your ball, eyes up." },
+      { min:6,  drill:"slobPlays", note:"Sideline out of bounds: Stack, then Pairs. Walk it, then run it with a defense." },
       { min:10, drill:"twodrib",   note:"4 on 4, Layers 1–3, two-dribble limit. Defense in the pack. Reward the extra pass out loud." },
     ] },
   { id:6, title:"Race & Space", date:null,
@@ -3337,7 +3341,7 @@ const savePlanState = () => { lsSet(EDITS_KEY, EDITS); lsSet(HIDDEN_KEY, HIDDEN)
 /* Bump PLAN_REV whenever the season plans are rewritten. A coach's edits to
    the old versions become "Mine" plans instead of overriding the new ones,
    and hidden/ordered season plans reset, so nothing is lost or mismatched. */
-const PLAN_REV = 4, PLAN_REV_KEY = "shiloh-bb.planRev";
+const PLAN_REV = 5, PLAN_REV_KEY = "shiloh-bb.planRev";
 if (lsGet(PLAN_REV_KEY, 1) !== PLAN_REV) {
   Object.entries(EDITS).forEach(([id, e], n) => {
     if (!validPlan(e)) return;
@@ -3696,6 +3700,10 @@ const outIcon  = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" st
 // Link to the drill's video: YouTube when the source page embeds one, else
 // the source's own video page. Write-ups with no video get a "Read" button.
 function drillLink(d) {
+  if (d.plays) {                                     // plays from our playbook: open each one
+    return d.plays.map(playById).filter(Boolean).map(p =>
+      `<a class="vid read" href="#plays" data-play="${p.id}">Open ${esc(p.name)}</a>`).join("");
+  }
   if (d.page && !d.video) {
     const pg = MENU_PAGES.find(m => m.id === d.page);
     const label = pg ? pg.label : PAGE_LABELS[d.page] || "coaching";
@@ -4048,7 +4056,7 @@ const PLAYS = [
     drills:["rrL1", "rrL2", "bfcMikan"] },
 
   // ── Baseline out of bounds (BLOB) ──
-  { id:"line-under", name:"Line Under", side:"blob", tag:"Baseline out of bounds · post layup",
+  { id:"line-under", name:"OBJ", side:"blob", tag:"Baseline out of bounds · post layup",
     source:{ label:"Don Kelbick, Breakthrough Basketball", url:"https://www.breakthroughbasketball.com/plays/2-simple-out-of-bounds-plays" },
     summary:"A simple inbounds play that gets the ball to a post player under the basket. 4 cuts up the lane for the catch, and 5 seals his man and ducks in for the layup.",
     steps:[
@@ -4065,7 +4073,7 @@ const PLAYS = [
       "1 and 3: stay wide and deep in the corners so their defenders can't help on 5.",
     ],
     drills:["jumpstop", "bfcMikan"] },
-  { id:"box-up-screener", name:"Box: Screen the Screener", side:"blob", tag:"Baseline out of bounds · box set",
+  { id:"box-up-screener", name:"BOX", side:"blob", tag:"Baseline out of bounds · box set",
     source:{ label:"Box Set 4 (Up Screener), Breakthrough Basketball", url:"https://www.breakthroughbasketball.com/plays/baseline-box-plays" },
     summary:"The classic box inbounds play. 5 sets an up screen for 3, then 4 screens the screener and 5 cuts to the basket for the layup.",
     steps:[
@@ -5417,11 +5425,12 @@ function render() {
       state.box      ? { attr:"data-back",         label:sn ? `${snLabel} schedule` : "All games" }
     : state.leaders  ? { attr:"data-back-leaders", label:sn ? `${snLabel} Team Stats` : "Team Stats" }
     : state.season   ? { attr:"data-back-season",  label:"Past Seasons" }
+    : state.play && state.playFrom != null ? { attr:"data-back-to-plan", label:"Practice plan" }
     : state.play     ? { attr:"data-back-plays",   label:"All plays" }
     : state.practice && state.fromSchedule ? { attr:"data-back-schedule", label:"Schedule" }
     : (state.practice || state.builder) ? { attr:"data-back-practice", label:"All practices" }
     : null;
-  ["data-back", "data-back-leaders", "data-back-season", "data-back-practice", "data-back-schedule", "data-back-plays"].forEach(a => crumb.removeAttribute(a));
+  ["data-back", "data-back-leaders", "data-back-season", "data-back-practice", "data-back-schedule", "data-back-plays", "data-back-to-plan"].forEach(a => crumb.removeAttribute(a));
   crumb.hidden = !back;
   if (back) { crumb.setAttribute(back.attr, "1"); $("#crumb-txt").textContent = back.label; }
 
@@ -5593,6 +5602,7 @@ function goTab(id) {
   state.practice = null;
   state.fromSchedule = false;
   state.play = null;
+  state.playFrom = null;
   state.practiceTab = "plans";
   state.builder = null;
   state.shared = null;
@@ -5655,7 +5665,17 @@ document.addEventListener("click", (e) => {
   if (dp) { const id = parseId(dp.dataset.dayPlan); goTab("practice"); state.practice = id; state.fromSchedule = true; render(); window.scrollTo(0, 0); return; }
   if (e.target.closest("[data-back-schedule]")) { goTab("schedule"); return; }
   const ply = e.target.closest("[data-play]");
-  if (ply) { state.play = ply.dataset.play; render(); window.scrollTo(0, 0); return; }
+  if (ply) {
+    const from = state.tab === "practice" ? state.practice : null;   // opened from a practice plan
+    if (state.tab !== "plays") goTab("plays");
+    state.play = ply.dataset.play;
+    state.playFrom = from;
+    render(); window.scrollTo(0, 0); return;
+  }
+  if (e.target.closest("[data-back-to-plan]")) {
+    const id = state.playFrom;
+    goTab("practice"); state.practice = id; render(); window.scrollTo(0, 0); return;
+  }
   const pfl = e.target.closest("[data-playfilter]");
   if (pfl) { state.playFilter = pfl.dataset.playfilter; render(); return; }
   if (e.target.closest("[data-back-plays]")) { state.play = null; render(); window.scrollTo(0, 0); return; }
