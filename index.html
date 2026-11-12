@@ -2176,6 +2176,13 @@ const GAMES = [
   // Boys 4th Silver, Pool A. Home team listed second on the league card.
   { id:1, week:"Wk 1", date:"2026-11-07", time:"3:20 PM", opp:"Bentonville West (Cooper)", home:true,
     site:"AAO Rogers · Court: Gatorade" },
+  { id:2, week:"Wk 2", date:"2026-11-14", time:"8:00 AM", opp:"Pea Ridge (Nwachuku)", home:false,
+    site:"AAO Fayetteville · Court: Gatorade" },
+  { id:3, week:"Wk 2", date:"2026-11-14", time:"9:20 AM", opp:"Life Way (Rateliff)", home:true,
+    site:"AAO Fayetteville · Court: Ozark Ortho" },
+  // Wk 3 (Nov 21) is a league drop weekend.
+  { id:4, week:"Wk 4", date:"2026-12-05", time:"2:40 PM", opp:"Farmington (Drennan)", home:false,
+    site:"AAO Rogers · Court: Radiant Eye Care" },
 ];
 
 /* ── DEMO GAME (?demo=1 only) ─────────────────────────────────
@@ -2272,7 +2279,12 @@ const ALL_GAMES = SEASONS.flatMap(sn => sn.games);
 const gameById = (id) => ALL_GAMES.find(g => g.id === id);
 
 const PLAYED  = playedIn(GAMES);
-const NEXT_ID = (GAMES.find(g => !g.final) || {}).id;
+const todayISO = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+};
+
+const NEXT_ID = (GAMES.find(g => !g.final && g.date >= todayISO()) || {}).id;
 
 const recordOf = (games) => {
   const p = playedIn(games);
@@ -2747,6 +2759,7 @@ function gameRow(g, opts) {
   const right = scored
     ? `<div class="game-res ${won ? "win" : "loss"}">${won ? "W" : "L"} ${g.us}–${g.them}</div>`
     : g.final  ? `<div class="game-upc">No result recorded</div>`
+    : g.date < todayISO() ? `<div class="game-upc">Score coming</div>`
     : next     ? `<div class="game-badge">Next Up</div>`
     : g.playoff ? `<div class="game-badge playoff">${g.week}</div>`
     : `<div class="game-upc">Upcoming</div>`;
@@ -2760,7 +2773,7 @@ function gameRow(g, opts) {
       </h3>
       <div class="game-when">${fmtDate(g.date, { weekday:"short", month:"short", day:"numeric", year:"numeric" })}${g.time && !scored ? ` · ${esc(g.time)}` : ""}${scored ? " · Final" : ""}</div>
       ${g.site ? `<div class="game-site">${esc(g.site)}</div>` : ""}
-      ${g.final ? "" : jerseyTag(g.home)}
+      ${g.final || g.date < todayISO() ? "" : jerseyTag(g.home)}
     </div>
     <div class="game-right">${right}</div>`;
 
@@ -2779,11 +2792,6 @@ function gameRow(g, opts) {
    Practices (white) and games (dark) merged by date, grouped by month.
    The first event on or after today gets the "Next Up" badge; anything
    before today is dimmed. */
-const todayISO = () => {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-};
-
 function practiceRow(p, next, past) {
   const when = fmtDate(p.date, { weekday:"short", month:"short", day:"numeric" });
   const plan = !p.off && p.plan != null ? practiceById(p.plan) : null;
@@ -2893,9 +2901,10 @@ function calendarView(events, today, nextEv) {
     const next = evs.includes(nextEv) ? " is-next" : "";
     const when = fmtDate(iso, { weekday:"short", month:"short", day:"numeric" });
     if (game) {
-      const label = it.opp ? `${it.home === false ? "@" : "vs"} ${it.opp}` : "Game";
+      const games = evs.filter(x => x.kind === "game").length;
+      const label = games > 1 ? `${games} games` : it.opp ? `${it.home === false ? "@" : "vs"} ${it.opp}` : "Game";
       return `<button class="cal-cell is-game${past}${next}${today_}" data-cal-day="${iso}"
-          aria-label="${esc(when)}: ${esc(label)}${it.time ? ", " + esc(it.time) : ""}">
+          aria-label="${esc(when)}: ${esc(label)}${it.time ? (games > 1 ? ", first at " : ", ") + esc(it.time) : ""}">
         <b>${d}</b><span class="cal-loc">${esc(label)}</span><span class="cal-time"><span class="t-full">${esc(it.time || "Game")}</span><span class="t-short">${esc(String(it.time || "Game").replace(/\s*[AP]M$/, ""))}</span></span></button>`;
     }
     if (it.off) {
@@ -5415,7 +5424,7 @@ function render() {
         ? `Every player · ${TEAM.season}`
         : `${TEAM.season} · ${PLAYED.length} game${PLAYED.length === 1 ? "" : "s"} played`)
   : boxGame            ? `Box score · ${fmtDate(boxGame.date)}`
-  : GAMES.length && !PLAYED.length ? `${TEAM.season} · first game ${fmtDate(GAMES[0].date, { weekday:"short", month:"short", day:"numeric" })}`
+  : GAMES.length && !PLAYED.length && NEXT_ID ? `${TEAM.season} · next game ${fmtDate(gameById(NEXT_ID).date, { weekday:"short", month:"short", day:"numeric" })}`
   : GAMES.length         ? `${TEAM.season} · ${PLAYED.length} of ${GAMES.length} games played`
   :                        `${TEAM.season} · practices · games coming soon`;
 
